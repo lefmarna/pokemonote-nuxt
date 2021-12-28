@@ -14,14 +14,19 @@
   </v-row>
 </template>
 
-<script>
-import { defineComponent } from '@nuxtjs/composition-api'
+<script lang="ts">
+import { defineComponent, inject } from '@nuxtjs/composition-api'
+import { AuthUserStore } from '@/utils/useAuthUser'
+import { AuthUserKey } from '@/utils/useAuthUserKey'
 
 export default defineComponent({
   setup() {
     const text = 'Hello, World!'
 
+    const { getAuthUser } = inject(AuthUserKey) as AuthUserStore
+
     return {
+      getAuthUser,
       text,
     }
   },
