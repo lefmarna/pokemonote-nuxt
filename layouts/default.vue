@@ -82,7 +82,7 @@
             alt="Pokemonote"
             class="shrink mt-2"
             contain
-            src="@/assets/logo.svg"
+            :src="logoPath"
             transition="scale-transition"
             max-height="81"
             max-width="286"
@@ -122,6 +122,10 @@ export default defineComponent({
   setup() {
     const { $axios } = useContext()
     const store = useStore()
+
+    const logoPath = computed(() => {
+      return require('@/assets/logo.svg')
+    })
 
     provide(AuthUserKey, useAuthUser())
     const { getAuthUser } = inject(AuthUserKey) as AuthUserStore
@@ -222,6 +226,7 @@ export default defineComponent({
       getAuthUser,
       // authUserName,
       drawer,
+      logoPath,
       otherMenuLists,
       // otherMenuListsFiltered,
       siteMenuLists,
