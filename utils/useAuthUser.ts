@@ -9,6 +9,10 @@ export default function useAuthUser() {
 
   const getAuthUser = computed(() => authUser)
 
+  const isLogin = computed(() => {
+    return Boolean(getAuthUser.value.username && getAuthUser.value.username)
+  })
+
   const setAuthUser = (user: User) => {
     authUser.username = user.username
     authUser.nickname = user.nickname
@@ -16,6 +20,7 @@ export default function useAuthUser() {
 
   return {
     getAuthUser,
+    isLogin,
     setAuthUser,
   }
 }

@@ -21,11 +21,8 @@
           </v-list-item>
           <!-- ログイン時のみマイページを表示する -->
           <v-list-item
-            v-if="
-              $store.getters.getAuthUser.username &&
-              $store.getters.getAuthUser.username
-            "
-            :to="`/users/${$store.getters.getAuthUser.username}`"
+            v-if="isLogin"
+            :to="`/users/${getAuthUser.username}`"
             exact
           >
             <v-list-item-icon>
@@ -53,7 +50,7 @@
         <v-list-item>Others</v-list-item>
         <v-divider />
         <v-list dense nav>
-          <!-- <v-list-item
+          <v-list-item
             v-for="otherMenuList in otherMenuListsFiltered"
             :key="otherMenuList.name"
             :to="otherMenuList.link"
@@ -64,7 +61,7 @@
             <v-list-item-content>
               <v-list-item-title>{{ otherMenuList.name }}</v-list-item-title>
             </v-list-item-content>
-          </v-list-item> -->
+          </v-list-item>
         </v-list>
         <v-divider />
         <v-list class="bottomFooter__copyright">
@@ -90,13 +87,13 @@
       </v-toolbar-title>
       <v-spacer />
       <!-- ヘッダー右側 -->
-      <!-- <v-toolbar-items v-if="$store.getters.isLogin">
+      <v-toolbar-items v-if="isLogin">
         <v-btn text @click="logout">ログアウト</v-btn>
       </v-toolbar-items>
       <v-toolbar-items v-else>
         <v-btn text to="/login">ログイン</v-btn>
         <v-btn text to="/register">新規登録</v-btn>
-      </v-toolbar-items> -->
+      </v-toolbar-items>
     </v-app-bar>
     <v-main>
       <!-- <Alert id="notice" /> -->
@@ -127,7 +124,7 @@ export default defineComponent({
     })
 
     provide(AuthUserKey, useAuthUser())
-    const { getAuthUser } = inject(AuthUserKey) as AuthUserStore
+    const { getAuthUser, isLogin } = inject(AuthUserKey) as AuthUserStore
 
     const drawer = ref()
 
@@ -193,19 +190,15 @@ export default defineComponent({
       ]
     })
 
-    // const authUserName = computed(() => {
-    //   return store.getters.authUser.username
-    // })
-
-    // const otherMenuListsFiltered = computed(() => {
-    //   if (store.getters.isLogin) {
-    //     return otherMenuLists.value
-    //   } else {
-    //     return otherMenuLists.value.filter(
-    //       (otherMenu) => otherMenu.requireAuth !== true
-    //     )
-    //   }
-    // })
+    const otherMenuListsFiltered = computed(() => {
+      if (isLogin) {
+        return otherMenuLists.value
+      } else {
+        return otherMenuLists.value.filter(
+          (otherMenu) => otherMenu.requireAuth !== true
+        )
+      }
+    })
 
     const logout = async () => {
       try {
@@ -222,12 +215,12 @@ export default defineComponent({
     }
 
     return {
-      getAuthUser,
-      // authUserName,
       drawer,
+      getAuthUser,
+      isLogin,
       logoPath,
       otherMenuLists,
-      // otherMenuListsFiltered,
+      otherMenuListsFiltered,
       siteMenuLists,
       tools,
       logout,
