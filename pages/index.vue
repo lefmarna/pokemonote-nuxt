@@ -83,8 +83,7 @@ import {
   inject,
   useStore,
 } from '@nuxtjs/composition-api'
-import { AuthUserStore } from '@/utils/useAuthUser'
-import { AuthUserKey } from '@/utils/useAuthUserKey'
+import { AuthUserKey, AuthUserStore } from '@/utils/useAuthUser'
 // import axios from 'axios'
 // import { updateRanking } from '@/utils/store'
 

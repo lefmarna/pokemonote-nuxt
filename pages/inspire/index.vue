@@ -16,8 +16,7 @@
 
 <script lang="ts">
 import { defineComponent, inject } from '@nuxtjs/composition-api'
-import { AuthUserStore } from '@/utils/useAuthUser'
-import { AuthUserKey } from '@/utils/useAuthUserKey'
+import { AuthUserKey, AuthUserStore } from '@/utils/useAuthUser'
 
 export default defineComponent({
   setup() {

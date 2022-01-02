@@ -1,4 +1,4 @@
-import { computed, reactive } from '@nuxtjs/composition-api'
+import { computed, InjectionKey, reactive } from '@nuxtjs/composition-api'
 import { User } from '~/types'
 
 export default function useAuthUser() {
@@ -21,3 +21,4 @@ export default function useAuthUser() {
 }
 
 export type AuthUserStore = ReturnType<typeof useAuthUser>
+export const AuthUserKey: InjectionKey<AuthUserStore> = Symbol('AuthUserStore')

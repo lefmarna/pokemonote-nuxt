@@ -115,8 +115,7 @@ import {
   useContext,
   useStore,
 } from '@nuxtjs/composition-api'
-import useAuthUser, { AuthUserStore } from '@/utils/useAuthUser'
-import { AuthUserKey } from '@/utils/useAuthUserKey'
+import useAuthUser, { AuthUserKey, AuthUserStore } from '@/utils/useAuthUser'
 
 export default defineComponent({
   setup() {
