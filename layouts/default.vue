@@ -124,7 +124,9 @@ export default defineComponent({
     })
 
     provide(AuthUserKey, useAuthUser())
-    const { getAuthUser, isLogin } = inject(AuthUserKey) as AuthUserStore
+    const { getAuthUser, isLogin, setAuthUser } = inject(
+      AuthUserKey
+    ) as AuthUserStore
 
     const drawer = ref()
 
@@ -191,7 +193,7 @@ export default defineComponent({
     })
 
     const otherMenuListsFiltered = computed(() => {
-      if (isLogin) {
+      if (isLogin.value) {
         return otherMenuLists.value
       } else {
         return otherMenuLists.value.filter(
@@ -208,7 +210,7 @@ export default defineComponent({
           return
         console.log(error)
       }
-      store.commit('updateAuthUser', {
+      setAuthUser({
         username: '',
         nickname: '',
       })

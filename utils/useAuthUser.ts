@@ -3,8 +3,8 @@ import { User } from '~/types'
 
 export default function useAuthUser() {
   const authUser = reactive<User>({
-    username: 'aa',
-    nickname: 'ii',
+    username: '',
+    nickname: '',
   })
 
   const getAuthUser = computed(() => authUser)
