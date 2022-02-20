@@ -53,6 +53,11 @@ export interface User {
   username: string
 }
 
+export interface AuthUser extends User {
+  email: string
+  email_verified_at: string
+}
+
 export interface Pokemon {
   id: number
   lv: number
