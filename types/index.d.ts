@@ -6,7 +6,7 @@ export interface Card {
 }
 
 export interface LazyValue {
-  lazyValue: number
+  lazyValue: number | null
 }
 
 export interface Login {
