@@ -6,7 +6,13 @@
         <v-list-item>Menu</v-list-item>
         <v-divider></v-divider>
         <v-list dense nav>
-          <v-list-item v-for="siteMenuList in siteMenuLists" :key="siteMenuList.name" :to="siteMenuList.link" exact>
+          <v-list-item
+            v-for="siteMenuList in siteMenuLists"
+            :key="siteMenuList.name"
+            :to="siteMenuList.link"
+            exact
+            nuxt
+          >
             <v-list-item-icon>
               <v-icon>{{ siteMenuList.icon }}</v-icon>
             </v-list-item-icon>
@@ -15,7 +21,7 @@
             </v-list-item-content>
           </v-list-item>
           <!-- ログイン時のみマイページを表示する -->
-          <v-list-item v-if="isLogin" :to="`/users/${authUser.username}`" exact>
+          <v-list-item v-if="isLogin" :to="`/users/${authUser.username}`" exact nuxt>
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
@@ -28,7 +34,7 @@
         <v-list-item>Tools</v-list-item>
         <v-divider />
         <v-list dense nav>
-          <v-list-item v-for="tool in tools" :key="tool.name" :to="tool.link">
+          <v-list-item v-for="tool in tools" :key="tool.name" :to="tool.link" nuxt>
             <v-list-item-icon>
               <v-icon>{{ tool.icon }}</v-icon>
             </v-list-item-icon>
@@ -45,6 +51,7 @@
             v-for="otherMenuList in otherMenuListsFiltered"
             :key="otherMenuList.name"
             :to="otherMenuList.link"
+            nuxt
           >
             <v-list-item-icon>
               <v-icon>{{ otherMenuList.icon }}</v-icon>
@@ -80,8 +87,8 @@
         <v-btn text @click="logout">ログアウト</v-btn>
       </v-toolbar-items>
       <v-toolbar-items v-else>
-        <v-btn text to="/login">ログイン</v-btn>
-        <v-btn text to="/register">新規登録</v-btn>
+        <v-btn text to="/login" nuxt>ログイン</v-btn>
+        <v-btn text to="/register" nuxt>新規登録</v-btn>
       </v-toolbar-items>
     </v-app-bar>
     <v-main>
@@ -204,50 +211,6 @@ export default defineComponent({
       logout,
     }
   },
-  // watch: {
-  //   $route(to) {
-  //     this.createPageTitle(to.meta)
-  //   },
-  // },
-  // mounted() {
-  //   const to = this.$route
-  //   this.createPageTitle(to.meta)
-  // },
-  // methods: {
-  //   /* ページが遷移したときにメタタグを書き換える */
-  //   createPageTitle(meta: { title: string; desc: string }) {
-  //     // titleを取得
-  //     const currentTitle = document.querySelectorAll(
-  //       "meta[name='twitter:title'], meta[property='og:title']"
-  //     )
-  //     // titleが存在する場合は書き換え、存在しない場合はデフォルトに設定
-  //     let rewriteTitle = 'Pokemonote'
-  //     if (meta.title) {
-  //       rewriteTitle = meta.title + ' | Pokemonote'
-  //     }
-  //     for (let i = 0, len = currentTitle.length; i < len; i++) {
-  //       currentTitle[i].setAttribute('content', rewriteTitle)
-  //     }
-  //     document.title = rewriteTitle
-  //     // descriptionを取得
-  //     const currentDesc = document.querySelectorAll(
-  //       "meta[name='description'], meta[name='twitter:description'], meta[property='og:description']"
-  //     )
-  //     // descriptionが存在する場合は書き換え、存在しない場合はデフォルトに設定
-  //     if (meta.desc) {
-  //       for (let i = 0, len = currentDesc.length; i < len; i++) {
-  //         currentDesc[i].setAttribute('content', meta.desc)
-  //       }
-  //     } else {
-  //       for (let i = 0, len = currentDesc.length; i < len; i++) {
-  //         currentDesc[i].setAttribute(
-  //           'content',
-  //           'ポケモンのステータスを計算・管理するためのWebアプリ『Pokemonote』へようこそ！ 素早さ計算機や剣盾に対応した種族値ランキングといったツールも公開しています。「シンプルで高機能」なツールにこだわって制作していますので、是非お試しください。'
-  //         )
-  //       }
-  //     }
-  //   },
-  // },
 })
 </script>
 

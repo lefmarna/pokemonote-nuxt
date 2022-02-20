@@ -24,9 +24,9 @@
       </template>
       <!-- ポケモン名にリンクを設定する -->
       <template #[`item.name`]="{ item }">
-        <router-link :to="`/pokemons/${item.id}`">
+        <nuxt-link :to="`/pokemons/${item.id}`">
           {{ item.name }}
-        </router-link>
+        </nuxt-link>
       </template>
       <template #[`item.user.nickname`]="{ item }">
         <!-- マイページのときは、編集・削除ボタンを表示する -->
@@ -36,9 +36,9 @@
         </div>
         <!-- マイページでないときは、ユーザー名にリンクを設定する -->
         <div v-else>
-          <router-link :to="`/users/${item.user.username}`">
+          <nuxt-link :to="`/users/${item.user.username}`">
             {{ item.user.nickname }}
-          </router-link>
+          </nuxt-link>
         </div>
       </template>
     </v-data-table>

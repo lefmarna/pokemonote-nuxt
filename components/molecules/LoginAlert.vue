@@ -4,6 +4,7 @@
       {{ alertTitle }}には、<router-link
         class="text-decoration-none login-alert"
         :to="`/login?redirect=${$route.fullPath}`"
+        nuxt
         >ログイン</router-link
       >が必要です。
     </v-alert>
