@@ -21,11 +21,11 @@ export const convertToHalfWidthInteger = (str: string | number, maxNumber: numbe
 /**
  * 小数点を切り捨てる、また、nullや負の数には初期値を返していく
  */
-export const numberToInt = (value: number, defaultValue = 0): number => {
-  if (String(value) === '' || value < defaultValue) {
+export const numberToInt = (value: number | null, defaultValue = 0): number => {
+  if (String(value) === '' || Number(value) < defaultValue) {
     return defaultValue
   } else {
-    return Math.floor(value)
+    return Math.floor(Number(value))
   }
 }
 
