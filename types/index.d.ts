@@ -74,4 +74,7 @@ export interface State {
     username: string
     nickname: string
   }
+  pokemonData: PokemonData[]
+  natureData: Nature[]
+  ranking: []
 }

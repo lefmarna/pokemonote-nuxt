@@ -56,11 +56,11 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/',
+    baseURL: process.env.BASE_URL || 'http://localhost/api/v1',
+    credentials: true,
   },
 
   publicRuntimeConfig: {
-    baseURL: process.env.BASE_URL || 'http://localhost/api/v1',
     analyticsTrackingId: process.env.ANALYTICS_TRACKING_ID || 'UA-*********-*',
     payjpPublicKey: process.env.PAYJP_PUBLIC_KEY || 'pk_test_************************',
   },
