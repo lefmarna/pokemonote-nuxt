@@ -16,16 +16,11 @@
           <v-card class="flex-fill text-center m-auto">
             <h2 class="headline font-weight-bold ma-2 mb-3">人気のポケモン</h2>
             <v-list>
-              <!-- <v-list-item
-                v-for="(item, index) in $store.getters.ranking"
-                :key="item.name"
-              >
+              <v-list-item v-for="(item, index) in $store.getters.ranking" :key="item.name">
                 <v-list-item-content>
-                  <v-list-item-title align="left"
-                    >{{ index + 1 }}位 {{ item.name }}</v-list-item-title
-                  >
+                  <v-list-item-title align="left">{{ index + 1 }}位 {{ item.name }}</v-list-item-title>
                 </v-list-item-content>
-              </v-list-item> -->
+              </v-list-item>
             </v-list>
           </v-card>
         </v-col>
@@ -67,25 +62,29 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@nuxtjs/composition-api'
+import { computed, defineComponent, useContext, useStore } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   setup() {
+    const { $axios } = useContext()
+    const store = useStore()
+
     const imgPath = computed(() => {
       return require('@/assets/pokemonote.svg')
     })
 
+    ;(async () => {
+      try {
+        const response = await $axios.get('/top')
+        store.commit('updateRanking', response.data.data)
+      } catch (error) {
+        console.log(error)
+      }
+    })()
+
     return {
       imgPath,
     }
-    // ;(async () => {
-    //   try {
-    //     const response = await axios.get('/top')
-    //     updateRanking(response.data.data)
-    //   } catch (error) {
-    //     console.log(error)
-    //   }
-    // })()
   },
 })
 </script>
