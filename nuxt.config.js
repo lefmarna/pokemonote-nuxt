@@ -59,6 +59,12 @@ export default {
     baseURL: '/',
   },
 
+  publicRuntimeConfig: {
+    baseURL: process.env.BASE_URL || 'http://localhost/api/v1',
+    analyticsTrackingId: process.env.ANALYTICS_TRACKING_ID || 'UA-*********-*',
+    payjpPublicKey: process.env.PAYJP_PUBLIC_KEY || 'pk_test_************************',
+  },
+
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
