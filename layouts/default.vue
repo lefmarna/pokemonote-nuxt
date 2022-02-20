@@ -63,7 +63,7 @@
       <!-- ヘッダー左側 -->
       <v-app-bar-nav-icon @click="drawer = !drawer" />
       <v-toolbar-title>
-        <router-link to="/"
+        <nuxt-link to="/"
           ><v-img
             alt="Pokemonote"
             class="shrink mt-2"
@@ -72,7 +72,7 @@
             transition="scale-transition"
             max-height="81"
             max-width="286"
-        /></router-link>
+        /></nuxt-link>
       </v-toolbar-title>
       <v-spacer />
       <!-- ヘッダー右側 -->
