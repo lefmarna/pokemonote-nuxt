@@ -9,11 +9,12 @@ export const state = (): State => ({
 })
 
 export const getters: GetterTree<State, ReturnType<typeof state>> = {
-  getAuthUser: (state) => state.authUser,
+  authUser: (state) => state.authUser,
+  isLogin: (state) => Boolean(state.authUser.username && state.authUser.nickname),
 }
 
 export const mutations: MutationTree<State> = {
-  setAuthUser(state, authUser) {
+  updateAuthUser(state, authUser) {
     state.authUser = authUser
   },
 }

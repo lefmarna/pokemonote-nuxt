@@ -6,12 +6,7 @@
         <v-list-item>Menu</v-list-item>
         <v-divider></v-divider>
         <v-list dense nav>
-          <v-list-item
-            v-for="siteMenuList in siteMenuLists"
-            :key="siteMenuList.name"
-            :to="siteMenuList.link"
-            exact
-          >
+          <v-list-item v-for="siteMenuList in siteMenuLists" :key="siteMenuList.name" :to="siteMenuList.link" exact>
             <v-list-item-icon>
               <v-icon>{{ siteMenuList.icon }}</v-icon>
             </v-list-item-icon>
@@ -20,11 +15,7 @@
             </v-list-item-content>
           </v-list-item>
           <!-- ログイン時のみマイページを表示する -->
-          <v-list-item
-            v-if="isLogin"
-            :to="`/users/${getAuthUser.username}`"
-            exact
-          >
+          <v-list-item v-if="isLogin" :to="`/users/${getAuthUser.username}`" exact>
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
@@ -64,9 +55,7 @@
           </v-list-item>
         </v-list>
         <v-divider />
-        <v-list class="bottomFooter__copyright">
-          © Copyright 2021 Pokemonote.
-        </v-list>
+        <v-list class="bottomFooter__copyright"> © Copyright 2021 Pokemonote. </v-list>
       </v-container>
     </v-navigation-drawer>
     <!-- ヘッダーの設定 -->
@@ -103,30 +92,19 @@
 </template>
 
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  inject,
-  provide,
-  ref,
-  useContext,
-  useStore,
-} from '@nuxtjs/composition-api'
-import useAuthUser, { AuthUserKey, AuthUserStore } from '@/utils/useAuthUser'
+import { computed, defineComponent, ref, useContext, useStore } from '@nuxtjs/composition-api'
+import { getAuthUser } from '~/utils/store'
 
 export default defineComponent({
   setup() {
     const { $axios } = useContext()
     const store = useStore()
 
+    const isLogin = ref<boolean>(store.getters.isLogin)
+
     const logoPath = computed(() => {
       return require('@/assets/logo.svg')
     })
-
-    provide(AuthUserKey, useAuthUser())
-    const { getAuthUser, isLogin, setAuthUser } = inject(
-      AuthUserKey
-    ) as AuthUserStore
 
     const drawer = ref()
 
@@ -196,9 +174,7 @@ export default defineComponent({
       if (isLogin.value) {
         return otherMenuLists.value
       } else {
-        return otherMenuLists.value.filter(
-          (otherMenu) => otherMenu.requireAuth !== true
-        )
+        return otherMenuLists.value.filter((otherMenu) => otherMenu.requireAuth !== true)
       }
     })
 
@@ -206,11 +182,10 @@ export default defineComponent({
       try {
         await $axios.post('/logout')
       } catch (error) {
-        if (!$axios.isAxiosError(error) || error.response!.status !== 401)
-          return
+        if (!$axios.isAxiosError(error) || error.response!.status !== 401) return
         console.log(error)
       }
-      setAuthUser({
+      store.commit('updateAuthUser', {
         username: '',
         nickname: '',
       })
@@ -219,8 +194,8 @@ export default defineComponent({
     return {
       drawer,
       getAuthUser,
-      isLogin,
       logoPath,
+      isLogin,
       otherMenuLists,
       otherMenuListsFiltered,
       siteMenuLists,

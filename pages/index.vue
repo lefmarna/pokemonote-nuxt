@@ -10,10 +10,6 @@
         min-height="164"
       />
     </div>
-    <button @click="setAuthUser({ username: 'uu', nickname: 'ee' })">
-      たああ
-    </button>
-    <div>{{ getAuthUser.username }}{{ getAuthUser.nickname }}</div>
     <v-container>
       <v-row class="d-flex my-sm-2">
         <v-col cols="12" md="6" class="d-flex order-md-2">
@@ -77,34 +73,16 @@
 </template>
 
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  inject,
-  useStore,
-} from '@nuxtjs/composition-api'
-import { AuthUserKey, AuthUserStore } from '@/utils/useAuthUser'
-// import axios from 'axios'
-// import { updateRanking } from '@/utils/store'
+import { computed, defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   setup() {
-    const store = useStore()
-
-    const authUser = store.getters.getAuthUser
-
-    const { getAuthUser, setAuthUser } = inject(AuthUserKey) as AuthUserStore
-
     const imgPath = computed(() => {
       return require('@/assets/pokemonote.svg')
     })
 
     return {
-      getAuthUser,
-      setAuthUser,
-      authUser,
       imgPath,
-      store,
     }
     // ;(async () => {
     //   try {
