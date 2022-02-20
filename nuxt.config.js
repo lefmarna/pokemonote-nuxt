@@ -18,7 +18,31 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
+      {
+        hid: 'description',
+        name: 'description',
+        content:
+          'ポケモンのステータスを計算・管理するためのWebアプリ『Pokemonote』へようこそ！ 素早さ計算機や剣盾に対応した種族値ランキングといったツールも公開しています。「シンプルで高機能」なツールにこだわって制作していますので、是非お試しください。',
+      },
+      { property: 'og:site_name', content: 'Pokemonote' },
+      { property: 'og:type', content: 'website' },
+      { hid: 'og:title', property: 'og:title', content: 'Pokemonote' },
+      {
+        hid: 'og:description',
+        property: 'og:description',
+        content:
+          'ポケモンのステータスを計算・管理するためのWebアプリ『Pokemonote』へようこそ！ 素早さ計算機や剣盾に対応した種族値ランキングといったツールも公開しています。「シンプルで高機能」なツールにこだわって制作していますので、是非お試しください。',
+      },
+      { property: 'og:image', content: 'https://pokemonote.com/twitter_card.jpg' },
+      { hid: 'twitter:title', name: 'twitter:title', content: 'Pokemonote' },
+      {
+        hid: 'twitter:description',
+        name: 'twitter:description',
+        content:
+          'ポケモンのステータスを計算・管理するためのWebアプリ『Pokemonote』へようこそ！ 素早さ計算機や剣盾に対応した種族値ランキングといったツールも公開しています。「シンプルで高機能」なツールにこだわって制作していますので、是非お試しください。',
+      },
+      { name: 'twitter:card', content: 'summary' },
+      { name: 'twitter:site', content: '@lefmarna' },
       { name: 'format-detection', content: 'telephone=no' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
