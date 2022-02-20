@@ -15,7 +15,7 @@
             </v-list-item-content>
           </v-list-item>
           <!-- ログイン時のみマイページを表示する -->
-          <v-list-item v-if="isLogin" :to="`/users/${getAuthUser.username}`" exact>
+          <v-list-item v-if="isLogin" :to="`/users/${authUser.username}`" exact>
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
@@ -93,12 +93,13 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref, useContext, useStore } from '@nuxtjs/composition-api'
-import { getAuthUser } from '~/utils/store'
 
 export default defineComponent({
   setup() {
     const { $axios } = useContext()
     const store = useStore()
+
+    const authUser = store.getters.authUser
 
     const isLogin = ref<boolean>(store.getters.isLogin)
 
@@ -193,7 +194,7 @@ export default defineComponent({
 
     return {
       drawer,
-      getAuthUser,
+      authUser,
       logoPath,
       isLogin,
       otherMenuLists,

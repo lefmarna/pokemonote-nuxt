@@ -31,9 +31,7 @@
         </v-col>
         <v-col cols="12" md="6" class="d-flex order-md-1">
           <v-card style="width: 100%">
-            <h2 class="headline font-weight-bold ma-2 mb-3 text-center">
-              更新情報
-            </h2>
+            <h2 class="headline font-weight-bold ma-2 mb-3 text-center">更新情報</h2>
             <v-sheet class="body-1 overflow-y-auto" max-height="280">
               <div class="px-2">
                 <div>
@@ -54,16 +52,12 @@
       <v-row>
         <v-col cols="12">
           <v-card>
-            <h2 class="headline font-weight-bold ma-2 mb-3 text-center">
-              Pokemonoteについて
-            </h2>
+            <h2 class="headline font-weight-bold ma-2 mb-3 text-center">Pokemonoteについて</h2>
             <div class="px-2 pt-2 pb-1">
               <p>
                 当サイトは、個人の運営するファンサイトであり、株式会社ポケモンや任天堂、その他各企業様とは一切関係ありません。
               </p>
-              <p>
-                ポケットモンスター・ポケモン・Pokémonは任天堂・クリーチャーズ・ゲームフリークの登録商標です。
-              </p>
+              <p>ポケットモンスター・ポケモン・Pokémonは任天堂・クリーチャーズ・ゲームフリークの登録商標です。</p>
             </div>
           </v-card>
         </v-col>
