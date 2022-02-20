@@ -14,6 +14,11 @@ export interface Login {
   password: string
 }
 
+export interface Meta {
+  title: string
+  description: string
+}
+
 export interface Nature {
   name: string
   stats: number[]

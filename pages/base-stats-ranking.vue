@@ -59,9 +59,17 @@ import {
   SP_ATTACK_INDEX,
   SP_DEFENCE_INDEX,
 } from '@/utils/constants'
+import { updateMeta } from '@/utils/meta'
 
 export default defineComponent({
   setup() {
+    const meta = {
+      title: '種族値ランキング（ポケモン剣盾『鎧の孤島』『冠の雪原』に対応）',
+      description:
+        'ポケモン剣盾の種族値ランキングです。攻撃や特攻、素早さを除いた実質種族値でのリストアップも可能です。伝説や幻のポケモンを表示するオプション、各種ステータスでソートする機能にも対応しています。準伝や600属の暴れる環境で、採用するポケモンに迷った際には、きっとこのツールが役立つことでしょう。',
+    }
+
+    updateMeta(meta)
     const store = useStore()
     // 【特別なポケモンを表示する】
     const isShowRanks = reactive({
@@ -197,5 +205,6 @@ export default defineComponent({
       statsChange,
     }
   },
+  head: {},
 })
 </script>
