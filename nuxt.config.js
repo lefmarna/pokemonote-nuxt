@@ -106,7 +106,7 @@ export default {
           secondary: colors.amber.darken3,
           info: colors.blue,
           warning: colors.amber.base,
-          error: colors.deepOrange.accent4,
+          error: colors.red.accent2,
           success: colors.green.accent3,
           danger: colors.red.darken2,
         },
