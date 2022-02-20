@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /email/
+Disallow: /give-tip/
+Disallow: /lefmarna_otoiawase/
+Disallow: /privacy-policy
+
+Sitemap: https://pokemonote.com/sitemap.xml
