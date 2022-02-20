@@ -7,15 +7,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, useContext, useRoute, useRouter, useStore } from '@nuxtjs/composition-api'
+import { defineComponent, reactive, ref, useContext, useRouter } from '@nuxtjs/composition-api'
 import { exceptionErrorToArray } from '@/utils/error'
 import { AuthUser } from '~/types'
 
 export default defineComponent({
   setup(_) {
-    const { $axios } = useContext()
-    const store = useStore()
-    const route = useRoute()
+    const { $axios, route, store } = useContext()
     const router = useRouter()
 
     const loginParams = reactive({
@@ -42,8 +40,7 @@ export default defineComponent({
         } else {
           router.push('/')
         }
-        // TODO ログイン時に「ログインしました」のアラートを出す処理が未反映
-        // notice()
+        store.dispatch('notice')
       } catch (error) {
         errors.value = exceptionErrorToArray(error)
       }

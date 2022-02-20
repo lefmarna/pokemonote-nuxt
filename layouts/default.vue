@@ -21,7 +21,7 @@
             </v-list-item-content>
           </v-list-item>
           <!-- ログイン時のみマイページを表示する -->
-          <v-list-item v-if="isLogin" :to="`/users/${authUser.username}`" exact nuxt>
+          <v-list-item v-if="isLogin" :to="`/users/${$store.getters.authUser.username}`" exact nuxt>
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
@@ -92,23 +92,23 @@
       </v-toolbar-items>
     </v-app-bar>
     <v-main>
-      <!-- <Alert id="notice" /> -->
+      <Alert id="notice" />
       <router-view />
     </v-main>
   </v-app>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, useContext, useStore } from '@nuxtjs/composition-api'
+import { computed, defineComponent, ref, useContext, useRouter } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   setup() {
-    const { $axios } = useContext()
-    const store = useStore()
+    const { $axios, store } = useContext()
+    const router = useRouter()
 
-    const authUser = store.getters.authUser
-
-    const isLogin = ref<boolean>(store.getters.isLogin)
+    const isLogin = computed(() => {
+      return store.getters.isLogin
+    })
 
     const logoPath = computed(() => {
       return require('@/assets/logo.svg')
@@ -197,11 +197,11 @@ export default defineComponent({
         username: '',
         nickname: '',
       })
+      router.replace('/login')
     }
 
     return {
       drawer,
-      authUser,
       logoPath,
       isLogin,
       otherMenuLists,

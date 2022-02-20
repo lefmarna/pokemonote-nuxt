@@ -6,6 +6,7 @@ export const state = (): State => ({
     username: '',
     nickname: '',
   },
+  notice: false,
   pokemonData: [],
   natureData: [],
   ranking: [],
@@ -13,6 +14,7 @@ export const state = (): State => ({
 
 export const getters: GetterTree<State, ReturnType<typeof state>> = {
   authUser: (state) => state.authUser,
+  notice: (state) => state.notice,
   pokemonData: (state) => state.pokemonData,
   natureData: (state) => state.natureData,
   ranking: (state) => state.ranking,
@@ -23,6 +25,9 @@ export const mutations: MutationTree<State> = {
   updateAuthUser(state, authUser) {
     state.authUser = authUser
   },
+  updateNotice(state, notice) {
+    state.notice = notice
+  },
   updatePokemonData(state, value) {
     state.pokemonData = value
   },
@@ -31,5 +36,15 @@ export const mutations: MutationTree<State> = {
   },
   updateRanking(state, value) {
     state.ranking = value
+  },
+}
+
+export const actions = {
+  notice({ commit }: any) {
+    commit('updateNotice', true)
+    // setTimeoutで3000ms後にshowをfalseにする
+    setTimeout(() => {
+      commit('updateNotice', false)
+    }, 2250)
   },
 }

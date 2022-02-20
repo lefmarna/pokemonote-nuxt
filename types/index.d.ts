@@ -5,6 +5,10 @@ export interface Card {
   exp_year: string
 }
 
+export interface Email {
+  email: string
+}
+
 export interface LazyValue {
   lazyValue: number | null
 }
@@ -74,11 +78,11 @@ export interface Pokemon {
 }
 
 export interface State {
-  // notice: boolean
   authUser: {
     username: string
     nickname: string
   }
+  notice: boolean
   pokemonData: PokemonData[]
   natureData: Nature[]
   ranking: []

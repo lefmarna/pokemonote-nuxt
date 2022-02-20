@@ -109,7 +109,7 @@ export default {
           info: colors.blue,
           warning: colors.amber.base,
           error: colors.red.accent2,
-          success: colors.green.accent3,
+          success: colors.green,
           danger: colors.red.darken2,
         },
       },

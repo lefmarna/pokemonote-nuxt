@@ -72,7 +72,9 @@ export default defineComponent({
     const store = useStore()
     const search = ref<string>()
 
-    const authUserName = ref<string>(store.getters.authUser.username)
+    const authUserName = computed(() => {
+      return store.getters.authUser.username
+    })
 
     const headers = computed(() => {
       const tableHeader = [
