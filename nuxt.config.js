@@ -10,8 +10,10 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s | Pokemonote',
-    title: 'Pokemonote',
+    titleTemplate(title) {
+      if (!title) return 'Pokemonote'
+      return `${title} | Pokemonote`
+    },
     htmlAttrs: {
       lang: 'ja',
     },
