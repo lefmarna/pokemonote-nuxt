@@ -167,7 +167,7 @@ export default defineComponent({
         {
           name: 'お問い合わせ',
           icon: 'mdi-email',
-          link: '/lefmarna_otoiawase',
+          link: '/lefmarna-otoiawase',
         },
         {
           name: '設定',
