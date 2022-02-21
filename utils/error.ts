@@ -23,8 +23,9 @@ export const formatAxiosError = (errorsResponse: AxiosError): string[] => {
 export const exceptionErrorToArray = (error: unknown, expectedStatusCodes: number[] = []): string[] => {
   if (
     !axios.isAxiosError(error) ||
-    (expectedStatusCodes.length && !expectedStatusCodes.includes(error.response!.status))
-  )
+    (expectedStatusCodes.length && !expectedStatusCodes.includes(error.response?.status ?? 500))
+  ) {
     return [EXCEPTION_ERROR_MESSAGE]
-  return formatAxiosError(error.response!.data.errors)
+  }
+  return formatAxiosError(error.response?.data.errors)
 }

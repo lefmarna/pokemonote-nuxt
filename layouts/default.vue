@@ -190,7 +190,7 @@ export default defineComponent({
       try {
         await $axios.post('/logout')
       } catch (error) {
-        if (!$axios.isAxiosError(error) || error.response!.status !== 401) return
+        if (!$axios.isAxiosError(error) || error.response?.status !== 401) return
         console.log(error)
       }
       store.commit('updateAuthUser', {
