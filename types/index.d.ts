@@ -87,3 +87,8 @@ export interface State {
   natureData: Nature[]
   ranking: []
 }
+
+export interface ShowUser {
+  user: User
+  pokemons: Pokemon[]
+}
