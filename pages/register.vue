@@ -33,7 +33,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref, useContext, useRouter } from '@nuxtjs/composition-api'
-import { exceptionErrorToArray } from '@/utils/error'
+import { exceptionErrorToArray } from '@/utils/utilities'
 
 export default defineComponent({
   setup() {

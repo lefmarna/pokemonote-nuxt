@@ -26,7 +26,7 @@
 <script lang="ts">
 import { defineComponent, PropType, ref } from '@nuxtjs/composition-api'
 import { LazyValue, Stat } from '@/types'
-import { convertToHalfWidthInteger } from '@/utils/calc'
+import { convertToHalfWidthInteger } from '@/utils/utilities'
 import { MAX_EV } from '@/utils/constants'
 
 export default defineComponent({

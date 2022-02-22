@@ -43,7 +43,7 @@
 <script lang="ts">
 import { defineComponent, onMounted, reactive, ref, useContext, useRouter } from '@nuxtjs/composition-api'
 import { GIFTS, HTTP_OK, HTTP_PAYMENT_REQUIRED, HTTP_UNPROCESSABLE_ENTITY } from '@/utils/constants'
-import { exceptionErrorToArray } from '@/utils/error'
+import { exceptionErrorToArray } from '@/utils/utilities'
 import { Card, Tip } from '@/types'
 
 // Payjpに型を指定しないとエラーになる

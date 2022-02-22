@@ -59,7 +59,7 @@ import {
   SP_ATTACK_INDEX,
   SP_DEFENCE_INDEX,
 } from '@/utils/constants'
-import { updateMeta } from '@/utils/meta'
+import { updateMeta } from '@/utils/utilities'
 
 export default defineComponent({
   setup() {

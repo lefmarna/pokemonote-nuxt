@@ -158,7 +158,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref, PropType } from '@nuxtjs/composition-api'
-import { convertToHalfWidthInteger, numberToInt, valueVerification } from '@/utils/calc'
+import { convertToHalfWidthInteger, numberToInt, valueVerification } from '@/utils/utilities'
 import {
   ATTACK_INDEX,
   DEFENCE_ENHANCEMENTS,

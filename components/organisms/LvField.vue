@@ -25,7 +25,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from '@nuxtjs/composition-api'
-import { convertToHalfWidthInteger } from '@/utils/calc'
+import { convertToHalfWidthInteger } from '@/utils/utilities'
 import { DEFAULT_LEVEL, MAX_LEVEL, MIN_LEVEL } from '@/utils/constants'
 import { LazyValue } from '@/types'
 

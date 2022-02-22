@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref, useContext, useRouter } from '@nuxtjs/composition-api'
-import { exceptionErrorToArray } from '@/utils/error'
+import { exceptionErrorToArray } from '@/utils/utilities'
 import { AuthUser } from '~/types'
 
 export default defineComponent({
