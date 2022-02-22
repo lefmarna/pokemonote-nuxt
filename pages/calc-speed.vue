@@ -105,8 +105,17 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref, useContext } from '@nuxtjs/composition-api'
-import { LOWER_NATURE, MAX_EV, RANKS, SPEED_ABILITIES, SPEED_INDEX, SPEED_ITEMS, UPPER_NATURE } from '@/utils/constants'
-import { numberToInt, valueVerification } from '@/utils/utilities'
+import {
+  LOWER_NATURE,
+  MAX_EV,
+  MAX_REAL_NUMBER,
+  RANKS,
+  SPEED_ABILITIES,
+  SPEED_INDEX,
+  SPEED_ITEMS,
+  UPPER_NATURE,
+} from '@/utils/constants'
+import { convertToHalfWidthInteger, numberToInt, valueVerification } from '@/utils/utilities'
 import { Nature, PokemonData, Stat } from '~/types'
 
 export default defineComponent({
@@ -171,8 +180,8 @@ export default defineComponent({
     /**
      * 実数値から努力値の逆算を行う
      */
-    const setSpeed = (event: number) => {
-      let setValue = Number(event) // eventで取ってきたものはstring型になってしまうため、明示的にキャストの処理を記載している
+    const setSpeed = (value: string | number) => {
+      let setValue = Number(convertToHalfWidthInteger(value, MAX_REAL_NUMBER, false))
       const formatLv = numberToInt(lv.value, 1)
       const individualValue = numberToInt(stats.value[SPEED_INDEX].individualValue)
       const effortValue = numberToInt(stats.value[SPEED_INDEX].effortValue)
