@@ -136,7 +136,7 @@ export default defineComponent({
         {
           name: 'ステータス計算機',
           icon: 'mdi-calculator',
-          link: '/inspire',
+          link: '/calc-stats',
         },
         {
           name: '素早さ計算機',

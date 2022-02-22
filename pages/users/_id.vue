@@ -1,6 +1,5 @@
 <template>
   <div v-if="user" class="user">
-    <v-btn to="/users/example" nuxt />
     <!-- <v-avatar v-if="user.icon" size="36px">
       <img alt="アイコン" :src="user.icon" />
     </v-avatar> -->

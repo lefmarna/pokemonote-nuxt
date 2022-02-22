@@ -1,11 +1,11 @@
 <template>
   <v-container :class="!$store.getters.isLogin ? '' : 'py-0'">
     <v-alert v-if="!$store.getters.isLogin" outlined type="warning" border="left">
-      {{ alertTitle }}には、<router-link
+      {{ alertTitle }}には、<nuxt-link
         class="text-decoration-none login-alert"
         :to="`/login?redirect=${$route.fullPath}`"
         nuxt
-        >ログイン</router-link
+        >ログイン</nuxt-link
       >が必要です。
     </v-alert>
   </v-container>
