@@ -93,6 +93,13 @@ export default {
     payjpPublicKey: process.env.PAYJP_PUBLIC_KEY || 'pk_test_************************',
   },
 
+  // コンソールに表示されるガイドを表示させない
+  vue: {
+    config: {
+      productionTip: false,
+    },
+  },
+
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
