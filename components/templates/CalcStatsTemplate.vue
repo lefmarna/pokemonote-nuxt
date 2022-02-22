@@ -157,7 +157,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, PropType } from '@vue/composition-api'
+import { computed, defineComponent, ref, PropType } from '@nuxtjs/composition-api'
 import { convertToHalfWidthInteger, numberToInt, valueVerification } from '@/utils/calc'
 import {
   ATTACK_INDEX,

@@ -48,6 +48,7 @@ export default {
       { name: 'format-detection', content: 'telephone=no' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    script: [{ type: 'text/javascript', src: 'https://js.pay.jp/v1/' }],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
