@@ -86,6 +86,10 @@ export interface State {
   pokemonData: PokemonData[]
   natureData: Nature[]
   ranking: []
+  currentPokemon: PokemonData
+  lv: number
+  currentNature: Nature
+  stats: Stat[]
 }
 
 export interface ShowUser {
