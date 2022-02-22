@@ -21,11 +21,6 @@ export const SP_ATTACK_INDEX = 3
 export const SP_DEFENCE_INDEX = 4
 export const SPEED_INDEX = 5
 
-// バリデーション
-export const emailValidation =
-  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-export const passwordValidation = /^(?=.*?[a-z])(?=.*?\d)[a-z\d!@#$%^&*]{8,64}$/i
-
 export const GIFTS = [
   { name: '--- 金額を選択 ---', value: 0 },
   { name: '120円', value: 120 },

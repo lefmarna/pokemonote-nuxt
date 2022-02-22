@@ -14,7 +14,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
-import { passwordValidation } from '@/utils/constants'
+import { passwordValidation } from '@/utils/regex'
 
 export default defineComponent({
   props: {

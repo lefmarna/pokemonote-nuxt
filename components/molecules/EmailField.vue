@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import { computed, defineComponent } from '@nuxtjs/composition-api'
-import { emailValidation } from '@/utils/constants'
+import { emailValidation } from '@/utils/regex'
 
 export default defineComponent({
   props: {
