@@ -398,7 +398,7 @@ export default defineComponent({
       }
       // 【共通の処理】計算した値を代入する
       const verifiedSetValue = valueVerification(setValue, MAX_EV)
-      emit('updateEffortValue', verifiedSetValue, index)
+      emit('updateEffortValue', { value: verifiedSetValue, index })
     }
 
     // 努力値をリセットする
