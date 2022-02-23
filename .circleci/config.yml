@@ -1,0 +1,86 @@
+version: 2.1
+
+#  実行環境を定義
+executors:
+  default:
+    docker:
+      - image: circleci/node:16.13.1
+
+# 複数のjobで使うcommandはまとめておく
+commands:
+  yarn_install:
+    steps:
+      - restore_cache:
+          keys:
+            - nuxt-yarn-{{ checksum "yarn.lock" }}
+            - nuxt-yarn-
+      - run:
+          name: "Yarn Install"
+          command: yarn install --cache-folder ~/.cache/yarn
+      - save_cache:
+          key: nuxt-yarn-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+
+jobs:
+  test:
+    executor:
+      name: default
+    steps:
+      - checkout
+      - yarn_install
+      - run:
+          name: "Jestによるテスト"
+          command: yarn test
+
+  build:
+    executor:
+      name: default
+    steps:
+      - checkout
+      - yarn_install
+      - run:
+          name: "Yarn Generate"
+          command: yarn generate
+
+      # buildで出来上がったディレクトリをデプロイのjobに渡す
+      - persist_to_workspace:
+          root: dist
+          paths:
+            - .
+
+  # Netlifyへのデプロイ
+  deploy:
+    executor:
+      name: default
+    steps:
+      # buildで出来上がったディレクトリを展開
+      - attach_workspace:
+          at: dist
+
+      # デプロイ
+      - run:
+          name: "Netlifyにデプロイするためのライブラリをインストール"
+          command: yarn add netlify-cli
+      - run:
+          name: "Deploy"
+          command: yarn netlify deploy -p -d dist -a ${NETLIFY_AUTH_TOKEN} -s ${NETLIFY_SITE_ID}
+
+workflows:
+  version: 2
+  test_build_deploy:
+    jobs:
+      - test
+      # masterブランチにpushされたときのみbuildとdeployを実行
+      - build:
+          requires:
+            - test
+          filters:
+            branches:
+              only: master
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
