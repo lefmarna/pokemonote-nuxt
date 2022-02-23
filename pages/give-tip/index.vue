@@ -43,7 +43,7 @@
 <script lang="ts">
 import { defineComponent, onMounted, reactive, ref, useContext, useRouter } from '@nuxtjs/composition-api'
 import { GIFTS, HTTP_OK, HTTP_PAYMENT_REQUIRED, HTTP_UNPROCESSABLE_ENTITY } from '@/utils/constants'
-import { exceptionErrorToArray } from '@/utils/utilities'
+import { exceptionErrorToArray, updateMeta } from '@/utils/utilities'
 import { Card, Tip } from '@/types'
 
 // Payjpに型を指定しないとエラーになる
@@ -58,6 +58,8 @@ declare global {
 
 export default defineComponent({
   setup() {
+    updateMeta('チップを贈る')
+
     const { $axios, $config } = useContext()
     const router = useRouter()
     const errors = ref<string[]>()
@@ -105,5 +107,6 @@ export default defineComponent({
       giveTip,
     }
   },
+  head: {},
 })
 </script>

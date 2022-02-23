@@ -5,9 +5,12 @@
 <script lang="ts">
 import { defineComponent, useContext, useRouter } from '@nuxtjs/composition-api'
 import { HTTP_UNAUTHORIZED } from '@/utils/constants'
+import { updateMeta } from '~/utils/utilities'
 
 export default defineComponent({
   setup() {
+    updateMeta('設定')
+
     const { $axios, store } = useContext()
     const router = useRouter()
 
@@ -29,5 +32,6 @@ export default defineComponent({
       unsubscribe,
     }
   },
+  head: {},
 })
 </script>

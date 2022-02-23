@@ -173,6 +173,18 @@
   </v-container>
 </template>
 
+<script lang="ts">
+import { defineComponent } from '@nuxtjs/composition-api'
+import { updateMeta } from '~/utils/utilities'
+
+export default defineComponent({
+  setup() {
+    updateMeta('利用規約')
+  },
+  head: {},
+})
+</script>
+
 <style scoped>
 ul {
   background-color: #f2f2f2;

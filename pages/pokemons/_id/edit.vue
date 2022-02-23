@@ -15,9 +15,12 @@
 <script lang="ts">
 import { defineComponent, reactive, ref, useContext, useRouter, watch } from '@nuxtjs/composition-api'
 import { Nature, PokemonData, Stat } from '@/types/index'
+import { updateMeta } from '~/utils/utilities'
 
 export default defineComponent({
   setup() {
+    updateMeta('ポケモン編集')
+
     const { route, store, $axios } = useContext()
     const router = useRouter()
 
@@ -128,5 +131,6 @@ export default defineComponent({
       updatePokemon,
     }
   },
+  head: {},
 })
 </script>

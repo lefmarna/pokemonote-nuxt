@@ -12,9 +12,12 @@
 <script lang="ts">
 import { defineComponent, ref, useContext, useRouter } from '@nuxtjs/composition-api'
 import { Email } from '@/types'
+import { updateMeta } from '~/utils/utilities'
 
 export default defineComponent({
   setup() {
+    updateMeta('メール確認')
+
     const { $axios } = useContext()
     const router = useRouter()
 
@@ -56,5 +59,6 @@ export default defineComponent({
       resend,
     }
   },
+  head: {},
 })
 </script>

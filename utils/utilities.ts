@@ -1,6 +1,5 @@
 import { useMeta } from '@nuxtjs/composition-api'
 import axios, { AxiosError } from 'axios'
-import { Meta } from '~/types'
 
 /**
  * エラーメッセージ一覧（エラーメッセージ）
@@ -66,16 +65,27 @@ export const numberToInt = (value: number | null, defaultValue = 0): number => {
 /**
  * メタタグを設定する
  */
-export const updateMeta = (_meta: Meta) => {
+export const updateMeta = (metaTitle: string, metaDescription?: string) => {
   const { title, meta } = useMeta()
-  title.value = _meta.title
-  meta.value = [
-    { hid: 'og:title', name: 'og:title', content: _meta.title },
-    { hid: 'twitter:title', name: 'twitter:title', content: _meta.title },
-    { hid: 'description', name: 'description', content: _meta.description },
-    { hid: 'og:description', name: 'og:description', content: _meta.description },
-    { hid: 'twitter:description', name: 'twitter:description', content: _meta.description },
+  title.value = metaTitle
+
+  const metaTitles = [
+    { hid: 'og:title', name: 'og:title', content: `${metaTitle} | Pokemonote` },
+    { hid: 'twitter:title', name: 'twitter:title', content: `${metaTitle} | Pokemonote` },
   ]
+
+  if (metaDescription === undefined) {
+    meta.value = metaTitles
+    return
+  }
+
+  const metaDescriptions = [
+    { hid: 'description', name: 'description', content: metaDescription },
+    { hid: 'og:description', name: 'og:description', content: metaDescription },
+    { hid: 'twitter:description', name: 'twitter:description', content: metaDescription },
+  ]
+
+  meta.value = [...metaTitles, ...metaDescriptions]
 }
 
 /**

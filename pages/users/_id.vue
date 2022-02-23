@@ -11,10 +11,12 @@
 <script lang="ts">
 import { computed, defineComponent, ref, useContext, watch } from '@nuxtjs/composition-api'
 import { Pokemon, ShowUser, User } from '~/types'
+import { updateMeta } from '~/utils/utilities'
 
 export default defineComponent({
   setup() {
     const { store, route, $axios } = useContext()
+    updateMeta(route.value.params.id)
 
     const user = ref<User>()
     const pokemons = ref<Pokemon[]>([])
@@ -52,5 +54,6 @@ export default defineComponent({
       user,
     }
   },
+  head: {},
 })
 </script>

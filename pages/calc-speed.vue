@@ -115,11 +115,16 @@ import {
   SPEED_ITEMS,
   UPPER_NATURE,
 } from '@/utils/constants'
-import { convertToHalfWidthInteger, numberToInt, valueVerification } from '@/utils/utilities'
+import { convertToHalfWidthInteger, numberToInt, updateMeta, valueVerification } from '@/utils/utilities'
 import { Nature, PokemonData, Stat } from '~/types'
 
 export default defineComponent({
   setup() {
+    updateMeta(
+      '素早さ計算機（ポケモン剣盾、DPリメイク（BDSP）に対応）',
+      'ポケモン剣盾、DPリメイク（BDSP）に対応している素早さ計算機です。実数値を入力することで、追い風や麻痺、湿原といったあらゆる状態の素早さをリアルタイムに表示します。すいすいや葉緑素などの特性、スカーフや鉄球といった持ち物を含んだ計算にも対応している、高機能な素早さ計算ツールとなっています。'
+    )
+
     const { store } = useContext()
 
     const currentNature = computed((): Nature => {
@@ -281,6 +286,7 @@ export default defineComponent({
       updateIndividualValue,
     }
   },
+  head: {},
 })
 </script>
 

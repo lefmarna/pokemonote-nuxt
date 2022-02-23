@@ -55,9 +55,12 @@ import {
   SP_ATTACK_INDEX,
   SP_DEFENCE_INDEX,
 } from '@/utils/constants'
+import { updateMeta } from '~/utils/utilities'
 
 export default defineComponent({
   setup() {
+    updateMeta('ポケモン詳細')
+
     const { route, store, $axios } = useContext()
     const router = useRouter()
 
@@ -122,5 +125,6 @@ export default defineComponent({
       deleteItem,
     }
   },
+  head: {},
 })
 </script>

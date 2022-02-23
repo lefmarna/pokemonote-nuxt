@@ -33,10 +33,12 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref, useContext, useRouter } from '@nuxtjs/composition-api'
-import { exceptionErrorToArray } from '@/utils/utilities'
+import { exceptionErrorToArray, updateMeta } from '@/utils/utilities'
 
 export default defineComponent({
   setup() {
+    updateMeta('アカウント作成')
+
     const { $axios } = useContext()
     const router = useRouter()
     // const image = ref();
@@ -87,5 +89,6 @@ export default defineComponent({
       register,
     }
   },
+  head: {},
 })
 </script>

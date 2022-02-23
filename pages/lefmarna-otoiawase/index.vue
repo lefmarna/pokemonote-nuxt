@@ -26,9 +26,12 @@
 
 <script lang="ts">
 import { defineComponent, ref, useContext, useRouter } from '@nuxtjs/composition-api'
+import { updateMeta } from '~/utils/utilities'
 
 export default defineComponent({
   setup() {
+    updateMeta('お問い合わせ')
+
     const { $axios } = useContext()
     const router = useRouter()
     const name = ref<string>()
@@ -55,5 +58,6 @@ export default defineComponent({
       handleSubmit,
     }
   },
+  head: {},
 })
 </script>

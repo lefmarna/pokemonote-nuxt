@@ -8,11 +8,13 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref, useContext, useRouter } from '@nuxtjs/composition-api'
-import { exceptionErrorToArray } from '@/utils/utilities'
+import { exceptionErrorToArray, updateMeta } from '@/utils/utilities'
 import { AuthUser } from '~/types'
 
 export default defineComponent({
-  setup(_) {
+  setup() {
+    updateMeta('ログイン')
+
     const { $axios, route, store } = useContext()
     const router = useRouter()
 
@@ -52,5 +54,6 @@ export default defineComponent({
       login,
     }
   },
+  head: {},
 })
 </script>

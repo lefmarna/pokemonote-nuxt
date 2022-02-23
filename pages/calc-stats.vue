@@ -21,9 +21,15 @@
 <script lang="ts">
 import { computed, defineComponent, useContext, useRouter } from '@nuxtjs/composition-api'
 import { Nature, PokemonData, Stat } from '~/types'
+import { updateMeta } from '~/utils/utilities'
 
 export default defineComponent({
   setup() {
+    updateMeta(
+      'ステータス計算機（ポケモン剣盾、DPリメイク（BDSP）に対応）',
+      'ポケモン剣盾、DPリメイク（BDSP）に対応したステータス計算機です。リアルタイムで計算が行われるため、個体値や努力値の変更を確認しながら計算できます。実数値から努力値の逆算にも対応、耐久調整を自動で行ってくれる機能も搭載しています。計算結果を投稿することで、あとから見返したり友達とシェアすることもできます！'
+    )
+
     const { store, $axios } = useContext()
     const router = useRouter()
 
@@ -85,5 +91,6 @@ export default defineComponent({
       updateIndividualValue,
     }
   },
+  head: {},
 })
 </script>
