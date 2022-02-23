@@ -7,6 +7,7 @@ export const state = (): State => ({
     nickname: '',
   },
   notice: false,
+  rememberRoute: '',
   pokemonData: [],
   natureData: [],
   ranking: [],
@@ -72,6 +73,7 @@ export const state = (): State => ({
 export const getters: GetterTree<State, ReturnType<typeof state>> = {
   authUser: (state) => state.authUser,
   notice: (state) => state.notice,
+  rememberRoute: (state) => state.rememberRoute,
   pokemonData: (state) => state.pokemonData,
   natureData: (state) => state.natureData,
   ranking: (state) => state.ranking,
@@ -88,6 +90,9 @@ export const mutations: MutationTree<State> = {
   },
   updateNotice(state, notice) {
     state.notice = notice
+  },
+  updateRememberRoute(state, rememberRoute) {
+    state.rememberRoute = rememberRoute
   },
   updatePokemonData(state, value) {
     state.pokemonData = value

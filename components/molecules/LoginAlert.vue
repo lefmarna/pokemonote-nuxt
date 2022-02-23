@@ -1,18 +1,14 @@
 <template>
   <v-container :class="!$store.getters.isLogin ? '' : 'py-0'">
     <v-alert v-if="!$store.getters.isLogin" outlined type="warning" border="left">
-      {{ alertTitle }}には、<nuxt-link
-        class="text-decoration-none login-alert"
-        :to="`/login?redirect=${$route.fullPath}`"
-        nuxt
-        >ログイン</nuxt-link
+      {{ alertTitle }}には、<span class="text-decoration-none login-alert" nuxt @click="toLogin">ログイン</span
       >が必要です。
     </v-alert>
   </v-container>
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, useContext, useRouter } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   props: {
@@ -21,11 +17,24 @@ export default defineComponent({
       required: true,
     },
   },
+  setup() {
+    const { route, store } = useContext()
+    const router = useRouter()
+
+    const toLogin = () => {
+      store.commit('updateRememberRoute', route.value.fullPath)
+      router.push('/login')
+    }
+    return {
+      toLogin,
+    }
+  },
 })
 </script>
 
 <style lang="scss" scoped>
 .login-alert {
+  cursor: pointer;
   color: #fb8c00;
 }
 </style>

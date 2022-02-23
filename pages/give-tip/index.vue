@@ -57,6 +57,7 @@ declare global {
 }
 
 export default defineComponent({
+  middleware: 'auth',
   setup() {
     updateMeta('チップを贈る')
 

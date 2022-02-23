@@ -78,6 +78,7 @@ export interface State {
     nickname: string
   }
   notice: boolean
+  rememberRoute: string
   pokemonData: PokemonData[]
   natureData: Nature[]
   ranking: []

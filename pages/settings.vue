@@ -8,6 +8,7 @@ import { HTTP_UNAUTHORIZED } from '@/utils/constants'
 import { updateMeta } from '~/utils/utilities'
 
 export default defineComponent({
+  middleware: 'auth',
   setup() {
     updateMeta('設定')
 

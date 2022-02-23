@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, useContext, useRouter } from '@nuxtjs/composition-api'
+import { defineComponent, onUnmounted, reactive, ref, useContext, useRouter } from '@nuxtjs/composition-api'
 import { exceptionErrorToArray, updateMeta } from '@/utils/utilities'
 import { AuthUser } from '~/types'
 
@@ -15,7 +15,7 @@ export default defineComponent({
   setup() {
     updateMeta('ログイン')
 
-    const { $axios, route, store } = useContext()
+    const { $axios, store } = useContext()
     const router = useRouter()
 
     const loginParams = reactive({
@@ -37,8 +37,8 @@ export default defineComponent({
 
         store.commit('updateAuthUser', response.data.data)
 
-        if (route.value.redirectedFrom) {
-          router.push(route.value.redirectedFrom)
+        if (store.getters.rememberRoute) {
+          router.push(store.getters.rememberRoute)
         } else {
           router.push('/')
         }
@@ -47,6 +47,10 @@ export default defineComponent({
         errors.value = exceptionErrorToArray(error)
       }
     }
+
+    onUnmounted(() => {
+      store.commit('updateRememberRoute', '')
+    })
 
     return {
       errors,

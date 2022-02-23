@@ -18,6 +18,7 @@ import { Nature, PokemonData, Stat } from '@/types/index'
 import { updateMeta } from '~/utils/utilities'
 
 export default defineComponent({
+  middleware: 'auth',
   setup() {
     updateMeta('ポケモン編集')
 

@@ -14,6 +14,7 @@ import { defineComponent } from '@nuxtjs/composition-api'
 import { updateMeta } from '~/utils/utilities'
 
 export default defineComponent({
+  middleware: 'auth',
   setup() {
     updateMeta('応援ありがとう')
   },

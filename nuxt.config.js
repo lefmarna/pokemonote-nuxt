@@ -115,7 +115,7 @@ export default {
           accent: colors.blue.accent1,
           secondary: colors.grey.darken3,
           info: colors.blue,
-          warning: colors.amber.base,
+          warning: colors.orange.darken1,
           error: colors.red.accent2,
           success: colors.green,
           danger: colors.red.darken2,
