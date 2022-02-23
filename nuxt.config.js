@@ -93,6 +93,16 @@ export default {
     payjpPublicKey: process.env.PAYJP_PUBLIC_KEY || 'pk_test_************************',
   },
 
+  // 存在しないページへのアクセスが来た場合、トップページを返す
+  router: {
+    extendRoutes(routes, resolve) {
+      routes.push({
+        path: '*',
+        component: resolve(__dirname, 'pages/index.vue'),
+      })
+    },
+  },
+
   // コンソールに表示されるガイドを表示させない
   vue: {
     config: {
