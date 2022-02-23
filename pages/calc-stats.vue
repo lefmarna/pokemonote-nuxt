@@ -4,11 +4,14 @@
     <CalcStatsTemplate
       title="ステータス計算機"
       button-text="投稿する"
-      :current-pokemon.sync="currentPokemon"
-      :current-nature.sync="currentNature"
-      :lv.sync="lv"
+      :current-pokemon="currentPokemon"
+      :current-nature="currentNature"
+      :lv="lv"
       :stats.sync="stats"
       @submit="postPokemon"
+      @update:currentPokemon="updateCurrentPokemon"
+      @update:currentNature="updateCurrentNature"
+      @update:lv="updateLv"
       @updateEffortValue="updateEffortValue"
       @updateIndividualValue="updateIndividualValue"
     />
@@ -49,6 +52,18 @@ export default defineComponent({
       }
     }
 
+    const updateCurrentPokemon = (pokemonData: PokemonData) => {
+      store.commit('updateCurrentPokemon', pokemonData)
+    }
+
+    const updateCurrentNature = (nature: Nature) => {
+      store.commit('updateCurrentNature', nature)
+    }
+
+    const updateLv = (lv: number) => {
+      store.commit('updateLv', lv)
+    }
+
     const updateEffortValue = (value: number, index: number) => {
       store.commit('updateEffortValue', { value, index })
     }
@@ -63,6 +78,9 @@ export default defineComponent({
       lv,
       stats,
       postPokemon,
+      updateCurrentPokemon,
+      updateCurrentNature,
+      updateLv,
       updateEffortValue,
       updateIndividualValue,
     }
