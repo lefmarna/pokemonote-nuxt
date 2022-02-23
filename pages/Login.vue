@@ -12,6 +12,7 @@ import { exceptionErrorToArray, updateMeta } from '@/utils/utilities'
 import { AuthUser } from '~/types'
 
 export default defineComponent({
+  middleware: 'noAuth',
   setup() {
     updateMeta('ログイン')
 

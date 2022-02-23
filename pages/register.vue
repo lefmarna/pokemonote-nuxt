@@ -36,6 +36,7 @@ import { computed, defineComponent, ref, useContext, useRouter } from '@nuxtjs/c
 import { exceptionErrorToArray, updateMeta } from '@/utils/utilities'
 
 export default defineComponent({
+  middleware: 'noAuth',
   setup() {
     updateMeta('アカウント作成')
 

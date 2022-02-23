@@ -7,6 +7,7 @@ import { defineComponent, useContext, useRouter } from '@nuxtjs/composition-api'
 import { updateMeta } from '~/utils/utilities'
 
 export default defineComponent({
+  middleware: 'noAuth',
   setup() {
     updateMeta('メール認証')
 

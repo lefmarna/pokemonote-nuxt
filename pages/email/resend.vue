@@ -15,6 +15,7 @@ import { Email } from '@/types'
 import { updateMeta } from '~/utils/utilities'
 
 export default defineComponent({
+  middleware: 'noAuth',
   setup() {
     updateMeta('メール確認')
 
