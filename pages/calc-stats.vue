@@ -7,7 +7,7 @@
       :current-pokemon="currentPokemon"
       :current-nature="currentNature"
       :lv="lv"
-      :stats.sync="stats"
+      :stats="stats"
       @submit="postPokemon"
       @update:currentPokemon="updateCurrentPokemon"
       @update:currentNature="updateCurrentNature"

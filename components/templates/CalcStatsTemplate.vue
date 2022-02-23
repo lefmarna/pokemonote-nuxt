@@ -173,6 +173,7 @@ import {
   SP_ATTACK_INDEX,
   SP_DEFENCE_ENHANCEMENTS,
   SP_DEFENCE_INDEX,
+  STATS_LENGTH,
   UPPER_NATURE,
 } from '@/utils/constants'
 import { Nature, PokemonData, Stat } from '@/types/index'
@@ -398,14 +399,14 @@ export default defineComponent({
       }
       // 【共通の処理】計算した値を代入する
       const verifiedSetValue = valueVerification(setValue, MAX_EV)
-      emit('updateEffortValue', { value: verifiedSetValue, index })
+      emit('updateEffortValue', verifiedSetValue, index)
     }
 
     // 努力値をリセットする
     const resetEffortValue = (): void => {
-      props.stats.forEach((stat) => {
-        stat.effortValue = null
-      })
+      for (let i = 0; i < STATS_LENGTH; i++) {
+        emit('updateEffortValue', null, i)
+      }
     }
 
     // 理想の耐久調整を自動で計算する関数
@@ -440,10 +441,10 @@ export default defineComponent({
       let oldHBD = 0
       let newHBD = 0
 
-      // TODO: HBDの努力値を一度リセットする(不要な処理のような気もするが、これを記載しないと努力値の合計が最大値を超えてしまうことがある)
-      // props.stats[HP_INDEX].effortValue = 0
-      // props.stats[DEFENCE_INDEX].effortValue = 0
-      // props.stats[SP_DEFENCE_INDEX].effortValue = 0
+      // HBDの努力値を一度リセットする(不要な処理のような気もするが、これらを記載しないと努力値の合計が最大値を超えてしまうことがある)
+      emit('updateEffortValue', null, HP_INDEX)
+      emit('updateEffortValue', null, DEFENCE_INDEX)
+      emit('updateEffortValue', null, SP_DEFENCE_INDEX)
 
       // 努力値の余りが最大値より大きかった場合、スタートであるHPの仮努力値を最大値とする
       if (tmpHpEV > MAX_EV) tmpHpEV = MAX_EV

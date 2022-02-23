@@ -5,7 +5,7 @@
     :current-pokemon.sync="currentPokemon"
     :current-nature.sync="currentNature"
     :lv.sync="lv"
-    :stats.sync="stats"
+    :stats="stats"
     @submit="updatePokemon"
     @updateEffortValue="updateEffortValue"
     @updateIndividualValue="updateIndividualValue"
