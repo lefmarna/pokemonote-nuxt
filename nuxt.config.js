@@ -79,7 +79,13 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/google-gtag',
   ],
+
+  'google-gtag': {
+    id: process.env.ANALYTICS_ID || 'G-**********',
+    debug: false,
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
@@ -89,7 +95,6 @@ export default {
   },
 
   publicRuntimeConfig: {
-    analyticsTrackingId: process.env.ANALYTICS_TRACKING_ID || 'UA-*********-*',
     payjpPublicKey: process.env.PAYJP_PUBLIC_KEY || 'pk_test_************************',
   },
 
