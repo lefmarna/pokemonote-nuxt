@@ -4,7 +4,7 @@
       <v-img
         alt="Pokemonote ポケモンをもっと楽しく！"
         class="shrink"
-        :src="imgPath"
+        :src="require('@/assets/pokemonote.svg')"
         transition="scale-transition"
         max-height="492"
         min-height="164"
@@ -62,16 +62,12 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, useContext, useStore } from '@nuxtjs/composition-api'
+import { defineComponent, useContext, useStore } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   setup() {
     const { $axios } = useContext()
     const store = useStore()
-
-    const imgPath = computed(() => {
-      return require('@/assets/pokemonote.svg')
-    })
 
     ;(async () => {
       try {
@@ -81,10 +77,6 @@ export default defineComponent({
         console.log(error)
       }
     })()
-
-    return {
-      imgPath,
-    }
   },
 })
 </script>

@@ -46,8 +46,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, PropType, useRouter, useStore } from '@nuxtjs/composition-api'
-import axios from 'axios'
+import { computed, defineComponent, ref, PropType, useRouter, useContext } from '@nuxtjs/composition-api'
 import { Pokemon } from '@/types/index'
 
 interface Props {
@@ -69,7 +68,7 @@ export default defineComponent({
   },
   setup(props: Props) {
     const router = useRouter()
-    const store = useStore()
+    const { store, $axios } = useContext()
     const search = ref<string>()
 
     const authUserName = computed(() => {
@@ -115,7 +114,7 @@ export default defineComponent({
 
     const deletePokemon = async (id: number): Promise<void> => {
       try {
-        await axios.delete(`/pokemons/${id}`)
+        await $axios.delete(`/pokemons/${id}`)
         // 削除するポケモンのデータを探す
         const deletePokemon = pokemonTable.value.findIndex((pokemon: Pokemon) => pokemon.id === id)
         // 配列から要素を削除
