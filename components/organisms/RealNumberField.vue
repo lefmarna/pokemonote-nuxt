@@ -9,6 +9,7 @@
         :label="stats[statsIndex].name"
         :value="realNumber"
         persistent-placeholder
+        @click="realNumberRef.$refs.input.select()"
         @change="updateRealNumber($event, statsIndex)"
       />
     </div>
@@ -26,7 +27,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref } from '@nuxtjs/composition-api'
-import { LazyValue, Stat } from '@/types'
+import { VTextField, Stat } from '@/types'
 
 export default defineComponent({
   props: {
@@ -44,7 +45,7 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
-    const realNumberRef = ref<LazyValue>()
+    const realNumberRef = ref<VTextField>()
 
     const updateRealNumber = (event: string | number, index: number): void => {
       if (realNumberRef.value === undefined) return

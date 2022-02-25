@@ -8,6 +8,7 @@
         placeholder="0"
         :value="stats[statsIndex].individualValue"
         persistent-placeholder
+        @click="individualValueRef.$refs.input.select()"
         @input="updateIndividualValue($event, statsIndex)"
       />
     </div>
@@ -25,7 +26,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref } from '@nuxtjs/composition-api'
-import { LazyValue, Stat } from '@/types'
+import { VTextField, Stat } from '@/types'
 import { convertToHalfWidthInteger } from '@/utils/utilities'
 import { MAX_IV } from '@/utils/constants'
 
@@ -41,7 +42,7 @@ export default defineComponent({
     },
   },
   setup(_, { emit }) {
-    const individualValueRef = ref<LazyValue>()
+    const individualValueRef = ref<VTextField>()
 
     const updateIndividualValue = (value: string | number, index: number): void => {
       if (individualValueRef.value === undefined) return

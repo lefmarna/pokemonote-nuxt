@@ -8,6 +8,7 @@
         :placeholder="String(MIN_LEVEL)"
         :value="lv"
         persistent-placeholder
+        @click="lvRef.$refs.input.select()"
         @input="updateLv($event)"
       />
     </div>
@@ -27,7 +28,7 @@
 import { defineComponent, ref } from '@nuxtjs/composition-api'
 import { convertToHalfWidthInteger } from '@/utils/utilities'
 import { DEFAULT_LEVEL, MAX_LEVEL, MIN_LEVEL } from '@/utils/constants'
-import { LazyValue } from '@/types'
+import { VTextField } from '@/types'
 
 export default defineComponent({
   props: {
@@ -38,7 +39,7 @@ export default defineComponent({
     },
   },
   setup(_, { emit }) {
-    const lvRef = ref<LazyValue>()
+    const lvRef = ref<VTextField>()
 
     const updateLv = (value: string) => {
       if (lvRef.value === undefined) return

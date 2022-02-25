@@ -8,6 +8,7 @@
         placeholder="0"
         :value="stats[statsIndex].effortValue"
         persistent-placeholder
+        @click="effortValueRef.$refs.input.select()"
         @input="updateEffortValue($event, statsIndex)"
       />
     </div>
@@ -25,7 +26,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref } from '@nuxtjs/composition-api'
-import { LazyValue, Stat } from '@/types'
+import { VTextField, Stat } from '@/types'
 import { convertToHalfWidthInteger } from '@/utils/utilities'
 import { MAX_EV } from '@/utils/constants'
 
@@ -41,7 +42,7 @@ export default defineComponent({
     },
   },
   setup(_, { emit }) {
-    const effortValueRef = ref<LazyValue>()
+    const effortValueRef = ref<VTextField>()
 
     const updateEffortValue = (value: string | number, index: number): void => {
       if (effortValueRef.value === undefined) return

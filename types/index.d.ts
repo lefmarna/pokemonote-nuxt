@@ -9,8 +9,11 @@ export interface Email {
   email: string
 }
 
-export interface LazyValue {
+export interface VTextField {
   lazyValue: number | null
+  $refs: {
+    input: HTMLInputElement
+  }
 }
 
 export interface Login {
