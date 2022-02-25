@@ -59,7 +59,7 @@ export default defineComponent({
   setup(_, { emit }) {
     const formRef = ref<{ validate: () => boolean }>()
     const submit = () => {
-      if (formRef.value!.validate()) {
+      if (formRef.value && formRef.value.validate()) {
         emit('submit')
       }
     }
