@@ -1,9 +1,19 @@
 <template>
-  <v-btn color="error" elevation="2" @click="unsubscribe">退会</v-btn>
+  <DialogCard title="Pokemonote - アカウント退会" submit-button-text="退会する" :is-danger="true" @submit="unsubscribe">
+    <template #activator="activator">
+      <v-btn color="danger white--text" elevation="2" v-bind="activator.attrs" v-on="activator.on">退会</v-btn>
+    </template>
+    <template #content>
+      <v-card-text>
+        これまでに投稿されたポケモンのデータも全て削除されます。<br />
+        本当に退会してもよろしいですか？
+      </v-card-text>
+    </template>
+  </DialogCard>
 </template>
 
 <script lang="ts">
-import { defineComponent, useContext, useRouter } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useContext, useRouter } from '@nuxtjs/composition-api'
 import { HTTP_UNAUTHORIZED } from '@/utils/constants'
 import { updateMeta } from '~/utils/utilities'
 
@@ -14,6 +24,8 @@ export default defineComponent({
 
     const { $axios, store } = useContext()
     const router = useRouter()
+
+    const dialog = ref(false)
 
     const unsubscribe = async () => {
       try {
@@ -26,10 +38,12 @@ export default defineComponent({
         username: '',
         nickname: '',
       })
+      dialog.value = false
       router.replace('/login')
     }
 
     return {
+      dialog,
       unsubscribe,
     }
   },
