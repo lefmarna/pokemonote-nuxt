@@ -50,14 +50,14 @@ export const RANKS = [
 ]
 
 export const DEFENCE_ENHANCEMENTS = [
-  { name: '2.0 - ファーコート等', value: 2.0 },
-  { name: '1.5 - ふくつのたて等', value: 1.5 },
+  { name: '2.0', value: 2.0 },
+  { name: '1.5', value: 1.5 },
   { name: '1.0', value: 1.0 },
 ]
 
 export const SP_DEFENCE_ENHANCEMENTS = [
-  { name: '2.0 - こおりのりんぷん等', value: 2.0 },
-  { name: '1.5 - とつげきチョッキ等', value: 1.5 },
+  { name: '2.0', value: 2.0 },
+  { name: '1.5', value: 1.5 },
   { name: '1.0', value: 1.0 },
 ]
 
