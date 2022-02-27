@@ -83,55 +83,62 @@
         <v-container :class="$vuetify.breakpoint.xs ? 'pa-0' : ''">
           <v-row>
             <v-col cols="6">
-              <v-card height="100%" shaped>
+              <v-card rounded="xl" height="100%" outlined>
                 <v-card-title>耐久指数</v-card-title>
                 <v-card-text>
-                  <p class="mb-2">総合：{{ physicalDurability + specialDurability }}</p>
-                  <p class="mb-2">物理：{{ physicalDurability }}</p>
-                  <p class="mb-0">特殊：{{ specialDurability }}</p>
+                  <p class="mb-2">
+                    総合：{{ physicalDurability + specialDurability }}<br />
+                    物理：{{ physicalDurability }}<br />
+                    特殊：{{ specialDurability }}
+                  </p>
                 </v-card-text>
               </v-card>
             </v-col>
             <v-col cols="6">
-              <v-card height="100%" shaped>
+              <v-card height="100%" rounded="xl" outlined>
                 <v-card-title>その他</v-card-title>
                 <v-card-text>めざパ：{{ hiddenPower }} </v-card-text>
               </v-card>
             </v-col>
           </v-row>
           <!-- 耐久調整-->
-          <v-row class="pb-2" align="start">
+          <v-row align="start">
             <v-col cols="12">
-              <v-card shaped>
-                <v-card-title>耐久調整</v-card-title>
-                <v-card-text>
-                  <v-row>
-                    <v-col cols="6" class="pb-0" align="center">
+              <v-card rounded="xl" outlined>
+                <v-card-title class="justify-center">耐久調整</v-card-title>
+                <v-card-text>最も理想的な配分で、余りの努力値をHBDに振り分けます。</v-card-text>
+                <v-row>
+                  <v-col cols="4" class="pb-0" align="center">
+                    <v-card max-width="125" flat>
                       <v-card-subtitle class="pa-0">倍率</v-card-subtitle>
-                      <v-select
-                        v-model="selectDefenceEnhancement"
-                        :items="DEFENCE_ENHANCEMENTS"
-                        item-text="name"
-                        item-value="value"
-                        label="防御"
-                      ></v-select>
-                      <v-select
-                        v-model="selectSpDefenceEnhancement"
-                        :items="SP_DEFENCE_ENHANCEMENTS"
-                        item-text="name"
-                        item-value="value"
-                        label="特防"
-                      ></v-select>
-                    </v-col>
-                    <v-col cols="6" class="pb-0" align="center">
+                      <v-card-text>
+                        <v-select
+                          v-model="selectDefenceEnhancement"
+                          :items="DEFENCE_ENHANCEMENTS"
+                          item-text="name"
+                          item-value="value"
+                          label="防御"
+                        ></v-select>
+                        <v-select
+                          v-model="selectSpDefenceEnhancement"
+                          :items="SP_DEFENCE_ENHANCEMENTS"
+                          item-text="name"
+                          item-value="value"
+                          label="特防"
+                        ></v-select>
+                      </v-card-text>
+                    </v-card>
+                  </v-col>
+                  <v-col cols="8" class="pb-0" align="center">
+                    <v-card max-width="250" flat>
                       <v-card-subtitle class="pa-0">計算スタイル</v-card-subtitle>
                       <v-radio-group v-model="calcStyle">
                         <v-radio label="バランス - HBD/(B+D)" value="balance"></v-radio>
                         <v-radio label="総合耐久 - H=B+D" value="performance" disabled></v-radio>
                       </v-radio-group>
-                    </v-col>
-                  </v-row>
-                </v-card-text>
+                    </v-card>
+                  </v-col>
+                </v-row>
                 <v-card-actions>
                   <v-row class="mb-0">
                     <v-col cols="12" align="center">
@@ -146,12 +153,13 @@
           </v-row>
           <!-- ポケモンの説明 -->
           <v-row>
-            <v-col class="py-0">
+            <v-col>
               <v-textarea
                 v-model="description"
                 outlined
                 rows="5"
-                shaped
+                hide-details
+                no-resize
                 placeholder="ポケモンの説明（例：○○の××確定耐え）"
               ></v-textarea>
             </v-col>
