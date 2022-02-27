@@ -1,5 +1,22 @@
 <template>
   <v-container>
+    <v-bottom-navigation class="d-md-none" fixed>
+      <v-btn to="/" nuxt>
+        <v-icon>mdi-home</v-icon>
+      </v-btn>
+
+      <v-btn @click="resetEffortValue">
+        <v-icon>mdi-autorenew</v-icon>
+      </v-btn>
+
+      <v-btn value="favorites">
+        <v-icon>mdi-dots-horizontal-circle-outline</v-icon>
+      </v-btn>
+
+      <v-btn @click="emitPokemon">
+        <v-icon color="primary">mdi-send</v-icon>
+      </v-btn>
+    </v-bottom-navigation>
     <Title :text="title" />
     <v-row>
       <!-- 左ここから -->
