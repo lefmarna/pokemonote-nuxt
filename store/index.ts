@@ -3,8 +3,11 @@ import { State } from '~/types'
 
 export const state = (): State => ({
   authUser: {
+    id: null,
     username: '',
     nickname: '',
+    email: '',
+    email_verified_at: false,
   },
   notice: false,
   rememberRoute: '',

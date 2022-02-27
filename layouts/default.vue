@@ -194,8 +194,11 @@ export default defineComponent({
         console.log(error)
       }
       store.commit('updateAuthUser', {
+        id: '',
         username: '',
         nickname: '',
+        email: '',
+        email_verified_at: false,
       })
       router.replace('/login')
     }
