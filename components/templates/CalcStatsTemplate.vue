@@ -16,6 +16,10 @@
           </v-btn>
         </template>
         <v-container style="background-color: white">
+          <v-row class="justify-space-between align-center mx-0">
+            <v-card-title class="mx-auto">オプション</v-card-title>
+            <v-btn class="ml-n10" color="secondary" icon @click="dialog = false"><v-icon>mdi-close</v-icon></v-btn>
+          </v-row>
           <v-row>
             <v-col cols="6">
               <v-card rounded="xl" height="100%" outlined>
