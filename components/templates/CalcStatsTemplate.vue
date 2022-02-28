@@ -99,21 +99,10 @@
               ></v-textarea>
             </v-col>
           </v-row>
-          <!-- 「努力値リセット」と「投稿する」のボタン -->
-          <v-row class="pb-2 d-none d-md-flex" align-content="center">
-            <v-col class="text-center">
-              <v-btn color="danger" elevation="2" outlined large @click.native="resetEffortValue">努力値リセット</v-btn>
-            </v-col>
-            <v-col class="text-center">
-              <v-btn color="primary" elevation="3" :disabled="!$store.getters.isLogin" large @click="emitPokemon">{{
-                buttonText
-              }}</v-btn>
-            </v-col>
-          </v-row>
         </v-container>
       </v-dialog>
 
-      <v-btn @click="emitPokemon">
+      <v-btn v-if="$store.getters.isLogin" @click="emitPokemon">
         <v-icon color="primary">mdi-send</v-icon>
       </v-btn>
     </v-bottom-navigation>
