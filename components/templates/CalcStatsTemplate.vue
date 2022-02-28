@@ -1,10 +1,120 @@
 <template>
   <v-container>
+    <v-bottom-navigation class="d-md-none" fixed>
+      <!-- <v-btn to="/" nuxt>
+        <v-icon>mdi-home</v-icon>
+      </v-btn> -->
+
+      <v-btn @click="resetEffortValue">
+        <v-icon>mdi-autorenew</v-icon>
+      </v-btn>
+
+      <v-dialog v-model="dialog" transition="dialog-bottom-transition">
+        <template #activator="{ on, attrs }">
+          <v-btn v-bind="attrs" v-on="on">
+            <v-icon>mdi-dots-horizontal-circle-outline</v-icon>
+          </v-btn>
+        </template>
+        <v-container style="background-color: white">
+          <v-row class="justify-space-between align-center mx-0">
+            <v-card-title class="mx-auto">オプション</v-card-title>
+            <v-btn class="ml-n10" color="secondary" icon @click="dialog = false"><v-icon>mdi-close</v-icon></v-btn>
+          </v-row>
+          <v-row>
+            <v-col cols="6">
+              <v-card rounded="xl" height="100%" outlined>
+                <v-card-title>耐久指数</v-card-title>
+                <v-card-text>
+                  <p class="mb-2">
+                    総合：{{ physicalDurability + specialDurability }}<br />
+                    物理：{{ physicalDurability }}<br />
+                    特殊：{{ specialDurability }}
+                  </p>
+                </v-card-text>
+              </v-card>
+            </v-col>
+            <v-col cols="6">
+              <v-card height="100%" rounded="xl" outlined>
+                <v-card-title>その他</v-card-title>
+                <v-card-text>めざパ：{{ hiddenPower }} </v-card-text>
+              </v-card>
+            </v-col>
+          </v-row>
+          <!-- 耐久調整-->
+          <v-row align="start">
+            <v-col cols="12">
+              <v-card rounded="xl" outlined>
+                <v-card-title class="justify-center">耐久調整</v-card-title>
+                <v-card-text>最も理想的な配分で、余りの努力値をHBDに振り分けます。</v-card-text>
+                <v-row>
+                  <v-col cols="4" class="pb-0" align="center">
+                    <v-card max-width="125" min-width="89" flat>
+                      <v-card-subtitle class="pa-0">倍率</v-card-subtitle>
+                      <v-card-text>
+                        <v-select
+                          v-model="selectDefenceEnhancement"
+                          :items="DEFENCE_ENHANCEMENTS"
+                          item-text="name"
+                          item-value="value"
+                          label="防御"
+                        ></v-select>
+                        <v-select
+                          v-model="selectSpDefenceEnhancement"
+                          :items="SP_DEFENCE_ENHANCEMENTS"
+                          item-text="name"
+                          item-value="value"
+                          label="特防"
+                        ></v-select>
+                      </v-card-text>
+                    </v-card>
+                  </v-col>
+                  <v-col cols="8" class="pb-0" align="center">
+                    <v-card max-width="250" flat>
+                      <v-card-subtitle class="pa-0">計算スタイル</v-card-subtitle>
+                      <v-radio-group v-model="calcStyle">
+                        <v-radio label="バランス - HBD/(B+D)" value="balance"></v-radio>
+                        <v-radio label="総合耐久 - H=B+D" value="performance" disabled></v-radio>
+                      </v-radio-group>
+                    </v-card>
+                  </v-col>
+                </v-row>
+                <v-card-actions>
+                  <v-row class="mb-0">
+                    <v-col cols="12" align="center">
+                      <v-btn color="primary" elevation="2" outlined large @click.native="durabilityAdjustment"
+                        >耐久調整を計算する</v-btn
+                      >
+                    </v-col>
+                  </v-row>
+                </v-card-actions>
+              </v-card>
+            </v-col>
+          </v-row>
+          <!-- ポケモンの説明 -->
+          <v-row>
+            <v-col>
+              <v-textarea
+                v-model="description"
+                outlined
+                rows="5"
+                hide-details
+                no-resize
+                placeholder="ポケモンの説明（例：○○の××確定耐え）"
+              ></v-textarea>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-dialog>
+
+      <v-btn v-if="$store.getters.isLogin" @click="emitPokemon">
+        <v-icon color="primary">mdi-send</v-icon>
+      </v-btn>
+    </v-bottom-navigation>
     <Title :text="title" />
     <v-row>
       <!-- 左ここから -->
-      <v-col cols="12" md="6" class="d-flex">
-        <v-container :class="$vuetify.breakpoint.xs ? 'px-0' : ''">
+      <v-col cols="12" md="6" class="d-flex" :class="{ 'mb-14': $vuetify.breakpoint.xs || $vuetify.breakpoint.sm }">
+        <v-container>
           <StatsTableHeader
             :current-pokemon="currentPokemon"
             :current-nature="currentNature"
@@ -62,59 +172,66 @@
       </v-col>
       <!-- 左ここまで -->
       <!-- 右ここから -->
-      <v-col cols="12" md="6" class="d-flex">
-        <v-container :class="$vuetify.breakpoint.xs ? 'pa-0' : ''">
+      <v-col cols="12" md="6" class="d-none d-md-flex">
+        <v-container style="background-color: white">
           <v-row>
             <v-col cols="6">
-              <v-card height="100%" shaped>
+              <v-card rounded="xl" height="100%" outlined>
                 <v-card-title>耐久指数</v-card-title>
                 <v-card-text>
-                  <p class="mb-2">総合：{{ physicalDurability + specialDurability }}</p>
-                  <p class="mb-2">物理：{{ physicalDurability }}</p>
-                  <p class="mb-0">特殊：{{ specialDurability }}</p>
+                  <p class="mb-2">
+                    総合：{{ physicalDurability + specialDurability }}<br />
+                    物理：{{ physicalDurability }}<br />
+                    特殊：{{ specialDurability }}
+                  </p>
                 </v-card-text>
               </v-card>
             </v-col>
             <v-col cols="6">
-              <v-card height="100%" shaped>
+              <v-card height="100%" rounded="xl" outlined>
                 <v-card-title>その他</v-card-title>
                 <v-card-text>めざパ：{{ hiddenPower }} </v-card-text>
               </v-card>
             </v-col>
           </v-row>
           <!-- 耐久調整-->
-          <v-row class="pb-2" align="start">
+          <v-row align="start">
             <v-col cols="12">
-              <v-card shaped>
-                <v-card-title>耐久調整</v-card-title>
-                <v-card-text>
-                  <v-row>
-                    <v-col cols="6" class="pb-0" align="center">
+              <v-card rounded="xl" outlined>
+                <v-card-title class="justify-center">耐久調整</v-card-title>
+                <v-card-text>最も理想的な配分で、余りの努力値をHBDに振り分けます。</v-card-text>
+                <v-row>
+                  <v-col cols="4" class="pb-0" align="center">
+                    <v-card max-width="125" min-width="89" flat>
                       <v-card-subtitle class="pa-0">倍率</v-card-subtitle>
-                      <v-select
-                        v-model="selectDefenceEnhancement"
-                        :items="DEFENCE_ENHANCEMENTS"
-                        item-text="name"
-                        item-value="value"
-                        label="防御"
-                      ></v-select>
-                      <v-select
-                        v-model="selectSpDefenceEnhancement"
-                        :items="SP_DEFENCE_ENHANCEMENTS"
-                        item-text="name"
-                        item-value="value"
-                        label="特防"
-                      ></v-select>
-                    </v-col>
-                    <v-col cols="6" class="pb-0" align="center">
+                      <v-card-text>
+                        <v-select
+                          v-model="selectDefenceEnhancement"
+                          :items="DEFENCE_ENHANCEMENTS"
+                          item-text="name"
+                          item-value="value"
+                          label="防御"
+                        ></v-select>
+                        <v-select
+                          v-model="selectSpDefenceEnhancement"
+                          :items="SP_DEFENCE_ENHANCEMENTS"
+                          item-text="name"
+                          item-value="value"
+                          label="特防"
+                        ></v-select>
+                      </v-card-text>
+                    </v-card>
+                  </v-col>
+                  <v-col cols="8" class="pb-0" align="center">
+                    <v-card max-width="250" flat>
                       <v-card-subtitle class="pa-0">計算スタイル</v-card-subtitle>
                       <v-radio-group v-model="calcStyle">
                         <v-radio label="バランス - HBD/(B+D)" value="balance"></v-radio>
                         <v-radio label="総合耐久 - H=B+D" value="performance" disabled></v-radio>
                       </v-radio-group>
-                    </v-col>
-                  </v-row>
-                </v-card-text>
+                    </v-card>
+                  </v-col>
+                </v-row>
                 <v-card-actions>
                   <v-row class="mb-0">
                     <v-col cols="12" align="center">
@@ -129,18 +246,19 @@
           </v-row>
           <!-- ポケモンの説明 -->
           <v-row>
-            <v-col class="py-0">
+            <v-col>
               <v-textarea
                 v-model="description"
                 outlined
                 rows="5"
-                shaped
+                hide-details
+                no-resize
                 placeholder="ポケモンの説明（例：○○の××確定耐え）"
               ></v-textarea>
             </v-col>
           </v-row>
           <!-- 「努力値リセット」と「投稿する」のボタン -->
-          <v-row class="pb-2" align-content="center">
+          <v-row class="pb-2 d-none d-md-flex" align-content="center">
             <v-col class="text-center">
               <v-btn color="danger" elevation="2" outlined large @click.native="resetEffortValue">努力値リセット</v-btn>
             </v-col>
@@ -211,6 +329,7 @@ export default defineComponent({
     const selectSpDefenceEnhancement = ref(1)
     const calcStyle = ref('balance')
     const description = ref('')
+    const dialog = ref(false)
 
     const totalStats = computed(() => {
       return (
@@ -488,6 +607,9 @@ export default defineComponent({
       updateRealNumber(resultHp, HP_INDEX)
       updateRealNumber(resultDefence, DEFENCE_INDEX)
       updateRealNumber(resultSpDefence, SP_DEFENCE_INDEX)
+
+      // ダイアログの表示を閉じる
+      dialog.value = false
     }
 
     // ポケモンのデータを親に渡す
@@ -540,6 +662,7 @@ export default defineComponent({
       SP_DEFENCE_ENHANCEMENTS,
       calcStyle,
       description,
+      dialog,
       hiddenPower,
       physicalDurability,
       realNumbers,

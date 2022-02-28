@@ -61,8 +61,9 @@ export interface User {
 }
 
 export interface AuthUser extends User {
+  id: number | null
   email: string
-  email_verified_at: string
+  email_verified_at: boolean
 }
 
 export interface Pokemon {
@@ -76,10 +77,7 @@ export interface Pokemon {
 }
 
 export interface State {
-  authUser: {
-    username: string
-    nickname: string
-  }
+  authUser: AuthUser
   notice: boolean
   rememberRoute: string
   pokemonData: PokemonData[]
