@@ -24,14 +24,14 @@ export default defineComponent({
       return pokemons.value.filter((pokemon: Pokemon) => pokemon.user.username !== authUserName)
     })
 
-    $axios
-      .get<{ data: Pokemon[] }>('/pokemons')
-      .then((response) => {
+    ;(async () => {
+      try {
+        const response = await $axios.get<{ data: Pokemon[] }>('/pokemons')
         pokemons.value = response.data.data
-      })
-      .catch((error) => {
+      } catch (error) {
         console.log(error)
-      })
+      }
+    })()
 
     return {
       filteredPokemons,
