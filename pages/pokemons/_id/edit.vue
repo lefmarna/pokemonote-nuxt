@@ -83,15 +83,13 @@ export default defineComponent({
       },
     ])
 
-    const updatePokemon = (params: Event): void => {
-      $axios
-        .patch(`/pokemons/${route.value.params.id}`, params)
-        .then(() => {
-          router.push(`/pokemons/${route.value.params.id}`)
-        })
-        .catch(() => {
-          router.push('/')
-        })
+    const updatePokemon = async (params: Event): Promise<void> => {
+      try {
+        await $axios.patch(`/pokemons/${route.value.params.id}`, params)
+        router.push(`/pokemons/${route.value.params.id}`)
+      } catch (error) {
+        router.push('/')
+      }
     }
 
     const updateEffortValue = (value: number, index: number) => {

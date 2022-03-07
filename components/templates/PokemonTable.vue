@@ -49,11 +49,6 @@
 import { computed, defineComponent, ref, PropType, useRouter, useContext } from '@nuxtjs/composition-api'
 import { Pokemon } from '@/types/index'
 
-interface Props {
-  title: string
-  pokemons: Pokemon[]
-}
-
 export default defineComponent({
   props: {
     title: {
@@ -66,7 +61,7 @@ export default defineComponent({
       default: () => [],
     },
   },
-  setup(props: Props) {
+  setup(props) {
     const router = useRouter()
     const { store, $axios } = useContext()
     const search = ref<string>()

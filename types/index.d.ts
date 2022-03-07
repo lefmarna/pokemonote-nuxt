@@ -1,32 +1,32 @@
-export interface Card {
+export type Card = {
   number: string
   cvc: string
   exp_month: string
   exp_year: string
 }
 
-export interface Email {
+export type Email = {
   email: string
 }
 
-export interface VTextField {
+export type VTextField = {
   lazyValue: number | null
   $refs: {
     input: HTMLInputElement
   }
 }
 
-export interface Login {
+export type Login = {
   email: string
   password: string
 }
 
-export interface Nature {
+export type Nature = {
   name: string
   stats: number[]
 }
 
-export interface PokemonData {
+export type PokemonData = {
   no: number
   name: string
   form: string
@@ -39,34 +39,34 @@ export interface PokemonData {
   total?: number
 }
 
-export interface Ranking {
+export type Ranking = {
   name: string
 }
 
-export interface Stat {
+export type Stat = {
   name: string
   initial: string
   individualValue: number | null
   effortValue: number | null
 }
 
-export interface Tip {
+export type Tip = {
   price: number
   token: string
 }
 
-export interface User {
+export type User = {
   nickname: string
   username: string
 }
 
-export interface AuthUser extends User {
+export type AuthUser = User & {
   id: number | null
   email: string
   email_verified_at: boolean
 }
 
-export interface Pokemon {
+export type Pokemon = {
   id: number
   lv: number
   name: string
@@ -76,7 +76,7 @@ export interface Pokemon {
   user: User
 }
 
-export interface State {
+export type State = {
   authUser: AuthUser
   notice: boolean
   rememberRoute: string
@@ -89,7 +89,7 @@ export interface State {
   stats: Stat[]
 }
 
-export interface ShowUser {
+export type ShowUser = {
   user: User
   pokemons: Pokemon[]
 }

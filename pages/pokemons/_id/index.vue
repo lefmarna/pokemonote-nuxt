@@ -79,15 +79,13 @@ export default defineComponent({
     //  コンポーネントの更新ではライフサイクルの初期化を行わないため、watchで監視する形で実装している
     watch(
       () => route.value.params.id,
-      (id) => {
-        $axios
-          .get(`/pokemons/${id}`)
-          .then((response) => {
-            pokemon.value = response.data.data
-          })
-          .catch((error) => {
-            console.log(error)
-          })
+      async (id) => {
+        try {
+          const response = await $axios.get<{ data: Pokemon }>(`/pokemons/${id}`)
+          pokemon.value = response.data.data
+        } catch (error) {
+          console.log(error)
+        }
       },
       { immediate: true }
     )

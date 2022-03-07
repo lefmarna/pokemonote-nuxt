@@ -72,8 +72,8 @@
                     <v-card max-width="250" flat>
                       <v-card-subtitle class="pa-0">計算スタイル</v-card-subtitle>
                       <v-radio-group v-model="calcStyle">
-                        <v-radio label="バランス - HBD/(B+D)" value="balance"></v-radio>
-                        <v-radio label="総合耐久 - H=B+D" value="performance" disabled></v-radio>
+                        <v-radio label="バランス - HBD/(B+D)" value="balance" />
+                        <v-radio label="総合耐久 - H=B+D" value="performance" />
                       </v-radio-group>
                     </v-card>
                   </v-col>
@@ -226,8 +226,8 @@
                     <v-card max-width="250" flat>
                       <v-card-subtitle class="pa-0">計算スタイル</v-card-subtitle>
                       <v-radio-group v-model="calcStyle">
-                        <v-radio label="バランス - HBD/(B+D)" value="balance"></v-radio>
-                        <v-radio label="総合耐久 - H=B+D" value="performance" disabled></v-radio>
+                        <v-radio label="バランス - HBD/(B+D)" value="balance" />
+                        <v-radio label="総合耐久 - H=B+D" value="performance" />
                       </v-radio-group>
                     </v-card>
                   </v-col>
@@ -560,6 +560,9 @@ export default defineComponent({
       let oldHBD = 0
       let newHBD = 0
 
+      // 計算スタイルが H=B+D の際に、BとDの差分を比較するのに用いる変数
+      let tmpDiff: number | null = null
+
       // HBDの努力値を一度リセットする(不要な処理のような気もするが、これらを記載しないと努力値の合計が最大値を超えてしまうことがある)
       emit('updateEffortValue', null, HP_INDEX)
       emit('updateEffortValue', null, DEFENCE_INDEX)
@@ -588,16 +591,34 @@ export default defineComponent({
           tmpDefenceEnhancement = Math.floor(tmpDefence * selectDefenceEnhancement.value)
           tmpSpDefenceEnhancement = Math.floor(tmpSpDefence * selectSpDefenceEnhancement.value)
 
-          // 耐久指数を計算する
-          newHBD =
-            (tmpHp * tmpDefenceEnhancement * tmpSpDefenceEnhancement) /
-            (tmpDefenceEnhancement + tmpSpDefenceEnhancement)
-          // 耐久指数が前回のものより大きければ更新、そうでなければ更新しない
+          // 耐久指数を計算する（計算スタイルによって結果が異なる）
+          if (calcStyle.value === 'balance') {
+            newHBD =
+              (tmpHp * tmpDefenceEnhancement * tmpSpDefenceEnhancement) /
+              (tmpDefenceEnhancement + tmpSpDefenceEnhancement)
+          }
+
+          if (calcStyle.value === 'performance') {
+            newHBD = tmpHp * (tmpDefenceEnhancement + tmpSpDefenceEnhancement)
+
+            // NOTE 結果が同じ時には防御と特防の差が小さい方が好ましいため、最も差分の小さな値を入れるようにしている
+            if (oldHBD === newHBD && resultHp === tmpHp) {
+              const diff = Math.abs(tmpDefenceEnhancement - tmpSpDefenceEnhancement)
+              if (tmpDiff === null || tmpDiff > diff) {
+                tmpDiff = diff
+                resultDefence = tmpDefence
+                resultSpDefence = tmpSpDefence
+              }
+            }
+          }
+
           if (oldHBD < newHBD) {
+            // 耐久指数が前回のものより大きければ更新、そうでなければ更新しない
             oldHBD = newHBD
             resultHp = tmpHp
             resultDefence = tmpDefence
             resultSpDefence = tmpSpDefence
+            tmpDiff = null
           }
           tmpSpDefenceEV--
         }
