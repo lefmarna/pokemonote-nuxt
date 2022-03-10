@@ -26,7 +26,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from '@nuxtjs/composition-api'
-import { convertToHalfWidthInteger } from '@/utils/utilities'
+import { convertToInteger } from '@/utils/utilities'
 import { DEFAULT_LEVEL, MAX_LEVEL, MIN_LEVEL } from '@/utils/constants'
 import { VTextField } from '@/types'
 
@@ -43,7 +43,7 @@ export default defineComponent({
 
     const updateLv = (value: string) => {
       if (lvRef.value === undefined) return
-      const formatValue = convertToHalfWidthInteger(value, MAX_LEVEL, false)
+      const formatValue = convertToInteger(value, MAX_LEVEL, false)
 
       // lazyValueはVuetifyでinputタグの中身の値を示す、ここに直接代入することでリアクティブに入力を更新することができる
       lvRef.value.lazyValue = formatValue

@@ -27,7 +27,7 @@
 <script lang="ts">
 import { defineComponent, PropType, ref } from '@nuxtjs/composition-api'
 import { VTextField, Stat } from '@/types'
-import { convertToHalfWidthInteger } from '@/utils/utilities'
+import { convertToInteger } from '@/utils/utilities'
 import { MAX_EV } from '@/utils/constants'
 
 export default defineComponent({
@@ -47,7 +47,7 @@ export default defineComponent({
     const updateEffortValue = (value: string | number, index: number): void => {
       if (effortValueRef.value === undefined) return
 
-      const formatValue = convertToHalfWidthInteger(value, MAX_EV)
+      const formatValue = convertToInteger(value, MAX_EV)
       effortValueRef.value.lazyValue = formatValue
       emit('updateEffortValue', formatValue, index)
     }

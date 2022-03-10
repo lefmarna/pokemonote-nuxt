@@ -27,7 +27,7 @@
 <script lang="ts">
 import { defineComponent, PropType, ref } from '@nuxtjs/composition-api'
 import { VTextField, Stat } from '@/types'
-import { convertToHalfWidthInteger } from '@/utils/utilities'
+import { convertToInteger } from '@/utils/utilities'
 import { MAX_IV } from '@/utils/constants'
 
 export default defineComponent({
@@ -47,7 +47,7 @@ export default defineComponent({
     const updateIndividualValue = (value: string | number, index: number): void => {
       if (individualValueRef.value === undefined) return
 
-      const formatValue = convertToHalfWidthInteger(String(value), MAX_IV)
+      const formatValue = convertToInteger(String(value), MAX_IV)
       individualValueRef.value.lazyValue = formatValue
       emit('updateIndividualValue', formatValue, index)
     }

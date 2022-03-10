@@ -115,7 +115,7 @@ import {
   SPEED_ITEMS,
   UPPER_NATURE,
 } from '@/utils/constants'
-import { convertToHalfWidthInteger, numberToInt, updateMeta, valueVerification } from '@/utils/utilities'
+import { convertToInteger, numberToInt, updateMeta, valueVerification } from '@/utils/utilities'
 import { Nature, PokemonData, Stat } from '~/types'
 
 export default defineComponent({
@@ -186,7 +186,7 @@ export default defineComponent({
      * 実数値から努力値の逆算を行う
      */
     const setSpeed = (value: string | number) => {
-      let setValue = Number(convertToHalfWidthInteger(value, MAX_REAL_NUMBER, false))
+      let setValue = Number(convertToInteger(value, MAX_REAL_NUMBER, false))
       const formatLv = numberToInt(lv.value, 1)
       const individualValue = numberToInt(stats.value[SPEED_INDEX].individualValue)
       const effortValue = numberToInt(stats.value[SPEED_INDEX].effortValue)

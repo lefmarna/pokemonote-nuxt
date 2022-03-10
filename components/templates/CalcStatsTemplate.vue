@@ -186,7 +186,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref, PropType } from '@nuxtjs/composition-api'
-import { convertToHalfWidthInteger, numberToInt, valueVerification } from '@/utils/utilities'
+import { convertToInteger, numberToInt, valueVerification } from '@/utils/utilities'
 import {
   ATTACK_INDEX,
   DEFENCE_ENHANCEMENTS,
@@ -383,7 +383,7 @@ export default defineComponent({
 
     // 実数値から努力値の逆算を行う
     const updateRealNumber = (value: string | number, index: number): void => {
-      let setValue = Number(convertToHalfWidthInteger(value, MAX_REAL_NUMBER, false))
+      let setValue = Number(convertToInteger(value, MAX_REAL_NUMBER, false))
       const formatLv = numberToInt(props.lv, MIN_LEVEL)
       const formatIndividualValue = numberToInt(props.stats[index].individualValue)
       // HPのみ計算式が異なる
