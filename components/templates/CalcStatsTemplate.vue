@@ -365,7 +365,11 @@ export default defineComponent({
     }
 
     // 理想の耐久調整を自動で計算する関数
-    const durabilityAdjustment = (calcStyle: string): void => {
+    const durabilityAdjustment = (
+      calcStyle: string,
+      selectDefenceEnhancement: number,
+      selectSpDefenceEnhancement: number
+    ): void => {
       // 攻撃、特攻、素早さの努力値を除いた値を求める
       const remainderEffortValue =
         MAX_TOTAL_EV -
@@ -424,8 +428,8 @@ export default defineComponent({
           tmpDefence = getStat(DEFENCE_INDEX, tmpDefenceEV) // 防御の努力値から防御の実数値を計算
 
           // 耐久補正込での耐久値を求める
-          tmpDefenceEnhancement = Math.floor(tmpDefence * selectDefenceEnhancement.value)
-          tmpSpDefenceEnhancement = Math.floor(tmpSpDefence * selectSpDefenceEnhancement.value)
+          tmpDefenceEnhancement = Math.floor(tmpDefence * selectDefenceEnhancement)
+          tmpSpDefenceEnhancement = Math.floor(tmpSpDefence * selectSpDefenceEnhancement)
 
           // 耐久指数を計算する（計算スタイルによって結果が異なる）
           if (calcStyle === 'balance') {
@@ -448,8 +452,8 @@ export default defineComponent({
             }
           }
 
+          // 耐久指数が前回のものより大きければ更新、そうでなければ更新しない
           if (oldHBD < newHBD) {
-            // 耐久指数が前回のものより大きければ更新、そうでなければ更新しない
             oldHBD = newHBD
             resultHp = tmpHp
             resultDefence = tmpDefence

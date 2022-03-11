@@ -67,7 +67,9 @@
                   elevation="2"
                   outlined
                   large
-                  @click.native="$emit('durabilityAdjustment', calcStyle)"
+                  @click.native="
+                    $emit('durabilityAdjustment', calcStyle, selectDefenceEnhancement, selectSpDefenceEnhancement)
+                  "
                   >耐久調整を計算する</v-btn
                 >
               </v-col>
