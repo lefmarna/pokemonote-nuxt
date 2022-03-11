@@ -15,7 +15,7 @@ commands:
             - nuxt-yarn-{{ checksum "yarn.lock" }}
             - nuxt-yarn-
       - run:
-          name: "Yarn Install"
+          name: 'Yarn Install'
           command: yarn install --cache-folder ~/.cache/yarn
       - save_cache:
           key: nuxt-yarn-{{ checksum "yarn.lock" }}
@@ -30,7 +30,7 @@ jobs:
       - checkout
       - yarn_install
       - run:
-          name: "Jestによるテスト"
+          name: 'Jestによるテスト'
           command: yarn test
 
   build:
@@ -40,7 +40,7 @@ jobs:
       - checkout
       - yarn_install
       - run:
-          name: "Yarn Generate"
+          name: 'Yarn Generate'
           command: yarn generate
 
       # buildで出来上がったディレクトリをデプロイのjobに渡す
@@ -60,10 +60,10 @@ jobs:
 
       # デプロイ
       - run:
-          name: "Netlifyにデプロイするためのライブラリをインストール"
+          name: 'Netlifyにデプロイするためのライブラリをインストール'
           command: yarn add netlify-cli
       - run:
-          name: "Deploy"
+          name: 'Deploy'
           command: yarn netlify deploy -p -d dist -a ${NETLIFY_AUTH_TOKEN} -s ${NETLIFY_SITE_ID}
 
 workflows:
