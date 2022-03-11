@@ -1,5 +1,6 @@
 <template>
   <v-container style="background-color: white">
+    <slot></slot>
     <v-row>
       <v-col cols="6">
         <v-card rounded="xl" height="100%" outlined>
