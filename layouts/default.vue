@@ -93,7 +93,7 @@
     </v-app-bar>
     <v-main>
       <Alert id="notice" />
-      <router-view />
+      <Nuxt />
     </v-main>
   </v-app>
 </template>
