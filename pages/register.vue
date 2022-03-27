@@ -34,6 +34,7 @@
 <script lang="ts">
 import { computed, defineComponent, ref, useContext, useRouter } from '@nuxtjs/composition-api'
 import { exceptionErrorToArray, updateMeta } from '@/utils/utilities'
+import { Email } from '~/types'
 
 export default defineComponent({
   middleware: 'noAuth',
@@ -71,7 +72,7 @@ export default defineComponent({
       const formData = new FormData(form)
 
       try {
-        const response = await $axios.post('/register', formData)
+        const response = await $axios.post<{ data: Email }>('/register', formData)
         localStorage.setItem('email', response.data.data.email)
         router.push('/email/resend')
       } catch (error) {

@@ -19,6 +19,9 @@ import { updateMeta } from '~/utils/utilities'
 
 export default defineComponent({
   middleware: 'auth',
+  validate({ params }) {
+    return /^\d+$/.test(params.id)
+  },
   setup() {
     updateMeta('ポケモン編集')
 

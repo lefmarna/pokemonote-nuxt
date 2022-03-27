@@ -58,6 +58,9 @@ import {
 import { updateMeta } from '~/utils/utilities'
 
 export default defineComponent({
+  validate({ params }) {
+    return /^\d+$/.test(params.id)
+  },
   setup() {
     updateMeta('ポケモン詳細')
 
