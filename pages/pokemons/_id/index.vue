@@ -87,7 +87,7 @@ export default defineComponent({
           const response = await $axios.get<{ data: Pokemon }>(`/pokemons/${id}`)
           pokemon.value = response.data.data
         } catch (error) {
-          console.log(error)
+          router.push('/')
         }
       },
       { immediate: true }
