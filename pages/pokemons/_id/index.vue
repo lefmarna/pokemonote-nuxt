@@ -101,15 +101,13 @@ export default defineComponent({
       }
     }
 
-    const deleteItem = (id: number): void => {
-      $axios
-        .delete(`/pokemons/${id}`)
-        .then(() => {
-          router.push(`/users/${authUserName.value}`)
-        })
-        .catch(() => {
-          router.push('/')
-        })
+    const deleteItem = async (id: number): Promise<void> => {
+      try {
+        await $axios.delete(`/pokemons/${id}`)
+        router.push(`/users/${authUserName.value}`)
+      } catch (error) {
+        router.push('/')
+      }
     }
 
     return {
