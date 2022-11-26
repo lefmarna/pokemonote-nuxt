@@ -40,6 +40,12 @@
                   <p>『Pokemonote』α版を公開しました。</p>
                 </div>
               </div>
+              <div class="px-2">
+                <div>
+                  <h3>2022-11-26</h3>
+                  <p>ポケモンSV対応準備（随時追加予定）</p>
+                </div>
+              </div>
             </v-sheet>
           </v-card>
         </v-col>
