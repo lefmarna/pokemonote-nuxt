@@ -30,8 +30,14 @@
             <v-sheet class="body-1 overflow-y-auto" max-height="280">
               <div class="px-2">
                 <div>
-                  <h3>2021-04-30</h3>
-                  <p>『Pokemonote』プロトタイプを公開しました。</p>
+                  <h3>2022-12-03</h3>
+                  <p>ポケモンSV対応完了</p>
+                </div>
+              </div>
+              <div class="px-2">
+                <div>
+                  <h3>2022-11-26</h3>
+                  <p>ポケモンSV対応準備（随時追加予定）</p>
                 </div>
               </div>
               <div class="px-2">
@@ -42,8 +48,8 @@
               </div>
               <div class="px-2">
                 <div>
-                  <h3>2022-11-26</h3>
-                  <p>ポケモンSV対応準備（随時追加予定）</p>
+                  <h3>2021-04-30</h3>
+                  <p>『Pokemonote』プロトタイプを公開しました。</p>
                 </div>
               </div>
             </v-sheet>
