@@ -74,14 +74,14 @@ export default defineComponent({
       legendary: false,
       mythical: false,
       mega: false,
-      NotInPokedex: false,
+      sv: false,
     })
     const ranksCheckboxes = computed(() => {
       return [
         { text: '伝説', value: 'legendary' },
         { text: '幻', value: 'mythical' },
         { text: 'メガシンカ', value: 'mega' },
-        { text: '剣盾に登場しないポケモン', value: 'NotInPokedex' },
+        { text: 'SVに登場しないポケモン', value: 'sv' },
       ]
     })
 
@@ -110,40 +110,40 @@ export default defineComponent({
         {
           text: 'ＨＰ',
           value: `stats[${HP_INDEX}]`,
-          align: 'end',
+          align: 'right',
           width: '10%',
         },
         {
           text: '攻撃',
           value: `stats[${ATTACK_INDEX}]`,
-          align: 'end',
+          align: 'right',
           width: '10%',
         },
         {
           text: '防御',
           value: `stats[${DEFENCE_INDEX}]`,
-          align: 'end',
+          align: 'right',
           width: '10%',
         },
         {
           text: '特攻',
           value: `stats[${SP_ATTACK_INDEX}]`,
-          align: 'end',
+          align: 'right',
           width: '10%',
         },
         {
           text: '特防',
           value: `stats[${SP_DEFENCE_INDEX}]`,
-          align: 'end',
+          align: 'right',
           width: '10%',
         },
         {
           text: '素早',
           value: `stats[${SPEED_INDEX}]`,
-          align: 'end',
+          align: 'right',
           width: '10%',
         },
-        { text: '合計', value: 'total', align: 'end', width: '10%' },
+        { text: '合計', value: 'total', align: 'right', width: '10%' },
       ]
       if (isNotShowStats.attack) dataTableList[ATTACK_INDEX + 1].value = ''
       if (isNotShowStats.spAttack) dataTableList[SP_ATTACK_INDEX + 1].value = ''
@@ -165,8 +165,8 @@ export default defineComponent({
       if (!isShowRanks.legendary) result = filterPokemonListByRank(result, 'legendary')
       // 『幻』にチェックがついていないときは表示させない
       if (!isShowRanks.mythical) result = filterPokemonListByRank(result, 'mythical')
-      // 『剣盾に登場しないポケモン』にチェックがついていないときは表示させない
-      if (!isShowRanks.NotInPokedex) result = filterPokemonListByRank(result, 'NotInPokedex')
+      // 『SVに登場しないポケモン』にチェックがついていないときは表示させない
+      if (!isShowRanks.sv) result = result.filter((pokemon) => pokemon.ranks.includes('sv'))
 
       // 全てのオブジェクトで合計(total)を計算する
       result.forEach((array) => {
