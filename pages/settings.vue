@@ -24,8 +24,9 @@
           </template>
           <template #content>
             <v-card-text>
-              この機能は現在準備中です。<br />
-              ボタンを押してもパスワードを変更することはできません。
+              <PasswordField :password.sync="passwordParams.currentPassword" label="現在のパスワード" />
+              <PasswordField :password.sync="passwordParams.newPassword" label="新しいパスワード" />
+              <PasswordField :password.sync="passwordParams.newPasswordConfirmation" label="確認用パスワード" />
             </v-card-text>
           </template>
         </DialogCard>
@@ -52,7 +53,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useContext, useRouter } from '@nuxtjs/composition-api'
+import { defineComponent, reactive, ref, useContext, useRouter } from '@nuxtjs/composition-api'
 import { HTTP_UNAUTHORIZED } from '@/utils/constants'
 import { updateMeta } from '~/utils/utilities'
 
@@ -65,6 +66,12 @@ export default defineComponent({
     const router = useRouter()
 
     const dialog = ref(false)
+
+    const passwordParams = reactive({
+      currentPassword: '',
+      newPassword: '',
+      newPasswordConfirmation: '',
+    })
 
     const updateUserAccount = () => {}
 
@@ -90,6 +97,7 @@ export default defineComponent({
 
     return {
       dialog,
+      passwordParams,
       unsubscribe,
       updateUserAccount,
       updatePassword,
