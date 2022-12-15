@@ -75,7 +75,15 @@ export default defineComponent({
 
     const updateUserAccount = () => {}
 
-    const updatePassword = () => {}
+    const updatePassword = async () => {
+      try {
+        await $axios.post('/', passwordParams)
+        alert('パスワードを更新しました')
+      } catch (error) {
+        if (!$axios.isAxiosError(error) || error.response?.status !== HTTP_UNAUTHORIZED) return
+        console.log(error)
+      }
+    }
 
     const unsubscribe = async () => {
       try {
