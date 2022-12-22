@@ -111,7 +111,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, PropType } from '@nuxtjs/composition-api'
+import { computed, defineComponent, ref, PropType, watch } from '@nuxtjs/composition-api'
 import { convertToInteger, numberToInt, valueVerification } from '@/utils/utilities'
 import {
   ATTACK_INDEX,
@@ -158,6 +158,11 @@ export default defineComponent({
     stats: {
       type: [] as PropType<Stat[]>,
       required: true,
+    },
+    propsDescription: {
+      type: String,
+      required: false,
+      default: '',
     },
   },
   setup(props, { emit }) {
@@ -524,6 +529,13 @@ export default defineComponent({
     const updateEffortValue = (event: Event, index: number) => {
       emit('updateEffortValue', event, index)
     }
+
+    watch(
+      () => props.propsDescription,
+      () => {
+        description.value = props.propsDescription
+      }
+    )
 
     return {
       DEFENCE_ENHANCEMENTS,
