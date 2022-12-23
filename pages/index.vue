@@ -30,6 +30,12 @@
             <v-sheet class="body-1 overflow-y-auto" max-height="280">
               <div class="px-2">
                 <div>
+                  <h3>2022-12-23</h3>
+                  <p>ステータス計算機で保存されたはずのポケモンの説明が表示されない不具合の修正</p>
+                </div>
+              </div>
+              <div class="px-2">
+                <div>
                   <h3>2022-12-03</h3>
                   <p>ポケモンSV対応完了</p>
                 </div>
