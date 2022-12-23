@@ -6,6 +6,7 @@
     :current-nature.sync="currentNature"
     :lv.sync="lv"
     :stats="stats"
+    :props-description="description"
     @submit="updatePokemon"
     @updateEffortValue="updateEffortValue"
     @updateIndividualValue="updateIndividualValue"
@@ -95,6 +96,8 @@ export default defineComponent({
       }
     }
 
+    const description = ref('')
+
     const updateEffortValue = (value: number, index: number) => {
       stats[index].effortValue = value
     }
@@ -117,6 +120,7 @@ export default defineComponent({
             stat.individualValue = data.individualValues[index]
             stat.effortValue = data.effortValues[index]
           })
+          description.value = data.description
         } catch {
           router.push('/')
         }
@@ -126,6 +130,7 @@ export default defineComponent({
     return {
       currentPokemon,
       currentNature,
+      description,
       lv,
       stats,
       updateEffortValue,
