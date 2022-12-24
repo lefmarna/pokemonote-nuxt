@@ -24,10 +24,20 @@
           </template>
           <template #content>
             <v-card-text>
-              <PasswordField :password.sync="passwordParams.currentPassword" label="現在のパスワード" />
-              <PasswordField :password.sync="passwordParams.newPassword" label="新しいパスワード" />
-              <PasswordField :password.sync="passwordParams.newPasswordConfirmation" label="確認用パスワード" />
+              <PasswordField :password.sync="passwordParams.current_password" label="現在のパスワード" />
+              <PasswordField :password.sync="passwordParams.new_password" label="新しいパスワード" />
+              <PasswordField :password.sync="passwordParams.new_password_confirmation" label="確認用パスワード" />
             </v-card-text>
+            <v-list>
+              <v-list-item v-for="(error, index) in errors" :key="index">
+                <v-list-item-icon>
+                  <v-icon class="error-message">mdi-alert-circle</v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title class="error-message">{{ error }}</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
           </template>
         </DialogCard>
         <v-divider></v-divider>
@@ -54,8 +64,8 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref, useContext, useRouter } from '@nuxtjs/composition-api'
-import { HTTP_UNAUTHORIZED } from '@/utils/constants'
-import { updateMeta } from '~/utils/utilities'
+import { HTTP_PAYMENT_REQUIRED, HTTP_UNAUTHORIZED, HTTP_UNPROCESSABLE_ENTITY } from '@/utils/constants'
+import { exceptionErrorToArray, updateMeta } from '~/utils/utilities'
 
 export default defineComponent({
   middleware: 'auth',
@@ -64,24 +74,24 @@ export default defineComponent({
 
     const { $axios, store } = useContext()
     const router = useRouter()
+    const errors = ref<string[]>([])
 
     const dialog = ref(false)
 
     const passwordParams = reactive({
-      currentPassword: '',
-      newPassword: '',
-      newPasswordConfirmation: '',
+      current_password: '',
+      new_password: '',
+      new_password_confirmation: '',
     })
 
     const updateUserAccount = () => {}
 
     const updatePassword = async () => {
       try {
-        await $axios.post('/', passwordParams)
+        await $axios.post('/users/password/update', passwordParams)
         alert('パスワードを更新しました')
       } catch (error) {
-        if (!$axios.isAxiosError(error) || error.response?.status !== HTTP_UNAUTHORIZED) return
-        console.log(error)
+        errors.value = exceptionErrorToArray(error, [HTTP_PAYMENT_REQUIRED, HTTP_UNPROCESSABLE_ENTITY])
       }
     }
 
@@ -105,6 +115,7 @@ export default defineComponent({
 
     return {
       dialog,
+      errors,
       passwordParams,
       unsubscribe,
       updateUserAccount,
@@ -114,3 +125,9 @@ export default defineComponent({
   head: {},
 })
 </script>
+
+<style lang="scss" scoped>
+.error-message {
+  color: #d32f2f;
+}
+</style>
