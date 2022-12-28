@@ -89,6 +89,9 @@ export default defineComponent({
     const updatePassword = async () => {
       try {
         await $axios.post('/users/password/update', passwordParams)
+        passwordParams.current_password = ''
+        passwordParams.new_password = ''
+        passwordParams.new_password_confirmation = ''
         alert('パスワードを更新しました')
       } catch (error) {
         errors.value = exceptionErrorToArray(error, [HTTP_PAYMENT_REQUIRED, HTTP_UNPROCESSABLE_ENTITY])
