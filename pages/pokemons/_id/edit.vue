@@ -120,7 +120,7 @@ export default defineComponent({
             stat.individualValue = data.individualValues[index]
             stat.effortValue = data.effortValues[index]
           })
-          description.value = data.description
+          description.value = data.description ?? ''
         } catch {
           router.push('/')
         }
