@@ -68,7 +68,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref, useContext, useRouter } from '@nuxtjs/composition-api'
-import { HTTP_PAYMENT_REQUIRED, HTTP_UNAUTHORIZED, HTTP_UNPROCESSABLE_ENTITY } from '@/utils/constants'
+import { HTTP_UNAUTHORIZED, HTTP_UNPROCESSABLE_ENTITY } from '@/utils/constants'
 import { exceptionErrorToArray, updateMeta } from '~/utils/utilities'
 
 export default defineComponent({
@@ -92,20 +92,20 @@ export default defineComponent({
 
     const updatePassword = async (closeDialog: Function) => {
       try {
-        await $axios.post('/users/password/update', passwordParams)
+        await $axios.put('/settings/password', passwordParams)
         alert('パスワードを更新しました')
         closeDialog()
         passwordParams.current_password = ''
         passwordParams.new_password = ''
         passwordParams.new_password_confirmation = ''
       } catch (error) {
-        errors.value = exceptionErrorToArray(error, [HTTP_PAYMENT_REQUIRED, HTTP_UNPROCESSABLE_ENTITY])
+        errors.value = exceptionErrorToArray(error, [HTTP_UNAUTHORIZED, HTTP_UNPROCESSABLE_ENTITY])
       }
     }
 
     const unsubscribe = async () => {
       try {
-        await $axios.delete(`/users/${store.getters.authUser.username}`)
+        await $axios.delete(`/settings/unsubscribe`)
       } catch (error) {
         if (!$axios.isAxiosError(error) || error.response?.status !== HTTP_UNAUTHORIZED) return
         console.log(error)
