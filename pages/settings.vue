@@ -18,7 +18,11 @@
           </template>
         </DialogCard>
         <v-divider></v-divider>
-        <DialogCard title="Pokemonote - パスワードの更新" submit-button-text="更新する" @submit="updatePassword">
+        <DialogCard
+          title="Pokemonote - パスワードの更新"
+          submit-button-text="更新する"
+          @submit="updatePassword($event)"
+        >
           <template #activator="activator">
             <v-list-item v-bind="activator.attrs" v-on="activator.on">パスワードの更新</v-list-item>
           </template>
@@ -86,13 +90,14 @@ export default defineComponent({
 
     const updateUserAccount = () => {}
 
-    const updatePassword = async () => {
+    const updatePassword = async (closeDialog: Function) => {
       try {
         await $axios.post('/users/password/update', passwordParams)
+        alert('パスワードを更新しました')
+        closeDialog()
         passwordParams.current_password = ''
         passwordParams.new_password = ''
         passwordParams.new_password_confirmation = ''
-        alert('パスワードを更新しました')
       } catch (error) {
         errors.value = exceptionErrorToArray(error, [HTTP_PAYMENT_REQUIRED, HTTP_UNPROCESSABLE_ENTITY])
       }

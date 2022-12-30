@@ -10,9 +10,7 @@
         <v-btn color="secondary" outlined min-width="125" depressed @click="dialog = false">{{
           cancelButtonText
         }}</v-btn>
-        <v-btn :color="submitButtonColor" min-width="125" depressed @click="$emit('submit')">{{
-          submitButtonText
-        }}</v-btn>
+        <v-btn :color="submitButtonColor" min-width="125" depressed @click="submit">{{ submitButtonText }}</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -42,7 +40,7 @@ export default defineComponent({
       default: false,
     },
   },
-  setup(props) {
+  setup(props, { emit }) {
     const dialog = ref(false)
 
     const submitButtonColor = computed(() => {
@@ -50,9 +48,14 @@ export default defineComponent({
       return 'info'
     })
 
+    const submit = () => {
+      emit('submit', () => (dialog.value = false))
+    }
+
     return {
       dialog,
       submitButtonColor,
+      submit,
     }
   },
 })
