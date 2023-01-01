@@ -1,5 +1,11 @@
 <template>
-  <FormTemplate title="メール確認" button-text="確認メールを再送信する" :is-loading="isLoading" @submit="resend">
+  <FormTemplate
+    title="メール確認"
+    button-text="確認メールを再送信する"
+    :is-loading="isLoading"
+    :errors="errors"
+    @submit="resend"
+  >
     <p>
       登録はまだ完了していません。<br />
       メールに記載されたリンクをクリックして本登録を完了してください。
@@ -12,7 +18,7 @@
 <script lang="ts">
 import { defineComponent, ref, useContext, useRouter } from '@nuxtjs/composition-api'
 import { Email } from '@/types'
-import { updateMeta } from '~/utils/utilities'
+import { exceptionErrorToArray, updateMeta } from '~/utils/utilities'
 
 export default defineComponent({
   middleware: 'noAuth',
@@ -24,6 +30,7 @@ export default defineComponent({
 
     const email = ref<string | null>(localStorage.getItem('email'))
     const isLoading = ref(false)
+    const errors = ref<string[]>()
     localStorage.removeItem('email')
 
     const fetchEmail = () => {
@@ -48,14 +55,16 @@ export default defineComponent({
         await $axios.post('/email/resend', {
           email: email.value,
         })
-        isLoading.value = false
         alert('メールを再送信しました。')
       } catch (error) {
-        console.log(error)
+        errors.value = exceptionErrorToArray(error)
+      } finally {
+        isLoading.value = false
       }
     }
     return {
       email,
+      errors,
       isLoading,
       resend,
     }
