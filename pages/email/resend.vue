@@ -56,6 +56,7 @@ export default defineComponent({
           email: email.value,
         })
         alert('メールを再送信しました。')
+        errors.value = undefined
       } catch (error) {
         errors.value = exceptionErrorToArray(error)
       } finally {
