@@ -38,7 +38,7 @@
               <EmailField :email.sync="updateAccountParams.new_email" label="新しいメールアドレス" />
             </v-card-text>
             <v-list>
-              <v-list-item v-for="(error, index) in errors" :key="index">
+              <v-list-item v-for="(error, index) in updateAccountErrors" :key="index">
                 <v-list-item-icon>
                   <v-icon class="error-message">mdi-alert-circle</v-icon>
                 </v-list-item-icon>
@@ -65,7 +65,7 @@
               <PasswordField :password.sync="passwordParams.new_password_confirmation" label="確認用パスワード" />
             </v-card-text>
             <v-list>
-              <v-list-item v-for="(error, index) in errors" :key="index">
+              <v-list-item v-for="(error, index) in updatePasswordErrors" :key="index">
                 <v-list-item-icon>
                   <v-icon class="error-message">mdi-alert-circle</v-icon>
                 </v-list-item-icon>
@@ -110,7 +110,8 @@ export default defineComponent({
 
     const { $axios, store } = useContext()
     const router = useRouter()
-    const errors = ref<string[]>([])
+    const updateAccountErrors = ref<string[]>([])
+    const updatePasswordErrors = ref<string[]>([])
 
     const dialog = ref(false)
 
@@ -150,8 +151,9 @@ export default defineComponent({
         updateAccountParams.nickname = ''
         updateAccountParams.current_email = ''
         updateAccountParams.new_email = ''
+        updateAccountErrors.value = []
       } catch (error) {
-        errors.value = exceptionErrorToArray(error, [HTTP_UNAUTHORIZED, HTTP_UNPROCESSABLE_ENTITY])
+        updateAccountErrors.value = exceptionErrorToArray(error, [HTTP_UNAUTHORIZED, HTTP_UNPROCESSABLE_ENTITY])
       }
     }
 
@@ -163,8 +165,9 @@ export default defineComponent({
         passwordParams.current_password = ''
         passwordParams.new_password = ''
         passwordParams.new_password_confirmation = ''
+        updatePasswordErrors.value = []
       } catch (error) {
-        errors.value = exceptionErrorToArray(error, [HTTP_UNAUTHORIZED, HTTP_UNPROCESSABLE_ENTITY])
+        updatePasswordErrors.value = exceptionErrorToArray(error, [HTTP_UNAUTHORIZED, HTTP_UNPROCESSABLE_ENTITY])
       }
     }
 
@@ -188,8 +191,9 @@ export default defineComponent({
 
     return {
       dialog,
-      errors,
       updateAccountParams,
+      updateAccountErrors,
+      updatePasswordErrors,
       passwordParams,
       rules,
       unsubscribe,
