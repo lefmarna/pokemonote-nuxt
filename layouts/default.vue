@@ -84,7 +84,7 @@
       <v-spacer />
       <!-- ヘッダー右側 -->
       <v-toolbar-items v-if="isLogin">
-        <v-btn text @click="logout">ログアウト</v-btn>
+        <v-btn text :disabled="isLoading" @click="logout">ログアウト</v-btn>
       </v-toolbar-items>
       <v-toolbar-items v-else>
         <v-btn text to="/login" nuxt>ログイン</v-btn>
@@ -105,6 +105,7 @@ export default defineComponent({
   setup() {
     const { $axios, store } = useContext()
     const router = useRouter()
+    const isLoading = ref(false)
 
     const isLogin = computed(() => {
       return store.getters.isLogin
@@ -187,11 +188,14 @@ export default defineComponent({
     })
 
     const logout = async () => {
+      isLoading.value = true
       try {
         await $axios.post('/logout')
       } catch (error) {
         if (!$axios.isAxiosError(error) || error.response?.status !== 401) return
         console.log(error)
+      } finally {
+        isLoading.value = false
       }
       store.commit('updateAuthUser', {
         id: '',
@@ -207,6 +211,7 @@ export default defineComponent({
       drawer,
       logoPath,
       isLogin,
+      isLoading,
       otherMenuLists,
       otherMenuListsFiltered,
       siteMenuLists,

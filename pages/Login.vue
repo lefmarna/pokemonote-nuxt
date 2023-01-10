@@ -1,5 +1,5 @@
 <template>
-  <FormTemplate title="ログイン" button-text="ログイン" :errors="errors" @submit="login">
+  <FormTemplate title="ログイン" button-text="ログイン" :errors="errors" :is-loading="isLoading" @submit="login">
     <EmailField :email.sync="loginParams.email" />
     <PasswordField :password.sync="loginParams.password" />
     <nuxt-link to="/register"> 新規会員登録はこちら</nuxt-link>
@@ -23,9 +23,11 @@ export default defineComponent({
       email: '',
       password: '',
     })
+    const isLoading = ref(false)
     const errors = ref<string[]>()
 
     const login = async () => {
+      isLoading.value = true
       try {
         const response = await $axios.post<{ data: AuthUser }>('/login', loginParams)
 
@@ -46,6 +48,8 @@ export default defineComponent({
         store.dispatch('notice')
       } catch (error) {
         errors.value = exceptionErrorToArray(error)
+      } finally {
+        isLoading.value = false
       }
     }
 
@@ -55,6 +59,7 @@ export default defineComponent({
 
     return {
       errors,
+      isLoading,
       loginParams,
       login,
     }

@@ -1,5 +1,12 @@
 <template>
-  <FormTemplate name="form" title="アカウント作成" button-text="新規登録" :errors="errors" @submit="register">
+  <FormTemplate
+    name="form"
+    title="アカウント作成"
+    button-text="新規登録"
+    :errors="errors"
+    :is-loading="isLoading"
+    @submit="register"
+  >
     <!-- <v-file-input
       accept="image/jpeg, image/png"
       name="icon"
@@ -49,6 +56,7 @@ export default defineComponent({
     const email = ref<string>('')
     const password = ref<string>('')
     const passwordConfirmation = ref<string>('')
+    const isLoading = ref(false)
     const errors = ref<string[]>()
 
     const rules = computed(() => {
@@ -66,6 +74,7 @@ export default defineComponent({
     })
 
     const register = async (): Promise<void> => {
+      isLoading.value = true
       // 画像のデータはformDataを介さないと送れない
       const form = document.forms.namedItem('form')
       if (!form) return
@@ -77,6 +86,8 @@ export default defineComponent({
         router.push('/email/resend')
       } catch (error) {
         errors.value = exceptionErrorToArray(error)
+      } finally {
+        isLoading.value = false
       }
     }
 
@@ -87,6 +98,7 @@ export default defineComponent({
       password,
       passwordConfirmation,
       rules,
+      isLoading,
       errors,
       register,
     }
