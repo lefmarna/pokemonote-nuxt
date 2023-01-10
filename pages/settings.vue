@@ -34,8 +34,8 @@
                 counter
                 persistent-placeholder
               />
-              <EmailField :email.sync="updateAccountParams.current_email" label="現在のメールアドレス" />
-              <EmailField :email.sync="updateAccountParams.new_email" label="新しいメールアドレス" />
+              <!-- <EmailField :email.sync="updateAccountParams.current_email" label="現在のメールアドレス" />
+              <EmailField :email.sync="updateAccountParams.new_email" label="新しいメールアドレス" /> -->
             </v-card-text>
             <v-list>
               <v-list-item v-for="(error, index) in updateAccountErrors" :key="index">
@@ -118,8 +118,8 @@ export default defineComponent({
     const updateAccountParams = reactive({
       username: '',
       nickname: '',
-      current_email: '',
-      new_email: '',
+      // current_email: '',
+      // new_email: '',
     })
 
     const passwordParams = reactive({
@@ -149,8 +149,8 @@ export default defineComponent({
         closeDialog()
         updateAccountParams.username = ''
         updateAccountParams.nickname = ''
-        updateAccountParams.current_email = ''
-        updateAccountParams.new_email = ''
+        // updateAccountParams.current_email = ''
+        // updateAccountParams.new_email = ''
         updateAccountErrors.value = []
       } catch (error) {
         updateAccountErrors.value = exceptionErrorToArray(error, [HTTP_UNAUTHORIZED, HTTP_UNPROCESSABLE_ENTITY])
