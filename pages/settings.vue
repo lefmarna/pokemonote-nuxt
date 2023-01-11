@@ -6,15 +6,47 @@
         <v-card-title class="mx-auto">Pokemonote - 設定</v-card-title>
       </v-card-title>
       <v-list class="py-0 mx-3" flat>
-        <DialogCard title="Pokemonote - アカウント情報の変更" submit-button-text="変更する" @submit="updateUserAccount">
+        <DialogCard
+          title="Pokemonote - アカウント情報の変更"
+          submit-button-text="変更する"
+          @submit="updateAccount($event)"
+        >
           <template #activator="activator">
             <v-list-item v-bind="activator.attrs" v-on="activator.on">アカウント情報の変更</v-list-item>
           </template>
           <template #content>
             <v-card-text>
-              この機能は現在準備中です。<br />
-              ボタンを押してもアカウント情報を変更することはできません。
+              <v-text-field
+                v-model="updateAccountParams.username"
+                prepend-icon="mdi-account"
+                label="ユーザー名"
+                placeholder="英数5〜15文字で入力してください。"
+                :rules="[rules.required, rules.username]"
+                counter
+                persistent-placeholder
+              />
+              <v-text-field
+                v-model="updateAccountParams.nickname"
+                prepend-icon="mdi-account-outline"
+                label="ニックネーム"
+                placeholder="4〜50文字で入力してください。"
+                :rules="[rules.required, rules.nickname]"
+                counter
+                persistent-placeholder
+              />
+              <!-- <EmailField :email.sync="updateAccountParams.current_email" label="現在のメールアドレス" />
+              <EmailField :email.sync="updateAccountParams.new_email" label="新しいメールアドレス" /> -->
             </v-card-text>
+            <v-list>
+              <v-list-item v-for="(error, index) in updateAccountErrors" :key="index">
+                <v-list-item-icon>
+                  <v-icon class="error-message">mdi-alert-circle</v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title class="error-message">{{ error }}</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
           </template>
         </DialogCard>
         <v-divider></v-divider>
@@ -33,7 +65,7 @@
               <PasswordField :password.sync="passwordParams.new_password_confirmation" label="確認用パスワード" />
             </v-card-text>
             <v-list>
-              <v-list-item v-for="(error, index) in errors" :key="index">
+              <v-list-item v-for="(error, index) in updatePasswordErrors" :key="index">
                 <v-list-item-icon>
                   <v-icon class="error-message">mdi-alert-circle</v-icon>
                 </v-list-item-icon>
@@ -67,7 +99,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, useContext, useRouter } from '@nuxtjs/composition-api'
+import { computed, defineComponent, reactive, ref, useContext, useRouter } from '@nuxtjs/composition-api'
 import { HTTP_UNAUTHORIZED, HTTP_UNPROCESSABLE_ENTITY } from '@/utils/constants'
 import { exceptionErrorToArray, updateMeta } from '~/utils/utilities'
 
@@ -78,9 +110,17 @@ export default defineComponent({
 
     const { $axios, store } = useContext()
     const router = useRouter()
-    const errors = ref<string[]>([])
+    const updateAccountErrors = ref<string[]>([])
+    const updatePasswordErrors = ref<string[]>([])
 
     const dialog = ref(false)
+
+    const updateAccountParams = reactive({
+      username: '',
+      nickname: '',
+      // current_email: '',
+      // new_email: '',
+    })
 
     const passwordParams = reactive({
       current_password: '',
@@ -88,7 +128,35 @@ export default defineComponent({
       new_password_confirmation: '',
     })
 
-    const updateUserAccount = () => {}
+    const rules = computed(() => {
+      return {
+        required: (value: string) => !!value || 'この項目は必須です',
+        username: (value: string) => {
+          const pattern = /^[a-z\d]{5,15}$/i
+          return pattern.test(value) || '英数5〜15文字で入力してください。'
+        },
+        nickname: (value: string) => {
+          const length = value.length
+          return (length >= 4 && length <= 50) || '4〜50文字で入力してください。'
+        },
+      }
+    })
+
+    const updateAccount = async (closeDialog: Function) => {
+      try {
+        const response = await $axios.put('/settings/account', updateAccountParams)
+        alert('ユーザー情報を更新しました')
+        closeDialog()
+        updateAccountParams.username = ''
+        updateAccountParams.nickname = ''
+        // updateAccountParams.current_email = ''
+        // updateAccountParams.new_email = ''
+        updateAccountErrors.value = []
+        store.commit('updateAuthUser', response.data.data)
+      } catch (error) {
+        updateAccountErrors.value = exceptionErrorToArray(error, [HTTP_UNAUTHORIZED, HTTP_UNPROCESSABLE_ENTITY])
+      }
+    }
 
     const updatePassword = async (closeDialog: Function) => {
       try {
@@ -98,8 +166,9 @@ export default defineComponent({
         passwordParams.current_password = ''
         passwordParams.new_password = ''
         passwordParams.new_password_confirmation = ''
+        updatePasswordErrors.value = []
       } catch (error) {
-        errors.value = exceptionErrorToArray(error, [HTTP_UNAUTHORIZED, HTTP_UNPROCESSABLE_ENTITY])
+        updatePasswordErrors.value = exceptionErrorToArray(error, [HTTP_UNAUTHORIZED, HTTP_UNPROCESSABLE_ENTITY])
       }
     }
 
@@ -123,10 +192,13 @@ export default defineComponent({
 
     return {
       dialog,
-      errors,
+      updateAccountParams,
+      updateAccountErrors,
+      updatePasswordErrors,
       passwordParams,
+      rules,
       unsubscribe,
-      updateUserAccount,
+      updateAccount,
       updatePassword,
     }
   },
