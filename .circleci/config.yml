@@ -67,7 +67,6 @@ jobs:
           command: yarn netlify deploy -p -d dist -a ${NETLIFY_AUTH_TOKEN} -s ${NETLIFY_SITE_ID}
 
 workflows:
-  version: 2
   test_build_deploy:
     jobs:
       - test
@@ -84,3 +83,4 @@ workflows:
           filters:
             branches:
               only: master
+# VS Code Extension Version: 1.5.1
