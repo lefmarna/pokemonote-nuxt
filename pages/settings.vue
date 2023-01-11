@@ -144,7 +144,7 @@ export default defineComponent({
 
     const updateAccount = async (closeDialog: Function) => {
       try {
-        await $axios.put('/settings/account', updateAccountParams)
+        const response = await $axios.put('/settings/account', updateAccountParams)
         alert('ユーザー情報を更新しました')
         closeDialog()
         updateAccountParams.username = ''
@@ -152,6 +152,7 @@ export default defineComponent({
         // updateAccountParams.current_email = ''
         // updateAccountParams.new_email = ''
         updateAccountErrors.value = []
+        store.commit('updateAuthUser', response.data.data)
       } catch (error) {
         updateAccountErrors.value = exceptionErrorToArray(error, [HTTP_UNAUTHORIZED, HTTP_UNPROCESSABLE_ENTITY])
       }
