@@ -12,7 +12,7 @@
         </v-card-text>
         <!-- ボタン -->
         <v-card-actions>
-          <v-btn class="mx-auto px-5" color="info" :disabled="isLoading" large @click="submit">
+          <v-btn v-if="buttonText" class="mx-auto px-5" color="info" :disabled="isLoading" large @click="submit">
             {{ buttonText }}
           </v-btn>
         </v-card-actions>

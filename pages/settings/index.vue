@@ -34,11 +34,39 @@
                 counter
                 persistent-placeholder
               />
-              <!-- <EmailField :email.sync="updateAccountParams.current_email" label="現在のメールアドレス" />
-              <EmailField :email.sync="updateAccountParams.new_email" label="新しいメールアドレス" /> -->
             </v-card-text>
             <v-list>
               <v-list-item v-for="(error, index) in updateAccountErrors" :key="index">
+                <v-list-item-icon>
+                  <v-icon class="error-message">mdi-alert-circle</v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title class="error-message">{{ error }}</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
+          </template>
+        </DialogCard>
+        <v-divider></v-divider>
+        <DialogCard
+          title="Pokemonote - メールアドレスの変更"
+          submit-button-text="確認メールを送信する"
+          @submit="updateEmail()"
+        >
+          <template #activator="activator">
+            <v-list-item v-bind="activator.attrs" v-on="activator.on">メールアドレスの変更</v-list-item>
+          </template>
+          <template #content>
+            <v-card-text>
+              <EmailField :email.sync="updateEmailParams.current_email" label="現在のメールアドレス" />
+              <EmailField :email.sync="updateEmailParams.new_email" label="新しいメールアドレス" />
+              <EmailField
+                :email.sync="updateEmailParams.new_email_confirmation"
+                label="新しいメールアドレス（確認用）"
+              />
+            </v-card-text>
+            <v-list>
+              <v-list-item v-for="(error, index) in updateEmailErrors" :key="index">
                 <v-list-item-icon>
                   <v-icon class="error-message">mdi-alert-circle</v-icon>
                 </v-list-item-icon>
@@ -111,6 +139,7 @@ export default defineComponent({
     const { $axios, store } = useContext()
     const router = useRouter()
     const updateAccountErrors = ref<string[]>([])
+    const updateEmailErrors = ref<string[]>([])
     const updatePasswordErrors = ref<string[]>([])
 
     const dialog = ref(false)
@@ -118,8 +147,12 @@ export default defineComponent({
     const updateAccountParams = reactive({
       username: '',
       nickname: '',
-      // current_email: '',
-      // new_email: '',
+    })
+
+    const updateEmailParams = reactive({
+      current_email: '',
+      new_email: '',
+      new_email_confirmation: '',
     })
 
     const passwordParams = reactive({
@@ -149,12 +182,20 @@ export default defineComponent({
         closeDialog()
         updateAccountParams.username = ''
         updateAccountParams.nickname = ''
-        // updateAccountParams.current_email = ''
-        // updateAccountParams.new_email = ''
         updateAccountErrors.value = []
         store.commit('updateAuthUser', response.data.data)
       } catch (error) {
         updateAccountErrors.value = exceptionErrorToArray(error, [HTTP_UNAUTHORIZED, HTTP_UNPROCESSABLE_ENTITY])
+      }
+    }
+
+    const updateEmail = async () => {
+      try {
+        const response = await $axios.post('/settings/email', updateEmailParams)
+        localStorage.setItem('email', response.data.data.email)
+        router.push('/settings/email/resend')
+      } catch (error) {
+        updateEmailErrors.value = exceptionErrorToArray(error, [HTTP_UNAUTHORIZED, HTTP_UNPROCESSABLE_ENTITY])
       }
     }
 
@@ -194,11 +235,14 @@ export default defineComponent({
       dialog,
       updateAccountParams,
       updateAccountErrors,
+      updateEmailParams,
+      updateEmailErrors,
       updatePasswordErrors,
       passwordParams,
       rules,
       unsubscribe,
       updateAccount,
+      updateEmail,
       updatePassword,
     }
   },
