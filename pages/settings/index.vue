@@ -191,9 +191,8 @@ export default defineComponent({
 
     const updateEmail = async () => {
       try {
-        const response = await $axios.post('/settings/email', updateEmailParams)
-        localStorage.setItem('email', response.data.data.email)
-        router.push('/settings/email/resend')
+        await $axios.post('/settings/email', updateEmailParams)
+        router.push('/settings/email/confirm')
       } catch (error) {
         updateEmailErrors.value = exceptionErrorToArray(error, [HTTP_UNAUTHORIZED, HTTP_UNPROCESSABLE_ENTITY])
       }
