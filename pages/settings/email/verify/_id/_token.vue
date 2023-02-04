@@ -22,9 +22,8 @@ export default defineComponent({
         store.commit('updateAuthUser', response.data.data)
       } catch (error) {
         console.log(error)
-      } finally {
-        router.push('/')
       }
+      router.push('/')
     })()
   },
   head: {},
