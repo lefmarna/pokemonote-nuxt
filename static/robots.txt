@@ -4,5 +4,6 @@ Disallow: /give-tip/
 Disallow: /lefmarna-otoiawase/
 Disallow: /privacy-policy
 Disallow: /users/
+Disallow: /settings/
 
 Sitemap: https://pokemonote.com/sitemap.xml

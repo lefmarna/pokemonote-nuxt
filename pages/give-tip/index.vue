@@ -1,5 +1,11 @@
 <template>
-  <FormTemplate title="チップを贈る" button-text="チップを贈る" :errors="errors" @submit="giveTip">
+  <FormTemplate
+    title="チップを贈る"
+    button-text="チップを贈る"
+    :errors="errors"
+    :is-loading="isLoading"
+    @submit="giveTip"
+  >
     <v-card-subtitle>
       この機能は、現在テストモードで動作しています。<br />挙動は確認できますが、お金が引き落とされることはありません。
     </v-card-subtitle>
@@ -64,6 +70,7 @@ export default defineComponent({
     const { $axios, $config } = useContext()
     const router = useRouter()
     const errors = ref<string[]>()
+    const isLoading = ref(false)
 
     // カード情報はString型で渡す必要がある
     const card = reactive<Card>({
@@ -86,6 +93,7 @@ export default defineComponent({
     })
 
     const giveTip = (): void => {
+      isLoading.value = true
       window.Payjp.createToken(card, async (status, response) => {
         if (status === HTTP_OK) {
           tip.token = response.id
@@ -97,6 +105,8 @@ export default defineComponent({
         } catch (error) {
           errors.value = exceptionErrorToArray(error, [HTTP_PAYMENT_REQUIRED, HTTP_UNPROCESSABLE_ENTITY])
           tip.token = ''
+        } finally {
+          isLoading.value = false
         }
       })
     }
@@ -105,6 +115,7 @@ export default defineComponent({
       card,
       errors,
       tip,
+      isLoading,
       giveTip,
     }
   },

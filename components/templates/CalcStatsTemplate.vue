@@ -32,7 +32,7 @@
         </CalcStatsOptions>
       </v-dialog>
 
-      <v-btn v-if="$store.getters.isLogin" @click="emitPokemon">
+      <v-btn v-if="$store.getters.isLogin" :loading="isLoading" @click="emitPokemon">
         <v-icon color="primary">mdi-send</v-icon>
       </v-btn>
     </v-bottom-navigation>
@@ -100,6 +100,7 @@
           :description="description"
           :real-numbers="realNumbers"
           :stats="stats"
+          :is-loading="isLoading"
           @durabilityAdjustment="durabilityAdjustment"
           @emitPokemon="emitPokemon"
           @updateDescription="updateDescription"
@@ -163,6 +164,11 @@ export default defineComponent({
       type: String,
       required: false,
       default: '',
+    },
+    isLoading: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
   setup(props, { emit }) {

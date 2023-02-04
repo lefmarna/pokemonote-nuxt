@@ -16,7 +16,7 @@
             label="お問い合わせ内容"
           ></v-textarea>
           <v-card-actions>
-            <v-btn type="submit" class="mx-auto px-5" color="info" large>送信する</v-btn>
+            <v-btn type="submit" class="mx-auto px-5" color="info" :loading="isLoading" large>送信する</v-btn>
           </v-card-actions>
         </v-card-text>
       </v-card>
@@ -37,8 +37,10 @@ export default defineComponent({
     const name = ref<string>()
     const email = ref<string>()
     const message = ref<string>()
+    const isLoading = ref(false)
 
     const handleSubmit = async () => {
+      isLoading.value = true
       try {
         await $axios.post('/lefmarna-otoiawase', {
           name: name.value,
@@ -48,6 +50,8 @@ export default defineComponent({
         router.push('/lefmarna-otoiawase/thanks')
       } catch (error) {
         router.push('/')
+      } finally {
+        isLoading.value = false
       }
     }
 
@@ -55,6 +59,7 @@ export default defineComponent({
       name,
       email,
       message,
+      isLoading,
       handleSubmit,
     }
   },

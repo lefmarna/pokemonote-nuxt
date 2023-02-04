@@ -98,9 +98,15 @@
         <v-btn color="danger" elevation="2" outlined large @click.native="resetEffortValue">努力値リセット</v-btn>
       </v-col>
       <v-col class="text-center">
-        <v-btn color="primary" elevation="3" :disabled="!$store.getters.isLogin" large @click="$emit('emitPokemon')">{{
-          buttonText
-        }}</v-btn>
+        <v-btn
+          color="primary"
+          elevation="3"
+          :disabled="!$store.getters.isLogin"
+          :loading="isLoading"
+          large
+          @click="$emit('emitPokemon')"
+          >{{ buttonText }}</v-btn
+        >
       </v-col>
     </v-row>
   </v-container>
@@ -136,6 +142,11 @@ export default defineComponent({
     stats: {
       type: [] as PropType<Stat[]>,
       required: true,
+    },
+    isLoading: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
   setup(props, { emit }) {
