@@ -7,6 +7,7 @@
     :lv.sync="lv"
     :stats="stats"
     :props-description="description"
+    :is-loading="isLoading"
     @submit="updatePokemon"
     @updateEffortValue="updateEffortValue"
     @updateIndividualValue="updateIndividualValue"
@@ -28,6 +29,7 @@ export default defineComponent({
 
     const { route, store, $axios } = useContext()
     const router = useRouter()
+    const isLoading = ref(false)
 
     const currentPokemon = ref<PokemonData>({
       no: 567,
@@ -88,11 +90,14 @@ export default defineComponent({
     ])
 
     const updatePokemon = async (params: Event): Promise<void> => {
+      isLoading.value = true
       try {
         await $axios.patch(`/pokemons/${route.value.params.id}`, params)
         router.push(`/pokemons/${route.value.params.id}`)
       } catch (error) {
         router.push('/')
+      } finally {
+        isLoading.value = false
       }
     }
 
@@ -133,6 +138,7 @@ export default defineComponent({
       description,
       lv,
       stats,
+      isLoading,
       updateEffortValue,
       updateIndividualValue,
       updatePokemon,
