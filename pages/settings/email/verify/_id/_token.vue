@@ -31,11 +31,11 @@ export default defineComponent({
         console.log(error)
         router.push('/')
       }
-
-      return {
-        isConfirm,
-      }
     })()
+
+    return {
+      isConfirm,
+    }
   },
   head: {},
 })
