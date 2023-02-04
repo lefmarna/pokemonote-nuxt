@@ -7,12 +7,12 @@
       <v-card-title class="justify-center">{{ title }}</v-card-title>
       <slot name="content"></slot>
       <v-card-actions class="justify-space-around">
-        <v-btn color="secondary" outlined min-width="125" depressed :disabled="isLoading" @click="dialog = false">{{
-          cancelButtonText
-        }}</v-btn>
-        <v-btn :color="submitButtonColor" min-width="125" depressed :disabled="isLoading" @click="submit">{{
-          submitButtonText
-        }}</v-btn>
+        <v-btn color="secondary" outlined min-width="125" depressed :disabled="isLoading" @click="dialog = false">
+          {{ cancelButtonText }}
+        </v-btn>
+        <v-btn :color="submitButtonColor" min-width="125" depressed :loading="isLoading" @click="submit">
+          {{ submitButtonText }}
+        </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
