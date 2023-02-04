@@ -49,7 +49,7 @@
           </template>
         </DialogCard>
         <v-divider></v-divider>
-        <DialogCard
+        <!-- <DialogCard
           title="Pokemonote - メールアドレスの変更"
           submit-button-text="確認メールを送信する"
           :is-loading="isLoading"
@@ -79,7 +79,7 @@
             </v-list>
           </template>
         </DialogCard>
-        <v-divider></v-divider>
+        <v-divider></v-divider> -->
         <DialogCard
           title="Pokemonote - パスワードの更新"
           submit-button-text="更新する"
