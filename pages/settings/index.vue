@@ -9,6 +9,7 @@
         <DialogCard
           title="Pokemonote - アカウント情報の変更"
           submit-button-text="変更する"
+          :is-loading="isLoading"
           @submit="updateAccount($event)"
         >
           <template #activator="activator">
@@ -51,6 +52,7 @@
         <DialogCard
           title="Pokemonote - メールアドレスの変更"
           submit-button-text="確認メールを送信する"
+          :is-loading="isLoading"
           @submit="updateEmail()"
         >
           <template #activator="activator">
@@ -81,6 +83,7 @@
         <DialogCard
           title="Pokemonote - パスワードの更新"
           submit-button-text="更新する"
+          :is-loading="isLoading"
           @submit="updatePassword($event)"
         >
           <template #activator="activator">
@@ -109,6 +112,7 @@
           title="Pokemonote - アカウント退会"
           submit-button-text="退会する"
           :is-danger="true"
+          :is-loading="isLoading"
           @submit="unsubscribe"
         >
           <template #activator="activator">
@@ -141,6 +145,7 @@ export default defineComponent({
     const updateAccountErrors = ref<string[]>([])
     const updateEmailErrors = ref<string[]>([])
     const updatePasswordErrors = ref<string[]>([])
+    const isLoading = ref(false)
 
     const dialog = ref(false)
 
@@ -176,6 +181,7 @@ export default defineComponent({
     })
 
     const updateAccount = async (closeDialog: Function) => {
+      isLoading.value = true
       try {
         const response = await $axios.put('/settings/account', updateAccountParams)
         alert('ユーザー情報を更新しました')
@@ -186,19 +192,25 @@ export default defineComponent({
         store.commit('updateAuthUser', response.data.data)
       } catch (error) {
         updateAccountErrors.value = exceptionErrorToArray(error, [HTTP_UNAUTHORIZED, HTTP_UNPROCESSABLE_ENTITY])
+      } finally {
+        isLoading.value = false
       }
     }
 
     const updateEmail = async () => {
+      isLoading.value = true
       try {
         await $axios.post('/settings/email', updateEmailParams)
         router.push('/settings/email/confirm')
       } catch (error) {
         updateEmailErrors.value = exceptionErrorToArray(error, [HTTP_UNAUTHORIZED, HTTP_UNPROCESSABLE_ENTITY])
+      } finally {
+        isLoading.value = false
       }
     }
 
     const updatePassword = async (closeDialog: Function) => {
+      isLoading.value = true
       try {
         await $axios.put('/settings/password', passwordParams)
         alert('パスワードを更新しました')
@@ -209,15 +221,20 @@ export default defineComponent({
         updatePasswordErrors.value = []
       } catch (error) {
         updatePasswordErrors.value = exceptionErrorToArray(error, [HTTP_UNAUTHORIZED, HTTP_UNPROCESSABLE_ENTITY])
+      } finally {
+        isLoading.value = false
       }
     }
 
     const unsubscribe = async () => {
+      isLoading.value = true
       try {
         await $axios.delete(`/settings/unsubscribe`)
       } catch (error) {
         if (!$axios.isAxiosError(error) || error.response?.status !== HTTP_UNAUTHORIZED) return
         console.log(error)
+      } finally {
+        isLoading.value = false
       }
       store.commit('updateAuthUser', {
         id: '',
@@ -232,6 +249,7 @@ export default defineComponent({
 
     return {
       dialog,
+      isLoading,
       updateAccountParams,
       updateAccountErrors,
       updateEmailParams,
