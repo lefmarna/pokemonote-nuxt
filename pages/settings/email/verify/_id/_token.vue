@@ -23,7 +23,7 @@ export default defineComponent({
     ;(async () => {
       try {
         const response = await $axios.get(
-          `/settings/email/verify/${route.value.params.id}/${route.value.params.token}/?expires=${route.value.query.expires}&signature=${route.value.query.signature}`
+          `/settings/email/verify/${route.value.params.id}/${route.value.params.token}?expires=${route.value.query.expires}&signature=${route.value.query.signature}`
         )
         store.commit('updateAuthUser', response.data.data)
         isConfirm.value = false
