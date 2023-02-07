@@ -43,7 +43,8 @@ export default defineComponent({
     },
     buttonText: {
       type: String,
-      required: true,
+      required: false,
+      default: '',
     },
     isLoading: {
       type: Boolean,

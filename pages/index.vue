@@ -30,6 +30,12 @@
             <v-sheet class="body-1 overflow-y-auto" max-height="280">
               <div class="px-2">
                 <div>
+                  <h3>2023-02-07</h3>
+                  <p>メールアドレスの更新機能の公開</p>
+                </div>
+              </div>
+              <div class="px-2">
+                <div>
                   <h3>2023-02-04</h3>
                   <p>メールアドレスの更新機能の実装（正常に動作しなかったため一旦公開停止）</p>
                 </div>
