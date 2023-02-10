@@ -2,7 +2,12 @@
   <FormTemplate title="ログイン" button-text="ログイン" :errors="errors" :is-loading="isLoading" @submit="login">
     <EmailField :email.sync="loginParams.email" />
     <PasswordField :password.sync="loginParams.password" />
-    <nuxt-link to="/register"> 新規会員登録はこちら</nuxt-link>
+    <div>
+      <nuxt-link to="/password/forgot">パスワードをお忘れの方</nuxt-link>
+    </div>
+    <div>
+      <nuxt-link to="/register">新規会員登録はこちら</nuxt-link>
+    </div>
   </FormTemplate>
 </template>
 
