@@ -1,12 +1,18 @@
 <template>
   <FormTemplate
-    title="パスワード再設定"
-    button-text="パスワード再設定"
+    title="パスワード再設定の申請"
+    button-text="パスワード再設定メールを送信する"
     :errors="errors"
     :is-loading="isLoading"
     @submit="login"
   >
-    <EmailField :email.sync="email" />
+    <template #default>
+      <p>本人確認のためにメールをお送りします。メールに添付されたURLよりパスワードの再設定を行ってください。</p>
+      <EmailField :email.sync="email" />
+    </template>
+    <template #links>
+      <nuxt-link to="/login">ログインページへ戻る</nuxt-link>
+    </template>
   </FormTemplate>
 </template>
 
@@ -17,7 +23,7 @@ import { exceptionErrorToArray, updateMeta } from '@/utils/utilities'
 export default defineComponent({
   middleware: 'noAuth',
   setup() {
-    updateMeta('パスワード再設定')
+    updateMeta('パスワード再設定の申請')
 
     const { $axios } = useContext()
     const router = useRouter()

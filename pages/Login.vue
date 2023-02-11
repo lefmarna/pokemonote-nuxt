@@ -1,13 +1,17 @@
 <template>
   <FormTemplate title="ログイン" button-text="ログイン" :errors="errors" :is-loading="isLoading" @submit="login">
-    <EmailField :email.sync="loginParams.email" />
-    <PasswordField :password.sync="loginParams.password" />
-    <div>
-      <nuxt-link to="/password/forgot">パスワードをお忘れの方</nuxt-link>
-    </div>
-    <div>
-      <nuxt-link to="/register">新規会員登録はこちら</nuxt-link>
-    </div>
+    <template #default>
+      <EmailField :email.sync="loginParams.email" />
+      <PasswordField :password.sync="loginParams.password" />
+    </template>
+    <template #links>
+      <div>
+        <nuxt-link to="/register">新規会員登録はこちら</nuxt-link>
+      </div>
+      <div class="mt-3">
+        <nuxt-link to="/password/forgot">パスワードをお忘れの方はこちら</nuxt-link>
+      </div>
+    </template>
   </FormTemplate>
 </template>
 
