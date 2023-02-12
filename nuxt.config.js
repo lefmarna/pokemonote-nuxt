@@ -86,7 +86,7 @@ export default {
   basic: {
     name: 'admin',
     pass: '2222',
-    enabled: process.env.ENABLE_BASIC_AUTH === 'true',
+    enabled: process.env.ENABLE_BASIC_AUTH || false,
   },
 
   'google-gtag': {
