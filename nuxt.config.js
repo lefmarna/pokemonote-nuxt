@@ -48,7 +48,17 @@ export default {
       { name: 'format-detection', content: 'telephone=no' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
-    script: [{ type: 'text/javascript', src: 'https://js.pay.jp/v1/' }],
+    script: [
+      { type: 'text/javascript', src: 'https://js.pay.jp/v1/' },
+      {
+        ref: 'ads_script',
+        async: true,
+        src: `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${
+          process.env.ADSENSE_ID || 'ca-pub-#########'
+        }`,
+        crossorigin: 'anonymous',
+      },
+    ],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -80,12 +90,6 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/google-gtag',
-    [
-      '@nuxtjs/google-adsense',
-      {
-        id: process.env.ADSENSE_ID || 'ca-pub-#########',
-      },
-    ],
   ],
 
   'google-gtag': {
