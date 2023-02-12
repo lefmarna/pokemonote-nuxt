@@ -55,7 +55,7 @@ jobs:
                 command: rm -f ./static/robots.txt ./static/sitemap.xml
             - run:
                 name: 'create robots.txt'
-                command: "echo 'User-agent: *\nDisallow: /' > ./static/robots.txt"
+                command: "echo 'User-agent: *\nDisallow: /\n' > ./static/robots.txt"
             - run:
                 name: 'Yarn Generate'
                 command: yarn generate
@@ -69,7 +69,7 @@ jobs:
 
       # buildで出来上がったディレクトリをデプロイのjobに渡す
       - persist_to_workspace:
-          root: dist
+          root: .
           paths:
             - .
 
@@ -80,29 +80,27 @@ jobs:
     steps:
       # buildで出来上がったディレクトリを展開
       - attach_workspace:
-          at: dist
+          at: .
 
       # デプロイ
-      - run:
-          name: 'Netlifyにデプロイするためのライブラリをインストール'
-          command: yarn add netlify-cli
-
       - when:
           condition:
             equal: ['master', <<pipeline.git.branch>>]
           steps:
             - run:
                 name: 'Deploy Staging'
-                command: yarn netlify deploy -p -d dist -a ${NETLIFY_AUTH_TOKEN} -s ${NETLIFY_SITE_ID}
+                command: ./node_modules/.bin/netlify deploy -p -d ./dist -a ${NETLIFY_AUTH_TOKEN} -s ${NETLIFY_SITE_ID}
 
       - when:
           condition:
             equal: ['staging', <<pipeline.git.branch>>]
           steps:
+            - run: ls -la
+            - run: ls -la ./dist
             - run:
                 name: 'Deploy Staging'
-                # command: yarn netlify deploy -p -d dist -a ${NETLIFY_AUTH_TOKEN} -s ${NETLIFY_SITE_ID}
-                command: ls -la ./dist
+                # command: ./node_modules/.bin/netlify deploy -p -d ./dist -a ${NETLIFY_AUTH_TOKEN} -s ${NETLIFY_SITE_ID}
+                command: cat ./dist/robots.txt
 
 workflows:
   test_build_deploy:
