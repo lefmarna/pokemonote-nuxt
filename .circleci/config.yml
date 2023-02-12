@@ -95,12 +95,9 @@ jobs:
           condition:
             equal: ['staging', <<pipeline.git.branch>>]
           steps:
-            - run: ls -la
-            - run: ls -la ./dist
             - run:
                 name: 'Deploy Staging'
-                # command: ./node_modules/.bin/netlify deploy -p -d ./dist -a ${NETLIFY_AUTH_TOKEN} -s ${NETLIFY_SITE_ID}
-                command: cat ./dist/robots.txt
+                command: ./node_modules/.bin/netlify deploy -p -d ./dist -a ${NETLIFY_AUTH_TOKEN} -s ${STG_NETLIFY_SITE_ID}
 
 workflows:
   test_build_deploy:
