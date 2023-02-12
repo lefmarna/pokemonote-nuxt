@@ -39,6 +39,30 @@ jobs:
     steps:
       - checkout
       - yarn_install
+      - when:
+          condition:
+            equal: ['master', <<pipeline.git.branch>>]
+          steps:
+            - run:
+                name: 'Yarn Generate'
+                command: yarn generate
+      - unless:
+          condition:
+            equal: ['master', <<pipeline.git.branch>>]
+          steps:
+            - run:
+                name: 'delete SEO files'
+                command: rm -f ./static/robots.txt ./static/sitemap.xml
+            - run:
+                name: 'create robots.txt'
+                command: "echo 'User-agent: *\nDisallow: /' > ./static/robots.txt"
+            - run:
+                name: 'Yarn Generate'
+                command: yarn generate
+                environment:
+                  ANALYTICS_ID: G-**********
+                  BASE_URL: ${STG_BASE_URL}
+
       - run:
           name: 'Yarn Generate'
           command: yarn generate
@@ -62,25 +86,43 @@ jobs:
       - run:
           name: 'Netlifyにデプロイするためのライブラリをインストール'
           command: yarn add netlify-cli
-      - run:
-          name: 'Deploy'
-          command: yarn netlify deploy -p -d dist -a ${NETLIFY_AUTH_TOKEN} -s ${NETLIFY_SITE_ID}
+
+      - when:
+          condition:
+            equal: ['master', <<pipeline.git.branch>>]
+          steps:
+            - run:
+                name: 'Deploy Staging'
+                command: yarn netlify deploy -p -d dist -a ${NETLIFY_AUTH_TOKEN} -s ${NETLIFY_SITE_ID}
+
+      - when:
+          condition:
+            equal: ['staging', <<pipeline.git.branch>>]
+          steps:
+            - run:
+                name: 'Deploy Staging'
+                # command: yarn netlify deploy -p -d dist -a ${NETLIFY_AUTH_TOKEN} -s ${NETLIFY_SITE_ID}
+                command: ls -la ./dist
 
 workflows:
   test_build_deploy:
     jobs:
       - test
-      # masterブランチにpushされたときのみbuildとdeployを実行
+      # master or stagingブランチにpushされたときのみbuildとdeployを実行
       - build:
           requires:
             - test
           filters:
             branches:
-              only: master
+              only:
+                - master
+                - staging
       - deploy:
           requires:
             - build
           filters:
             branches:
-              only: master
+              only:
+                - master
+                - staging
 # VS Code Extension Version: 1.5.1
