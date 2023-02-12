@@ -46,8 +46,6 @@ jobs:
             - run:
                 name: 'Yarn Generate'
                 command: yarn generate
-                environment:
-                  BASE_URL: ${PROD_BASE_URL}
       - unless:
           condition:
             equal: ['master', <<pipeline.git.branch>>]
@@ -63,7 +61,7 @@ jobs:
                 command: yarn generate
                 environment:
                   ANALYTICS_ID: G-**********
-                  BASE_URL: ${STG_BASE_URL}
+                  BASE_URL: $STG_BASE_URL
                   ADSENSE_ID: 'ca-pub-#########'
 
       - run:
