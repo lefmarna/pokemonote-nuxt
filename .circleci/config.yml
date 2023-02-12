@@ -46,6 +46,8 @@ jobs:
             - run:
                 name: 'Yarn Generate'
                 command: yarn generate
+                environment:
+                  BASE_URL: ${PROD_BASE_URL}
       - unless:
           condition:
             equal: ['master', <<pipeline.git.branch>>]
