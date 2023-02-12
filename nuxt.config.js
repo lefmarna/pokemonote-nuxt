@@ -78,9 +78,16 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
+    'nuxt-basic-auth-module',
     '@nuxtjs/axios',
     '@nuxtjs/google-gtag',
   ],
+
+  basic: {
+    name: 'admin',
+    pass: '2222',
+    enabled: process.env.ENABLE_BASIC_AUTH === 'true',
+  },
 
   'google-gtag': {
     id: process.env.ANALYTICS_ID || 'G-**********',
