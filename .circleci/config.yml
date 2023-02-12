@@ -62,7 +62,6 @@ jobs:
                 environment:
                   ANALYTICS_ID: G-**********
                   BASE_URL: ${STG_BASE_URL}
-                  ENABLE_BASIC_AUTH: true
 
       - run:
           name: 'Yarn Generate'
