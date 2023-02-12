@@ -80,6 +80,12 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/google-gtag',
+    [
+      '@nuxtjs/google-adsense',
+      {
+        id: process.env.ADSENSE_ID || 'ca-pub-#########',
+      },
+    ],
   ],
 
   'google-gtag': {
