@@ -38,7 +38,7 @@ export default defineComponent({
     const login = async () => {
       isLoading.value = true
       try {
-        await $axios.get('csrf-cookie')
+        // await $axios.get('csrf-cookie')
         const response = await $axios.post<{ data: AuthUser }>('/login', loginParams)
 
         // メール認証済でない場合は、メール確認ページへ
