@@ -58,7 +58,7 @@ jobs:
                 command: "echo 'User-agent: *\nDisallow: /\n' > ./static/robots.txt"
             - run:
                 name: 'create .env.staging'
-                command: "echo 'ADSENSE_ID='ca-pub-#########'\nANALYTICS_ID='G-**********'\nBASE_URL='${STG_BASE_URL}'\nPAYJP_PUBLIC_KEY='${PAYJP_PUBLIC_KEY}' > .env.staging"
+                command: "echo 'ADSENSE_ID=ca-pub-#########\nANALYTICS_ID=G-**********\nBASE_URL=${STG_BASE_URL}\nPAYJP_PUBLIC_KEY=${PAYJP_PUBLIC_KEY}\n' > .env.staging"
             - run: cat .env.staging
             - run:
                 name: 'Yarn Generate'
