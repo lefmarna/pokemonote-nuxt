@@ -50,14 +50,14 @@ export default {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     script: [
       { type: 'text/javascript', src: 'https://js.pay.jp/v1/' },
-      // {
-      //   ref: 'ads_script',
-      //   async: true,
-      //   src: `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${
-      //     process.env.ADSENSE_ID || 'ca-pub-#########'
-      //   }`,
-      //   crossorigin: 'anonymous',
-      // },
+      {
+        ref: 'ads_script',
+        async: true,
+        src: `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${
+          process.env.ADSENSE_ID || 'ca-pub-#########'
+        }`,
+        crossorigin: 'anonymous',
+      },
     ],
   },
 

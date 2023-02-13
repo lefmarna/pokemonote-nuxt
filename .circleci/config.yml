@@ -57,16 +57,16 @@ jobs:
                 name: 'create robots.txt'
                 command: "echo 'User-agent: *\nDisallow: /\n' > ./static/robots.txt"
             - run:
+                name: 'create .env.staging'
+                command: "echo 'ADSENSE_ID='ca-pub-#########'\nANALYTICS_ID='G-**********'\nBASE_URL='${STG_BASE_URL}'\nPAYJP_PUBLIC_KEY='${PAYJP_PUBLIC_KEY}' > .env.staging"
+            - run: cat .env.staging
+            - run:
                 name: 'Yarn Generate'
                 command: yarn generate
-                environment:
-                  ANALYTICS_ID: 'G-**********'
-                  BASE_URL: '${STG_BASE_URL}'
-                  ADSENSE_ID: 'ca-pub-#########'
 
       - run:
           name: 'Yarn Generate'
-          command: yarn generate
+          command: yarn generate:staging
 
       # buildで出来上がったディレクトリをデプロイのjobに渡す
       - persist_to_workspace:
