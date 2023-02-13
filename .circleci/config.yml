@@ -61,7 +61,7 @@ jobs:
                 command: yarn generate
                 environment:
                   ANALYTICS_ID: G-**********
-                  BASE_URL: $STG_BASE_URL
+                  BASE_URL: https://stg-api.pokemonote.com/public/api/v1
                   ADSENSE_ID: 'ca-pub-#########'
 
       - run:
