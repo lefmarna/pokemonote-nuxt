@@ -39,13 +39,38 @@ jobs:
     steps:
       - checkout
       - yarn_install
+      - when:
+          condition:
+            equal: ['master', <<pipeline.git.branch>>]
+          steps:
+            - run:
+                name: 'Yarn Generate'
+                command: yarn generate
+      - unless:
+          condition:
+            equal: ['master', <<pipeline.git.branch>>]
+          steps:
+            - run:
+                name: 'delete SEO files'
+                command: rm -f ./static/robots.txt ./static/sitemap.xml
+            - run:
+                name: 'create robots.txt'
+                command: "echo 'User-agent: *\nDisallow: /\n' > ./static/robots.txt"
+            - run:
+                name: 'create .env.staging'
+                command: "echo 'ADSENSE_ID=ca-pub-#########\nANALYTICS_ID=G-**********\nBASE_URL=${STG_BASE_URL}\nPAYJP_PUBLIC_KEY=${PAYJP_PUBLIC_KEY}\n' > .env.staging"
+            - run: cat .env.staging
+            - run:
+                name: 'Yarn Generate'
+                command: yarn generate
+
       - run:
           name: 'Yarn Generate'
-          command: yarn generate
+          command: yarn generate:staging
 
       # buildで出来上がったディレクトリをデプロイのjobに渡す
       - persist_to_workspace:
-          root: dist
+          root: .
           paths:
             - .
 
@@ -56,31 +81,44 @@ jobs:
     steps:
       # buildで出来上がったディレクトリを展開
       - attach_workspace:
-          at: dist
+          at: .
 
       # デプロイ
-      - run:
-          name: 'Netlifyにデプロイするためのライブラリをインストール'
-          command: yarn add netlify-cli
-      - run:
-          name: 'Deploy'
-          command: yarn netlify deploy -p -d dist -a ${NETLIFY_AUTH_TOKEN} -s ${NETLIFY_SITE_ID}
+      - when:
+          condition:
+            equal: ['master', <<pipeline.git.branch>>]
+          steps:
+            - run:
+                name: 'Deploy Staging'
+                command: ./node_modules/.bin/netlify deploy -p -d ./dist -a ${NETLIFY_AUTH_TOKEN} -s ${NETLIFY_SITE_ID}
+
+      - when:
+          condition:
+            equal: ['staging', <<pipeline.git.branch>>]
+          steps:
+            - run:
+                name: 'Deploy Staging'
+                command: ./node_modules/.bin/netlify deploy -p -d ./dist -a ${NETLIFY_AUTH_TOKEN} -s ${STG_NETLIFY_SITE_ID}
 
 workflows:
   test_build_deploy:
     jobs:
       - test
-      # masterブランチにpushされたときのみbuildとdeployを実行
+      # master or stagingブランチにpushされたときのみbuildとdeployを実行
       - build:
           requires:
             - test
           filters:
             branches:
-              only: master
+              only:
+                - master
+                - staging
       - deploy:
           requires:
             - build
           filters:
             branches:
-              only: master
+              only:
+                - master
+                - staging
 # VS Code Extension Version: 1.5.1

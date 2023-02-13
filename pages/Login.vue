@@ -1,8 +1,17 @@
 <template>
   <FormTemplate title="ログイン" button-text="ログイン" :errors="errors" :is-loading="isLoading" @submit="login">
-    <EmailField :email.sync="loginParams.email" />
-    <PasswordField :password.sync="loginParams.password" />
-    <nuxt-link to="/register"> 新規会員登録はこちら</nuxt-link>
+    <template #default>
+      <EmailField :email.sync="loginParams.email" />
+      <PasswordField :password.sync="loginParams.password" />
+    </template>
+    <template #links>
+      <div>
+        <nuxt-link to="/register">新規会員登録はこちら</nuxt-link>
+      </div>
+      <div class="mt-3">
+        <nuxt-link to="/password/forgot">パスワードをお忘れの方はこちら</nuxt-link>
+      </div>
+    </template>
   </FormTemplate>
 </template>
 
@@ -29,6 +38,7 @@ export default defineComponent({
     const login = async () => {
       isLoading.value = true
       try {
+        // await $axios.get('csrf-cookie')
         const response = await $axios.post<{ data: AuthUser }>('/login', loginParams)
 
         // メール認証済でない場合は、メール確認ページへ

@@ -27,6 +27,9 @@
             </v-list-item-content>
           </v-list-item>
         </v-list>
+        <v-card-text>
+          <slot name="links"></slot>
+        </v-card-text>
       </v-card>
     </v-container>
   </v-form>
