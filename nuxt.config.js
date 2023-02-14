@@ -49,7 +49,7 @@ export default {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     script: [
-      { type: 'text/javascript', src: 'https://js.pay.jp/v1/' },
+      { src: 'https://js.pay.jp/v2/pay.js', defer: true },
       {
         ref: 'ads_script',
         async: true,

@@ -154,12 +154,12 @@ export default defineComponent({
 
     const otherMenuLists = computed(() => {
       return [
-        // {
-        //   name: 'チップを贈る',
-        //   icon: 'mdi-heart',
-        //   link: '/give-tip',
-        //   requireAuth: true,
-        // },
+        {
+          name: 'チップを贈る',
+          icon: 'mdi-heart',
+          link: '/give-tip',
+          requireAuth: true,
+        },
         {
           name: '利用規約',
           icon: 'mdi-comment-alert',

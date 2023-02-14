@@ -1,10 +1,3 @@
-export type Card = {
-  number: string
-  cvc: string
-  exp_month: string
-  exp_year: string
-}
-
 export type Email = {
   email: string
 }
