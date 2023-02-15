@@ -1,5 +1,6 @@
 <template>
   <ins
+    class="adsbygoogle"
     style="display: block"
     data-ad-client="ca-pub-3240586325286249"
     data-ad-slot="4559543564"
