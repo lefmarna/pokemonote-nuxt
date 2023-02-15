@@ -28,13 +28,6 @@ import { GIFTS, HTTP_PAYMENT_REQUIRED, HTTP_UNPROCESSABLE_ENTITY } from '@/utils
 import { exceptionErrorToArray, updateMeta } from '@/utils/utilities'
 import { Tip } from '@/types'
 
-// Payjpに型を指定しないとエラーになる
-declare global {
-  interface Window {
-    Payjp: (payjpPublicKey: string) => any
-  }
-}
-
 type Card = {
   mount: (id: string) => void
 }
@@ -46,6 +39,13 @@ type Element = {
 type Payjp = {
   elements: (options?: object) => Element
   createToken: (card: Card) => Promise<{ id?: string; error: { message: string } }>
+}
+
+// Payjpに型を指定しないとエラーになる
+declare global {
+  interface Window {
+    Payjp: (payjpPublicKey: string) => Payjp
+  }
 }
 
 export default defineComponent({
