@@ -18,47 +18,33 @@
       label="金額"
       type="number"
     ></v-select>
-    <v-text-field v-model="card.number" prepend-icon="mdi-credit-card" label="カード番号" type="text" />
-    <v-row>
-      <v-col>
-        <v-text-field
-          v-model="card.exp_month"
-          prepend-icon="mdi-calendar-month"
-          label="月"
-          type="text"
-          placeholder="例)3"
-          persistent-placeholder
-        />
-      </v-col>
-      <v-col>
-        <v-text-field
-          :value="card.exp_year.substr(2)"
-          prepend-icon="mdi-calendar"
-          label="年"
-          type="text"
-          placeholder="例)24"
-          persistent-placeholder
-          @input="card.exp_year = `20${$event}`"
-        />
-      </v-col>
-    </v-row>
-    <v-text-field v-model="card.cvc" prepend-icon="mdi-lock" label="セキュリティコード" type="text" />
+    <div id="payjp-form"></div>
   </FormTemplate>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, reactive, ref, useContext, useRouter } from '@nuxtjs/composition-api'
-import { GIFTS, HTTP_OK, HTTP_PAYMENT_REQUIRED, HTTP_UNPROCESSABLE_ENTITY } from '@/utils/constants'
+import { GIFTS, HTTP_PAYMENT_REQUIRED, HTTP_UNPROCESSABLE_ENTITY } from '@/utils/constants'
 import { exceptionErrorToArray, updateMeta } from '@/utils/utilities'
-import { Card, Tip } from '@/types'
+import { Tip } from '@/types'
+
+type Card = {
+  mount: (id: string) => void
+}
+
+type Element = {
+  create: (type: string, options?: object) => Card
+}
+
+type Payjp = {
+  elements: (options?: object) => Element
+  createToken: (card: Card) => Promise<{ id?: string; error: { message: string } }>
+}
 
 // Payjpに型を指定しないとエラーになる
 declare global {
   interface Window {
-    Payjp: {
-      setPublicKey: (key: string) => void
-      createToken: (card: Card, callback: (status: number, response: { id: string }) => void) => void
-    }
+    Payjp: (payjpPublicKey: string) => Payjp
   }
 }
 
@@ -72,13 +58,8 @@ export default defineComponent({
     const errors = ref<string[]>()
     const isLoading = ref(false)
 
-    // カード情報はString型で渡す必要がある
-    const card = reactive<Card>({
-      number: '',
-      cvc: '',
-      exp_month: '',
-      exp_year: '20',
-    })
+    const payjp = ref<Payjp>()
+    const card = ref<Card>()
 
     const tip = reactive<Tip>({
       price: 0,
@@ -89,30 +70,39 @@ export default defineComponent({
      * 公開鍵を読み込む
      */
     onMounted(() => {
-      window.Payjp.setPublicKey($config.payjpPublicKey)
+      payjp.value = window.Payjp($config.payjpPublicKey)
+      if (payjp.value === undefined) return
+
+      const elements = payjp.value.elements()
+      card.value = elements.create('card')
+      card.value.mount('#payjp-form')
     })
 
-    const giveTip = (): void => {
-      isLoading.value = true
-      window.Payjp.createToken(card, async (status, response) => {
-        if (status === HTTP_OK) {
-          tip.token = response.id
-        }
+    const giveTip = async () => {
+      if (payjp.value === undefined) return
+      if (card.value === undefined) return
 
-        try {
-          await $axios.post('/tips', tip)
-          router.push('/give-tip/thanks')
-        } catch (error) {
-          errors.value = exceptionErrorToArray(error, [HTTP_PAYMENT_REQUIRED, HTTP_UNPROCESSABLE_ENTITY])
-          tip.token = ''
-        } finally {
-          isLoading.value = false
+      isLoading.value = true
+      try {
+        const response = await payjp.value.createToken(card.value)
+        if (response.error || response.id === undefined) {
+          errors.value = [response.error.message]
+          return
         }
-      })
+        tip.token = response.id
+
+        await $axios.post('/tips', tip)
+        router.push('/give-tip/thanks')
+        tip.token = ''
+      } catch (e) {
+        console.log(e)
+        errors.value = exceptionErrorToArray(e, [HTTP_PAYMENT_REQUIRED, HTTP_UNPROCESSABLE_ENTITY])
+      } finally {
+        isLoading.value = false
+      }
     }
     return {
       GIFTS,
-      card,
       errors,
       tip,
       isLoading,
