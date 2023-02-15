@@ -1,12 +1,10 @@
 <template>
   <ins
-    class="adsbygoogle"
-    style="display: block"
+    style="display: inline-block; width: 232px; height: 232px"
     data-ad-client="ca-pub-3240586325286249"
-    data-ad-slot="4559543564"
-    data-ad-format="auto"
-    data-full-width-responsive="true"
-  ></ins>
+    data-ad-slot="2573612278"
+  >
+  </ins>
 </template>
 
 <script lang="ts">
