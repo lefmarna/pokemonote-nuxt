@@ -44,6 +44,7 @@
           </v-list-item>
         </v-list>
         <v-divider />
+        <Adsense />
         <v-list-item>Others</v-list-item>
         <v-divider />
         <v-list dense nav>
