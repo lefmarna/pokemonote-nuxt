@@ -43,7 +43,7 @@
             </v-list-item-content>
           </v-list-item>
         </v-list>
-        <v-divide />
+        <v-divider />
         <Adsense />
         <v-list-item>Others</v-list-item>
         <v-divider />
