@@ -46,6 +46,8 @@ jobs:
             - run:
                 name: 'Yarn Generate'
                 command: yarn generate
+                environment:
+                  BASE_URL: ${PROD_BASE_URL}
       - unless:
           condition:
             equal: ['master', <<pipeline.git.branch>>]
@@ -57,12 +59,10 @@ jobs:
                 name: 'create robots.txt'
                 command: "echo 'User-agent: *\nDisallow: /\n' > ./static/robots.txt"
             - run:
-                name: 'create .env'
-                command: echo "ANALYTICS_ID=G-**********\nBASE_URL=${STG_BASE_URL}\nPAYJP_PUBLIC_KEY=${PAYJP_PUBLIC_KEY}\n" > .env
-            - run: cat .env
-            - run:
                 name: 'Yarn Generate'
                 command: yarn generate
+                environment:
+                  BASE_URL: ${STG_BASE_URL}
 
       # buildで出来上がったディレクトリをデプロイのjobに渡す
       - persist_to_workspace:
