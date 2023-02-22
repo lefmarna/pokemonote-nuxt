@@ -10,8 +10,16 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Yarn install
-        uses: ./.github/actions/test_build_deploy
+      - name: Restore cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/yarn
+          key: nuxt-yarn-${{ hashFiles('yarn.lock') }}
+          restore-keys: nuxt-yarn-
+
+      - name: yarn install
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: yarn install --cache-folder ~/.cache/yarn
 
       - name: Test
         run: yarn test
@@ -25,14 +33,26 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Yarn install
-        uses: ./.github/actions/test_build_deploy
+      - name: Restore cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/yarn
+          key: nuxt-yarn-${{ hashFiles('yarn.lock') }}
+          restore-keys: nuxt-yarn-
+
+      - name: yarn install
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: yarn install --cache-folder ~/.cache/yarn
+
+      - run: ls -la
 
       - name: delete SEO files
         if: github.ref_name != 'master'
         run: |
           rm -f ./static/robots.txt ./static/sitemap.xml && \
           "echo 'User-agent: *\nDisallow: /\n' > ./static/robots.txt"
+
+      - run: ls -la
 
       - name: Yarn Generate
         run: yarn generate
