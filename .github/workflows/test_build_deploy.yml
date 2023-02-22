@@ -24,34 +24,47 @@ jobs:
       - name: Test
         run: yarn test
 
-  # build:
-  #   runs-on: ubuntu-latest
-  #   container:
-  #     image: node:16.13.1
-  #   if: github.ref_name == 'master' || github.ref_name == 'staging' || github.ref_name == 'develop'
-  #   needs: test
-  #   steps:
-  #     - uses: actions/checkout@v3
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: node:16.13.1
+    if: github.ref_name == 'master' || github.ref_name == 'staging' || github.ref_name == 'develop'
+    needs: test
+    steps:
+      - uses: actions/checkout@v3
 
-  #     - name: Restore cache
-  #       uses: actions/cache@v3
-  #       with:
-  #         path: ~/.cache/yarn
-  #         key: nuxt-yarn-${{ hashFiles('yarn.lock') }}
-  #         restore-keys: nuxt-yarn-
+      - name: Restore cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/yarn
+          key: nuxt-yarn-${{ hashFiles('yarn.lock') }}
+          restore-keys: nuxt-yarn-
 
-  #     - name: yarn install
-  #       if: steps.cache.outputs.cache-hit != 'true'
-  #       run: yarn install --cache-folder ~/.cache/yarn
+      - name: yarn install
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: yarn install --cache-folder ~/.cache/yarn
 
-  #     - name: Test
-  #       run: yarn test
+      - name: Yarn Generate
+        run: yarn generate
 
-  # deploy:
-  #   runs-on: ubuntu-latest
-  #   if: github.ref_name == 'master' || github.ref_name == 'staging' || github.ref_name == 'develop'
-  #   needs: test
-  #   steps:
+      - name: Upload Directory
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist
+          retention-days: 3
+
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.ref_name == 'master' || github.ref_name == 'staging' || github.ref_name == 'develop'
+    needs: build
+    steps:
+      - run: ls -la
+      - name: Download math result for job 1
+        uses: actions/download-artifact@v3
+        with:
+          name: dist
+      - run: ls -la
   #     - name: Deploy
   #       env:
   #         DEPLOY_DIRECTORY: ${{ github.ref_name == 'master' && secrets.PRODUCTION_DIRECTORY || github.ref_name == 'staging' && secrets.STAGING_DIRECTORY || secrets.DEVELOPMENT_DIRECTORY }}
