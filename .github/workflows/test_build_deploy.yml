@@ -11,7 +11,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Yarn install
-        uses: ./.github/actions/build
+        uses: ./.github/actions/test_build_deploy
 
       - name: Test
         run: yarn test
@@ -26,7 +26,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Yarn install
-        uses: ./.github/actions/build
+        uses: ./.github/actions/test_build_deploy
 
       - name: delete SEO files
         if: github.ref_name != 'master'
