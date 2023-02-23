@@ -42,8 +42,10 @@ jobs:
       - name: Upload Directory
         uses: actions/upload-artifact@v3
         with:
-          name: generated
-          path: .
+          name: dist_and_packages
+          path: |
+            dist
+            node_modules
           retention-days: 3
 
   deploy:
@@ -54,7 +56,7 @@ jobs:
       - name: Download math result for job 1
         uses: actions/download-artifact@v3
         with:
-          name: generated
+          name: dist_and_packages
       - run: ls -la
       # - name: Deploy
       #   env:
