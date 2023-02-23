@@ -30,11 +30,9 @@ jobs:
 
       - name: delete SEO files
         if: github.ref_name != 'master'
-        run: rm -f ./static/robots.txt ./static/sitemap.xml
-
-      - name: create robots.txt
-        if: github.ref_name != 'master'
-        run: "echo 'User-agent: *\nDisallow: /\n' > ./static/robots.txt"
+        run: |
+          rm -f ./static/robots.txt ./static/sitemap.xml && \
+          echo "User-agent: *\nDisallow: /\n" > ./static/robots.txt
 
       - name: Yarn Generate
         run: yarn generate
