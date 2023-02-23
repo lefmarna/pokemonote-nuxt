@@ -36,30 +36,27 @@ jobs:
 
       - name: Yarn Generate
         run: yarn generate
+        env:
+          BASE_URL: ${{ github.ref_name == 'master' && secrets.PROD_BASE_URL || github.ref_name == 'staging' && secrets.STG_BASE_URL || secrets.DEV_BASE_URL }}
 
       - name: Upload Directory
         uses: actions/upload-artifact@v3
         with:
-          name: dist
-          path: dist
+          name: generated
+          path: .
           retention-days: 3
 
   deploy:
     runs-on: ubuntu-latest
-    if: github.ref_name == 'master' || github.ref_name == 'staging' || github.ref_name == 'develop'
+    if: github.ref_name == 'master' || github.ref_name == 'staging'
     needs: build
     steps:
-      - run: ls -la
       - name: Download math result for job 1
         uses: actions/download-artifact@v3
         with:
-          name: dist
+          name: generated
       - run: ls -la
-  #     - name: Deploy
-  #       env:
-  #         DEPLOY_DIRECTORY: ${{ github.ref_name == 'master' && secrets.PRODUCTION_DIRECTORY || github.ref_name == 'staging' && secrets.STAGING_DIRECTORY || secrets.DEVELOPMENT_DIRECTORY }}
-  #       run: |
-  #         echo "${{ secrets.XSERVER_PRIVATE_KEY }}" > x-server.key && chmod 600 x-server.key && \
-  #         ssh -o StrictHostKeyChecking=no -i x-server.key ${{ secrets.XSERVER_USER }}@${{ secrets.XSERVER_HOST }} -l ${{ secrets.XSERVER_USER }} -p 10022 \
-  #         "cd $DEPLOY_DIRECTORY && git pull origin ${{ github.ref_name }} && composer install --optimize-autoloader --no-dev && \
-  #         php artisan config:cache && php artisan route:cache && php artisan migrate --force && exit"
+      # - name: Deploy
+      #   env:
+      #     NETLIFY_SITE_ID: ${{ github.ref_name == 'master' && secrets.PROD_NETLIFY_SITE_ID || secrets.STG_NETLIFY_SITE_ID }}
+      #   run: ./node_modules/.bin/netlify deploy -p -d ./dist -a ${{ secrets.NETLIFY_AUTH_TOKEN }} -s $NETLIFY_SITE_ID
