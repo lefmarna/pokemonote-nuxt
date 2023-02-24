@@ -43,7 +43,9 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: dist
-          path: ./dist
+          path: |
+            dist
+            yarn.lock
           retention-days: 3
 
   deploy:
@@ -56,9 +58,9 @@ jobs:
         with:
           name: dist
       - run: ls -la
-      - name: Install Netlify CLI
-        run: npm install netlify-cli -g
-      - run: ls -la
+
+      - name: Yarn install
+        uses: ./.github/actions/test_build_deploy
       # - name: Deploy
       #   env:
       #     NETLIFY_SITE_ID: ${{ github.ref_name == 'master' && secrets.PROD_NETLIFY_SITE_ID || secrets.STG_NETLIFY_SITE_ID }}
