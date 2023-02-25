@@ -1,0 +1,16 @@
+name: 'Yarn install'
+description: 'install packages'
+runs:
+  using: 'composite'
+  steps:
+    - name: Restore cache
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/yarn
+        key: nuxt-yarn-${{ hashFiles('yarn.lock') }}
+        restore-keys: nuxt-yarn-
+
+    - name: yarn install
+      if: steps.cache.outputs.cache-hit != 'true'
+      run: yarn install --cache-folder ~/.cache/yarn
+      shell: bash

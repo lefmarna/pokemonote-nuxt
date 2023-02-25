@@ -48,7 +48,6 @@
     "husky": "^7.0.0",
     "jest": "^27.4.4",
     "lint-staged": "^12.3.4",
-    "netlify-cli": "^9.16.7",
     "prettier": "^2.5.1",
     "ts-jest": "^27.1.1",
     "vue-jest": "^3.0.4"

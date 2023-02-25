@@ -1,0 +1,63 @@
+name: test_build_deploy
+on: push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    container:
+      image: node:16.13.1
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Yarn install
+        uses: ./.github/actions/test_build_deploy
+
+      - name: Test
+        run: yarn test
+
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: node:16.13.1
+    if: github.ref_name == 'master' || github.ref_name == 'staging' || github.ref_name == 'develop'
+    needs: test
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Yarn install
+        uses: ./.github/actions/test_build_deploy
+
+      - name: delete SEO files
+        if: github.ref_name != 'master'
+        run: |
+          rm -f ./static/robots.txt ./static/sitemap.xml && \
+          echo "User-agent: *\nDisallow: /\n" > ./static/robots.txt
+
+      - name: Yarn Generate
+        run: yarn generate
+        env:
+          BASE_URL: ${{ github.ref_name == 'master' && secrets.PROD_BASE_URL || github.ref_name == 'staging' && secrets.STG_BASE_URL || secrets.DEV_BASE_URL }}
+
+      - name: Upload Directory
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist
+          retention-days: 3
+
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.ref_name == 'master' || github.ref_name == 'staging'
+    needs: build
+    steps:
+      - name: Download math result for job 1
+        uses: actions/download-artifact@v3
+        with:
+          name: dist
+      - name: Install Netlify CLI
+        run: npm install -g netlify-cli@^12.13.1
+      - name: Deploy
+        env:
+          NETLIFY_SITE_ID: ${{ github.ref_name == 'master' && secrets.PROD_NETLIFY_SITE_ID || secrets.STG_NETLIFY_SITE_ID }}
+        run: netlify deploy -p -d . -a ${{ secrets.NETLIFY_AUTH_TOKEN }} -s $NETLIFY_SITE_ID
