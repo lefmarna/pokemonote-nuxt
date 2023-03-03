@@ -1,30 +1,48 @@
 <template>
   <v-container v-if="pokemon && pokemonDetails" class="pokemon">
     ポケモンの詳細ページは、現在コンテンツの表示を調整中です。
-    <v-row>No. {{ pokemonDetails.no }}</v-row>
-    <v-row>{{ pokemonDetails.name }}</v-row>
-    <v-row>
-      <ul v-for="(types, index) in pokemonDetails.types" :key="index">
-        <li>{{ types }}</li>
-      </ul>
-    </v-row>
-    <v-row>
-      <ul v-for="(abilities, index) in pokemonDetails.abilities" :key="index">
-        <li>{{ abilities }}</li>
-      </ul>
-    </v-row>
-    <v-row> {{ pokemonDetails.hiddenAbilities }}</v-row>
-    <v-row
-      >{{ pokemonDetails.stats[HP_INDEX] }}-{{ pokemonDetails.stats[ATTACK_INDEX] }}-{{
-        pokemonDetails.stats[DEFENCE_INDEX]
-      }}-{{ pokemonDetails.stats[SP_ATTACK_INDEX] }}-{{ pokemonDetails.stats[SP_DEFENCE_INDEX] }}-{{
-        pokemonDetails.stats[SPEED_INDEX]
-      }}</v-row
-    >
-
-    <!-- {{ pokemonDetails.types[0] }} -->
-    {{ pokemonDetails }}
-    <!-- <p>表示名：{{ pokemon.user.name }}</p> -->
+    <table>
+      <tbody>
+        <tr>
+          <td class="text-left">No</td>
+          <td class="text-right">{{ pokemonDetails.no }}</td>
+        </tr>
+        <tr>
+          <td class="text-left">ポケモン名</td>
+          <td class="text-right">{{ pokemon.name }}</td>
+        </tr>
+        <tr>
+          <td class="text-left">レベル</td>
+          <td class="text-right">{{ pokemon.lv }}</td>
+        </tr>
+        <tr>
+          <td class="text-left">性格</td>
+          <td class="text-right">{{ pokemon.nature }}</td>
+        </tr>
+        <tr>
+          <td class="text-left">種族値</td>
+          <td class="text-right">
+            {{ pokemonDetails.stats[HP_INDEX] }}-{{ pokemonDetails.stats[ATTACK_INDEX] }}-{{
+              pokemonDetails.stats[DEFENCE_INDEX]
+            }}-{{ pokemonDetails.stats[SP_ATTACK_INDEX] }}-{{ pokemonDetails.stats[SP_DEFENCE_INDEX] }}-{{
+              pokemonDetails.stats[SPEED_INDEX]
+            }}
+          </td>
+        </tr>
+        <tr>
+          <td class="text-left">ステータス</td>
+          <td class="text-right">
+            {{ pokemon.stats }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div v-if="pokemon.description" class="mt-3">
+      <span>ポケモンの説明</span>
+      <p>
+        {{ pokemon.description }}
+      </p>
+    </div>
     <!-- マイページのときは、編集・削除ボタンを表示する -->
     <v-row v-if="pokemon.user.username == authUserName">
       <v-col align="center">
