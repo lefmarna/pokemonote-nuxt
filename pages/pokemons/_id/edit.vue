@@ -92,7 +92,7 @@ export default defineComponent({
     const updatePokemon = async (params: Event): Promise<void> => {
       isLoading.value = true
       try {
-        await $axios.patch(`/pokemons/${route.value.params.id}`, params)
+        await $axios.put(`/pokemons/${route.value.params.id}`, params)
         router.push(`/pokemons/${route.value.params.id}`)
       } catch (error) {
         router.push('/')
