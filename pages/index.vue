@@ -30,6 +30,10 @@
             <v-sheet class="body-1 overflow-y-auto" max-height="280">
               <div class="px-2">
                 <div>
+                  <h3>2023-05-30</h3>
+                  <p>種族値ランキングでホームの解禁ポケモンに対応</p>
+                </div>
+                <div>
                   <h3>2023-02-28</h3>
                   <p>ウネルミナモ・テツノイサハ対応</p>
                 </div>
