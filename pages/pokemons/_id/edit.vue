@@ -115,7 +115,7 @@ export default defineComponent({
       () => route.value.params.id,
       async () => {
         try {
-          const response = await $axios.get(`/pokemons/${route.value.params.id}/edit/old`)
+          const response = await $axios.get(`/pokemons/${route.value.params.id}/edit`)
 
           const data = response.data.data
           currentPokemon.value = store.getters.pokemonData.find((pokemon: PokemonData) => pokemon.name === data.name)

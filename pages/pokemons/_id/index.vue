@@ -102,7 +102,7 @@ export default defineComponent({
       () => route.value.params.id,
       async (id) => {
         try {
-          const response = await $axios.get<{ data: Pokemon }>(`/pokemons/${id}/show/old`)
+          const response = await $axios.get<{ data: Pokemon }>(`/pokemons/${id}`)
           pokemon.value = response.data.data
         } catch (error) {
           router.push('/')
