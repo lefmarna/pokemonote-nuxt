@@ -30,10 +30,6 @@
             <v-sheet class="body-1 overflow-y-auto" max-height="280">
               <div class="px-2">
                 <div>
-                  <h3>2023-08-05</h3>
-                  <p>ページの読み込み速度をはじめとするパフォーマンスの向上</p>
-                </div>
-                <div>
                   <h3>2023-05-30</h3>
                   <p>種族値ランキングでホームの解禁ポケモンに対応</p>
                 </div>
