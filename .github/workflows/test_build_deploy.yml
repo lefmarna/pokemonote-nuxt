@@ -57,9 +57,9 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: dist
-      - name: Install Netlify CLI
-        run: npm install -g netlify-cli@^12.13.1
-      - name: Deploy
-        env:
-          NETLIFY_SITE_ID: ${{ github.ref_name == 'master' && secrets.PROD_NETLIFY_SITE_ID || secrets.STG_NETLIFY_SITE_ID }}
-        run: netlify deploy -p -d . -a ${{ secrets.NETLIFY_AUTH_TOKEN }} -s $NETLIFY_SITE_ID
+          path: ./dist-dir
+      - name: Deploy to XSERVER
+        run: |
+          echo "${{ secrets.XSERVER_PRIVATE_KEY }}" > x-server.key
+          chmod 600 x-server.key
+          rsync -avz --delete --delete-delay --delay-updates -e "ssh -o StrictHostKeyChecking=no -i x-server.key -p 10022" ./dist-dir/ ${{ secrets.XSERVER_USER }}@${{ secrets.XSERVER_HOST }}:${{ secrets.STAGING_DIRECTORY }}
