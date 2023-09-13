@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: node:16.13.1
-    if: github.ref_name == 'master' || github.ref_name == 'staging' || github.ref_name == 'develop'
+    if: github.ref_name == 'main' || github.ref_name == 'staging' || github.ref_name == 'develop'
     needs: test
     steps:
       - uses: actions/checkout@v3
@@ -29,7 +29,7 @@ jobs:
         uses: ./.github/actions/test_build_deploy
 
       - name: delete SEO files
-        if: github.ref_name != 'master'
+        if: github.ref_name != 'main'
         run: |
           rm -f ./static/robots.txt ./static/sitemap.xml && \
           echo "User-agent: *\nDisallow: /\n" > ./static/robots.txt
@@ -38,7 +38,7 @@ jobs:
         run: yarn generate
         env:
           ANALYTICS_ID: ${{ secrets.ANALYTICS_ID }}
-          BASE_URL: ${{ github.ref_name == 'master' && secrets.PROD_BASE_URL || github.ref_name == 'staging' && secrets.STG_BASE_URL || secrets.DEV_BASE_URL }}
+          BASE_URL: ${{ github.ref_name == 'main' && secrets.PROD_BASE_URL || github.ref_name == 'staging' && secrets.STG_BASE_URL || secrets.DEV_BASE_URL }}
           PAYJP_PUBLIC_KEY: ${{ secrets.PAYJP_PUBLIC_KEY }}
 
       - name: Upload Directory
@@ -50,7 +50,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    if: github.ref_name == 'master' || github.ref_name == 'staging'
+    if: github.ref_name == 'main' || github.ref_name == 'staging'
     needs: build
     steps:
       - name: Download math result for job 1
@@ -61,5 +61,5 @@ jobs:
         run: npm install -g netlify-cli@^12.13.1
       - name: Deploy
         env:
-          NETLIFY_SITE_ID: ${{ github.ref_name == 'master' && secrets.PROD_NETLIFY_SITE_ID || secrets.STG_NETLIFY_SITE_ID }}
+          NETLIFY_SITE_ID: ${{ github.ref_name == 'main' && secrets.PROD_NETLIFY_SITE_ID || secrets.STG_NETLIFY_SITE_ID }}
         run: netlify deploy -p -d . -a ${{ secrets.NETLIFY_AUTH_TOKEN }} -s $NETLIFY_SITE_ID

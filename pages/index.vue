@@ -30,6 +30,10 @@
             <v-sheet class="body-1 overflow-y-auto" max-height="280">
               <div class="px-2">
                 <div>
+                  <h3>2023-09-13</h3>
+                  <p>ポケモンSVのDLC「ゼロの秘宝 - 碧の仮面」に登場するポケモンに対応</p>
+                </div>
+                <div>
                   <h3>2023-05-30</h3>
                   <p>種族値ランキングでホームの解禁ポケモンに対応</p>
                 </div>
