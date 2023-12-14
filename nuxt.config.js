@@ -24,7 +24,7 @@ export default {
         hid: 'description',
         name: 'description',
         content:
-          'ポケモンのステータスを計算・管理するためのWebアプリ『Pokemonote』へようこそ！ 素早さ計算機やSVのDLC「ゼロの秘宝 - 碧の仮面」に対応した種族値ランキングといったツールも公開しています。「シンプルで高機能」なツールにこだわって制作していますので、是非お試しください。',
+          'ポケモンのステータスを計算・管理するためのWebアプリ『Pokemonote』へようこそ！ 素早さ計算機やSVのDLC「ゼロの秘宝 - 蒼の円盤」に対応した種族値ランキングといったツールも公開しています。「シンプルで高機能」なツールにこだわって制作していますので、是非お試しください。',
       },
       { property: 'og:site_name', content: 'Pokemonote' },
       { property: 'og:type', content: 'website' },
@@ -33,7 +33,7 @@ export default {
         hid: 'og:description',
         property: 'og:description',
         content:
-          'ポケモンのステータスを計算・管理するためのWebアプリ『Pokemonote』へようこそ！ 素早さ計算機やSVのDLC「ゼロの秘宝 - 碧の仮面」に対応した種族値ランキングといったツールも公開しています。「シンプルで高機能」なツールにこだわって制作していますので、是非お試しください。',
+          'ポケモンのステータスを計算・管理するためのWebアプリ『Pokemonote』へようこそ！ 素早さ計算機やSVのDLC「ゼロの秘宝 - 蒼の円盤」に対応した種族値ランキングといったツールも公開しています。「シンプルで高機能」なツールにこだわって制作していますので、是非お試しください。',
       },
       { property: 'og:image', content: 'https://pokemonote.com/twitter_card.jpg' },
       { hid: 'twitter:title', name: 'twitter:title', content: 'Pokemonote' },
@@ -41,7 +41,7 @@ export default {
         hid: 'twitter:description',
         name: 'twitter:description',
         content:
-          'ポケモンのステータスを計算・管理するためのWebアプリ『Pokemonote』へようこそ！ 素早さ計算機やSVのDLC「ゼロの秘宝 - 碧の仮面」に対応した種族値ランキングといったツールも公開しています。「シンプルで高機能」なツールにこだわって制作していますので、是非お試しください。',
+          'ポケモンのステータスを計算・管理するためのWebアプリ『Pokemonote』へようこそ！ 素早さ計算機やSVのDLC「ゼロの秘宝 - 蒼の円盤」に対応した種族値ランキングといったツールも公開しています。「シンプルで高機能」なツールにこだわって制作していますので、是非お試しください。',
       },
       { name: 'twitter:card', content: 'summary' },
       { name: 'twitter:site', content: '@lefmarna' },
